@@ -45,11 +45,11 @@ jobs:
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
-        with:
-          # Auto-enable Pages on first run if it isn't already enabled in repo
-          # settings. Saves a manual "Settings → Pages → Source: GitHub Actions"
-          # step. Requires `pages: write` permission (already set above).
-          enablement: true
+        # Pages must be enabled manually in repo settings before the first run:
+        #   Settings → Pages → Source: "GitHub Actions"
+        # The `enablement: true` flag exists but requires a PAT with admin
+        # scope — the default GITHUB_TOKEN can't enable Pages, only deploy to
+        # an already-enabled site.
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
