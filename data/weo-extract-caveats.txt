@@ -1,0 +1,20 @@
+AFG (Afghanistan, Islamic Republic of): missing NGDP_RPCH for 2026
+AFG (Afghanistan, Islamic Republic of): missing GGXONLB_NGDP for 2026
+ECU (Ecuador): missing GGXONLB_NGDP for 2026
+DROPPED ERI (Eritrea, The State of): no GGXWDG_NGDP for 2025
+LBN (Lebanon): missing NGDP_RPCH for 2026
+LBN (Lebanon): missing GGXONLB_NGDP for 2026
+DROPPED LBY (Libya): no GGXWDG_NGDP for 2025
+DROPPED LKA (Sri Lanka): no GGXWDG_NGDP for 2025
+DROPPED MAC (Macao Special Administrative Region, People's Republic of China): no GGXWDG_NGDP for 2025
+NRU (Nauru, Republic of): missing GGXONLB_NGDP for 2026
+PLW (Palau, Republic of): missing GGXONLB_NGDP for 2026
+SGP (Singapore): missing GGXONLB_NGDP for 2026
+DROPPED SOM (Somalia): no GGXWDG_NGDP for 2025
+DROPPED SYR (Syrian Arab Republic): no GGXWDG_NGDP for 2025
+TKM (Turkmenistan): missing GGXONLB_NGDP for 2026
+TWN (Taiwan Province of China): missing GGXONLB_NGDP for 2026
+VEN (Venezuela, República Bolivariana de): missing GGXONLB_NGDP for 2026
+DROPPED WBG (West Bank and Gaza): no GGXWDG_NGDP for 2025
+WSM (Samoa): missing GGXONLB_NGDP for 2026
+DROPPED YEM (Yemen, Republic of): no GGXWDG_NGDP for 2025

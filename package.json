@@ -1,0 +1,29 @@
+{
+  "name": "debt-projection-tool-v2",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "description": "Debt Projection Tool — Version 2. Same methodology as v1 (FT-2014-replica), but with the latest IMF WEO data (April 2026) and the full WEO universe (189 economies, 172 fully projectable). Baseline line is WEO's own published debt-to-GDP path; user's projection diverges from sliders.",
+  "homepage": "https://<owner>.github.io/<repo-name>/",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "d3": "^7.8.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/d3": "^7.4.3",
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "typescript": "^5.2.2",
+    "vite": "^8.0.16",
+    "vitest": "^3.2.6"
+  }
+}

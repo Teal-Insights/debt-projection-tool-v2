@@ -1,0 +1,580 @@
+/* DDT Explorer — our own design language: navy / amber / grays.
+   Matches the Project A/B deck palette; no FT-branded styling. */
+
+:root {
+  --navy: #0a2540;
+  --amber: #c08a3e;
+  --ink: #1a1a1a;
+  --gray1: #404040;
+  --gray2: #707070;
+  --gray3: #a0a0a0;
+  --rule: #e0e0e0;
+  --paper: #fafaf8;
+  --bg: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+.app {
+  /* Lock to viewport — never overflow the screen. The chart container takes the
+     remaining space inside this fixed envelope, so dragging sliders can't make
+     the page (and therefore the chart) grow unboundedly. */
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 8px;
+  gap: 10px;
+}
+
+/* Header */
+.app__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.app__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+/* "v1" version pill — sits inline next to the title to mark this artifact's vintage. */
+.app__version {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+  color: var(--amber);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 5px;
+  vertical-align: middle;
+  position: relative;
+  top: -2px;
+}
+
+.app__subtitle {
+  margin-left: 12px;
+  font-size: 13px;
+  color: var(--gray2);
+  font-style: italic;
+}
+
+/* Subtle hint next to the subtitle pointing users at the chart hover. */
+.app__hint {
+  color: var(--gray3);
+  font-style: italic;
+}
+
+.app__header-left {
+  display: flex;
+  align-items: baseline;
+}
+
+.app__header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app__reset {
+  background: white;
+  border: 1px solid var(--rule);
+  color: var(--navy);
+  padding: 6px 12px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.app__reset:hover {
+  border-color: var(--navy);
+}
+
+/* ============== Two-column layout ============== */
+.app__main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 400px;
+  gap: 16px;
+  min-height: 0;
+}
+
+/* LEFT COLUMN: chart fills the remaining vertical space; table is sized to its content.
+   This guarantees no empty space under the table — the chart absorbs it instead. */
+.app__left {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 16px;
+  min-height: 0;
+  min-width: 0;
+}
+
+.app__chart {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* The narrative cards bring their own borders — no outer container chrome needed. */
+
+/* RIGHT COLUMN: scrollable list of slider cards, same height as left column. */
+.app__right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.app__right::-webkit-scrollbar {
+  width: 6px;
+}
+.app__right::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 3px;
+}
+.app__right::-webkit-scrollbar-thumb:hover {
+  background: var(--gray3);
+}
+
+/* Section titles */
+.app__section-title {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+}
+
+.app__section-title--right {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
+  padding: 6px 2px 4px;
+  margin: 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+/* ============== Country selector (combobox with search) ==============
+   Trigger looks like a select; opens a panel containing a search input + a
+   filtered scrollable list of options. */
+.country-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.country-selector__label {
+  color: var(--gray2);
+}
+
+.country-selector__trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 240px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.country-selector__trigger:hover,
+.country-selector__trigger[aria-expanded='true'] {
+  border-color: var(--navy);
+}
+
+.country-selector__trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+}
+
+.country-selector__trigger-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.country-selector__chevron {
+  font-size: 10px;
+  color: var(--gray2);
+  flex-shrink: 0;
+}
+
+.country-selector__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  z-index: 50;
+  width: 280px;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(10, 37, 64, 0.10);
+  overflow: hidden;
+}
+
+.country-selector__search {
+  display: block;
+  width: 100%;
+  font-size: 13px;
+  color: var(--ink);
+  background: white;
+  border: none;
+  border-bottom: 1px solid var(--rule);
+  padding: 8px 10px;
+  outline: none;
+}
+
+.country-selector__search::placeholder {
+  color: var(--gray3);
+}
+
+.country-selector__search:focus-visible {
+  box-shadow: inset 0 -2px 0 var(--amber);
+}
+
+.country-selector__list {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.country-selector__list::-webkit-scrollbar {
+  width: 6px;
+}
+.country-selector__list::-webkit-scrollbar-thumb {
+  background: var(--rule);
+  border-radius: 3px;
+}
+
+.country-selector__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink);
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+.country-selector__option--highlighted {
+  background: var(--paper);
+}
+
+.country-selector__option--selected {
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.country-selector__option--selected.country-selector__option--highlighted {
+  background: rgba(192, 138, 62, 0.10);
+}
+
+.country-selector__option-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.country-selector__option-iso {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--gray3);
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.country-selector__empty {
+  padding: 12px 10px;
+  font-size: 12px;
+  color: var(--gray2);
+  font-style: italic;
+  text-align: center;
+}
+
+/* ============== Slider cards (year-strip) ============== */
+.slider-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 8px 12px 6px;
+}
+
+.slider-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.slider-card__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.slider-card__unit {
+  font-weight: 400;
+  color: var(--gray2);
+  font-size: 11.5px;
+}
+
+.slider-card__svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  touch-action: none;
+  user-select: none;
+}
+
+.slider-card__handle {
+  transition: r 0.1s ease, stroke-width 0.1s ease;
+}
+
+.slider-card__handle:hover {
+  r: 7;
+  stroke-width: 2.5;
+}
+
+.slider-card__handle:active {
+  r: 7;
+  stroke-width: 3;
+}
+
+/* Fan chart — the SVG is absolutely positioned inside a relative wrapper so its
+   intrinsic size can't feed back into the grid row and make the container grow. */
+.fan-chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.fan-chart__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.fan-chart .axis path,
+.fan-chart .axis line {
+  stroke: var(--gray3);
+  stroke-width: 1;
+}
+
+.fan-chart .axis text {
+  fill: var(--gray2);
+  font-size: 10px;
+}
+
+.fan-chart .axis-title {
+  fill: var(--gray1);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+/* ---------- Legend (HTML overlay, top-right of the chart) ---------- */
+.fan-chart__legend {
+  position: absolute;
+  top: 6px;
+  right: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  justify-content: flex-end;
+  font-size: 10px;
+  color: var(--gray2);
+  z-index: 2;
+  pointer-events: none;
+  max-width: calc(100% - 80px);
+}
+
+.fan-chart__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.fan-chart__legend-line {
+  display: inline-block;
+  width: 14px;
+  height: 2px;
+  border-radius: 1px;
+}
+
+.fan-chart__legend-fill {
+  display: inline-block;
+  width: 12px;
+  height: 8px;
+  border-radius: 1px;
+}
+
+/* ---------- Hover tooltip ---------- */
+.fan-chart__tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 6px 9px 5px;
+  font-size: 11px;
+  color: var(--ink);
+  box-shadow: 0 4px 10px rgba(10, 37, 64, 0.08);
+  min-width: 160px;
+  z-index: 5;
+  line-height: 1.35;
+}
+
+.fan-chart__tooltip-year {
+  font-weight: 700;
+  font-size: 11.5px;
+  color: var(--navy);
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 3px;
+}
+
+.fan-chart__tooltip-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 2px 0;
+}
+
+.fan-chart__tooltip-row strong {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--navy);
+}
+
+.fan-chart__tooltip-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 3px;
+  border-radius: 1px;
+}
+
+.fan-chart__tooltip-label {
+  color: var(--gray2);
+}
+
+.fan-chart__tooltip-summary {
+  margin-top: 5px;
+  padding-top: 4px;
+  border-top: 1px solid var(--rule);
+  font-size: 10.5px;
+  color: var(--gray1);
+  font-style: italic;
+}
+
+/* ============== Narrative cards (replaces the decomposition table) ==============
+   Cards sit in a single horizontal row; each takes an equal third of the
+   available width and stretches to match the tallest card's height. */
+.output-cards {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.narrative-card {
+  flex: 1 1 0;
+  min-width: 0;          /* allow cards to shrink narrower than their content */
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 8px 12px 9px;
+}
+
+.narrative-card__title {
+  margin: 0 0 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+}
+
+.narrative-card__body {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.narrative-card__body strong {
+  color: var(--navy);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Footer */
+.app__footer {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  color: var(--gray2);
+  border-top: 1px solid var(--rule);
+  padding-top: 8px;
+}
+
+/* Responsive: stack columns on narrow viewports */
+@media (max-width: 900px) {
+  .app__main {
+    grid-template-columns: 1fr;
+  }
+  .app__left {
+    grid-template-rows: 320px auto;
+  }
+  .app__right {
+    overflow-y: visible;
+  }
+}
