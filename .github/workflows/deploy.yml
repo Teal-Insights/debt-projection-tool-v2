@@ -27,10 +27,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        # --legacy-peer-deps: vite 8 + @vitejs/plugin-react 4.7 have an
+        # incorrectly-narrow peer-dep range (plugin-react caps at vite 7).
+        # The combo works fine at runtime; legacy-peer-deps tolerates the
+        # range check during install. Same flag would be needed locally too.
+        run: npm install --legacy-peer-deps
 
       - name: Build
         env:
