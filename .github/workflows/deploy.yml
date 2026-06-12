@@ -36,11 +36,15 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Build
-        env:
-          # Base path is derived from the repo name so the same workflow ships
-          # to any repo without manual editing. If you move to a custom domain,
-          # change this to '/' or set the env at the workflow_dispatch trigger.
-          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+        # Intentionally NOT setting VITE_BASE_PATH so vite.config.ts uses its
+        # default of './' (relative paths). This works at any URL the artifact
+        # gets served from:
+        #   - private-repo preview URLs like https://stunning-adventure-*.pages.github.io/
+        #     (serve from root — would 404 with a /<repo>/ prefix)
+        #   - standard public project sites at https://<user>.github.io/<repo>/
+        #   - custom domains at /
+        # Relative paths handle all three; an absolute /<repo>/ prefix only
+        # works for the second.
         run: npm run build
 
       - name: Configure Pages
