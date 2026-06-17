@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import reubenPhoto from '../assets/profiles/reuben_ti.jpeg';
 import ltePhoto from '../assets/profiles/teal_ti.jpeg';
+import ifehPhoto from '../assets/profiles/Ifeh_ti.jpg';
 
 // KaTeX is loaded entirely from CDN via <link> + <script> tags in index.html
 // (not as an npm import) because v1/v2 share a hoisted node_modules tree in
@@ -168,7 +169,8 @@ const AUTHORS: Author[] = [
   {
     name: 'Aniekpeno Ifeh',
     org: 'Teal Insights',
-    initials: 'AI',
+    photo: ifehPhoto,
+    linkedin: 'https://ng.linkedin.com/in/aniekpenoifeh-22011996',
     email: 'aniekpeno.ifeh@tealinsights.com',
   },
   {
