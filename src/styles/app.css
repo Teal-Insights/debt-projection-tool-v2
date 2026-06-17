@@ -624,15 +624,7 @@ body, #root {
   font-variant-numeric: tabular-nums;
 }
 
-/* Footer */
-.app__footer {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10.5px;
-  color: var(--gray2);
-  border-top: 1px solid var(--rule);
-  padding-top: 8px;
-}
+/* (Footer styles live further down in the file — the dark band override.) */
 
 /* Responsive: stack columns on narrow viewports */
 @media (max-width: 900px) {
@@ -820,67 +812,105 @@ a.toolkit-switcher__item:hover {
   line-height: 1.4;
 }
 
-/* ---------- Footer (Issue 03: logos + credits) — override the lean default ---------- */
+/* ---------- Footer — stakeholder-grade dark band ----------
+   Navy gradient strip with a 2px amber rule at the top, edge-to-edge across
+   the viewport (negative horizontal/bottom margins cancel the parent
+   `.app` container's padding). White-on-navy partner logos sit directly on
+   the band — no per-logo pills, the band IS the contrast surface. */
 .app__footer {
+  margin: 0 -24px -8px;
+  padding: 14px 24px;
+  background: linear-gradient(to right, var(--navy) 0%, #13355a 100%);
+  color: #cbd5e1;
+  border-top: 2px solid var(--amber);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 24px;
+  min-height: 60px;
+  flex-shrink: 0;
+}
+
+.app__footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.app__footer-tagline {
   font-size: 11px;
-  color: var(--gray2);
-  border-top: 1px solid var(--rule);
-  padding: 8px 0;
-  flex-wrap: wrap;
-}
-
-.app__footer-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.app__footer-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.app__footer-credit strong {
-  color: var(--navy);
-  font-weight: 600;
-}
-
-.app__footer-sep {
-  color: var(--gray3);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--amber);
 }
 
 .app__footer-data {
-  color: var(--gray2);
+  font-size: 12px;
+  font-weight: 500;
+  color: #e2e8f0;
 }
 
-.app__footer-link {
-  background: none;
-  border: none;
-  padding: 0;
-  font-size: inherit;
-  font-family: inherit;
-  color: var(--navy);
+.app__footer-partners {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.app__footer-partners-label {
+  font-size: 10.5px;
   font-weight: 600;
-  cursor: pointer;
-  text-decoration: underline;
-  text-decoration-color: var(--rule);
-  text-underline-offset: 2px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
 }
 
-.app__footer-link:hover {
-  text-decoration-color: var(--navy);
+.app__footer-partners-logos {
+  display: flex;
+  align-items: center;
+  gap: 22px;
 }
 
-.app__footer-link:focus-visible {
+.app__footer-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+}
+
+.app__footer-logo:hover {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+.app__footer-logo:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--amber);
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+.app__footer-logo-img {
+  display: block;
+  height: 26px;
+  width: auto;
+}
+
+/* Stack the two blocks vertically on narrow viewports so the partner logos
+   don't get squeezed against the brand block. */
+@media (max-width: 820px) {
+  .app__footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 20px;
+  }
+  .app__footer-partners {
+    align-self: stretch;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
 }
 
 .app__logo {
