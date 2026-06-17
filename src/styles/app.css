@@ -43,41 +43,51 @@ body, #root {
   gap: 10px;
 }
 
-/* Header */
+/* ============== Header / Navbar — stakeholder edition ==============
+   Clean white band with a 2px amber rule at the bottom that mirrors the
+   footer's top rule, framing the chart area between two symmetric brand
+   accents. Sections (brand / nav, context, controls) sit in a single row
+   with calm hierarchy: brand mark (colored globe) on the left, hairline
+   divider, product title with a refined version chip, underline-style
+   tabs, a quiet centered context strip, and utilitarian session
+   controls on the right. */
 .app__header {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--rule);
+  align-items: center;
+  gap: 20px;
+  padding: 14px 4px;
+  border-bottom: 2px solid var(--amber);
+  min-height: 64px;
 }
 
 .app__title {
   margin: 0;
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 700;
   color: var(--navy);
-  letter-spacing: -0.01em;
+  letter-spacing: -0.014em;
   display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
 }
 
-/* "v1" version pill — sits inline next to the title to mark this artifact's vintage. */
+/* Refined version chip — amber outline with a faint amber tint, no longer a
+   "pill on paper" — reads as a typography mark on the title, not a button. */
 .app__version {
-  display: inline-block;
-  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: lowercase;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--amber);
-  background: var(--paper);
-  border: 1px solid var(--rule);
+  background: rgba(192, 138, 62, 0.08);
+  border: 1px solid rgba(192, 138, 62, 0.35);
   border-radius: 3px;
-  padding: 1px 5px;
-  vertical-align: middle;
-  position: relative;
-  top: -2px;
+  padding: 2px 6px;
+  line-height: 1;
 }
 
 .app__subtitle {
@@ -87,7 +97,6 @@ body, #root {
   font-style: italic;
 }
 
-/* Subtle hint next to the subtitle pointing users at the chart hover. */
 .app__hint {
   color: var(--gray3);
   font-style: italic;
@@ -96,52 +105,69 @@ body, #root {
 .app__header-left {
   display: flex;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 12px;
+  /* No flex-wrap — keep brand + title + tabs locked in a single row even
+     on narrow viewports; the context strip and right controls can hide
+     gracefully via the existing media queries. */
 }
 
-/* ---------- Header brand (Teal Insights full logo) ----------
-   Navy pill at the top-left holding the full Teal Insights logo (globe +
-   wordmark) — matches the footer treatment so the same mark anchors both
-   ends of the page. */
+/* ---------- Header brand (Teal Insights globe mark) ----------
+   Just the colored low-poly globe portion of the Teal Insights logo —
+   the wordmark is redundant with the product title to its right. Sits
+   directly on the white navbar background (no pill), separated from
+   the title by a hairline divider. Links to the LinkedIn page. */
 .app__brand {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background: var(--navy);
-  border-radius: 6px;
-  padding: 5px 12px;
-  min-height: 36px;
-  transition: background 120ms ease;
+  text-decoration: none;
+  transition: opacity 120ms ease, transform 120ms ease;
 }
 
 .app__brand:hover {
-  background: #1a3550;
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+.app__brand:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 4px;
 }
 
 .app__brand-mark {
   display: block;
-  height: 24px;
+  height: 34px;
   width: auto;
+}
+
+/* Hairline vertical rule separating the brand mark from the product
+   identity — the visual cue that says "these belong together but
+   represent two different things." */
+.app__brand-divider {
+  display: inline-block;
+  width: 1px;
+  height: 28px;
+  background: var(--rule);
+  margin: 0 4px;
 }
 
 .app__header-right {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
-/* ---------- Header context strip — fills the empty middle of the navbar ----------
-   One-line "what this tool is" description with a Wayback link to the FT
-   visualizer. Sits between .app__header-left (brand + title + tabs) and
-   .app__header-right (country picker + reset). On the tool view only;
-   hidden on the methodology tab (which is itself the context surface). */
+/* ---------- Header context strip — fills the middle of the navbar ----------
+   Calm muted gray, italicised to read as editorial subtitling rather than
+   primary copy. Inline Wayback link to the FT visualizer is the only
+   interactive element. */
 .app__header-context {
   flex: 1;
-  margin: 0 16px;
+  margin: 0;
   font-size: 12.5px;
   line-height: 1.4;
   color: var(--gray2);
+  font-style: italic;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
@@ -151,13 +177,15 @@ body, #root {
 .app__header-context a {
   color: var(--navy);
   font-weight: 600;
+  font-style: normal;
   text-decoration: underline;
   text-decoration-color: var(--rule);
   text-underline-offset: 2px;
 }
 
 .app__header-context a:hover {
-  text-decoration-color: var(--navy);
+  text-decoration-color: var(--amber);
+  color: var(--amber);
 }
 
 /* On narrow viewports the navbar gets too crowded — hide the context strip
@@ -173,13 +201,22 @@ body, #root {
   border: 1px solid var(--rule);
   color: var(--navy);
   padding: 6px 12px;
-  font-size: 13px;
+  font-size: 12.5px;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 5px;
+  transition: border-color 120ms ease, background 120ms ease;
+  white-space: nowrap;
 }
 
 .app__reset:hover {
   border-color: var(--navy);
+  background: var(--paper);
+}
+
+.app__reset:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
 }
 
 /* ============== Two-column layout ============== */
@@ -1275,48 +1312,52 @@ a.toolkit-switcher__item:hover {
   box-shadow: 0 0 0 2px var(--amber);
 }
 
-/* ---------- Tab strip — pills inline with the title in the header ---------- */
+/* ---------- Tab strip — underline-style, inline with the title ----------
+   No pill container, no background fills. Tabs read as navigation rather
+   than buttons: just text with a 2px underline that turns amber on the
+   active tab and on hover. The clean underline aesthetic matches premium
+   product navbars (Stripe, Linear, Mercury) and lets the chart stay
+   the visual hero. */
 .app__tabs {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 2px;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
+  gap: 8px;
+  margin-left: 4px;
 }
 
 .app__tab {
   appearance: none;
   background: transparent;
   border: none;
-  padding: 5px 12px;
-  font-size: 12.5px;
+  padding: 8px 4px;
+  font-size: 13px;
   font-weight: 600;
   color: var(--gray2);
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   cursor: pointer;
-  border-radius: 4px;
-  transition: color 120ms ease, background 120ms ease;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease;
+  position: relative;
 }
 
 .app__tab:hover {
   color: var(--navy);
+  border-bottom-color: rgba(192, 138, 62, 0.35);
 }
 
 .app__tab--active {
-  color: white;
-  background: var(--navy);
+  color: var(--navy);
+  border-bottom-color: var(--amber);
 }
 
 .app__tab--active:hover {
-  color: white;
-  background: #1a3550;
+  border-bottom-color: var(--amber);
 }
 
 .app__tab:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 2px;
 }
 
 /* ---------- View mode: methodology releases the viewport lock ----------
