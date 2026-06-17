@@ -123,7 +123,7 @@ function buildWeoBaselineResult(country: CountryState): RecomputeResult {
     decomposition: [],
     peak,
     endOfHorizon,
-    fanBands: { ci95: [], ci90: [] }, // FanChart uses result.fanBands, not baseline's.
+    fanBands: { innerBand: [], outerBand: [] }, // FanChart uses result.fanBands, not baseline's.
     methodology: 'fc2012',
   };
 }

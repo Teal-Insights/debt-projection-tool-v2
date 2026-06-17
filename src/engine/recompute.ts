@@ -22,17 +22,31 @@
  */
 
 import type {
+  CountryState,
   FanBand,
   RecomputeInput,
   RecomputeResult,
   YearDecomposition,
+  YearlySliders,
 } from '../types';
 
 const PCT_TO_DEC = 0.01;
 
-/** Standard normal z-scores for two-sided confidence intervals. */
-const Z_95 = 1.96;
-const Z_90 = 1.645;
+/**
+ * Stress magnitudes for the two fan bands. Sustained adverse / favorable
+ * shifts (in percentage points) applied each year of the projection to the
+ * three core drivers — real GDP growth (g), effective real interest rate (r),
+ * and primary balance (pb). Conventional DSA stress sizes; large enough to
+ * be informative without dominating the chart.
+ *
+ * - INNER (moderate stress): ±1pp on g and r, ±1% of GDP on pb
+ * - OUTER (severe stress):   ±2pp on g and r, ±2% of GDP on pb
+ *
+ * Sign convention: in the "adverse" direction, g goes DOWN, r goes UP, and
+ * pb goes DOWN — all three push debt upward. "Favorable" is the mirror.
+ */
+const STRESS_INNER = { g: 1.0, r: 1.0, pb: 1.0 } as const;
+const STRESS_OUTER = { g: 2.0, r: 2.0, pb: 2.0 } as const;
 
 export function recompute(input: RecomputeInput): RecomputeResult {
   const { country, sliders } = input;
@@ -121,40 +135,73 @@ export function recompute(input: RecomputeInput): RecomputeResult {
   );
   const endOfHorizon = projected[projected.length - 1];
 
-  // Fan bands: 95% and 90% confidence intervals, anchored at the last historical
-  // year (baselineYear − 1) with zero width, widening across the projection.
-  // Width grows as σ × √(years forward from the anchor) — random-walk widening.
-  // Placeholder calibration: σ derived from the historical debt-to-GDP series.
-  const sigmaPerStep = historicalStdDev(historical.map(p => p.debtPct));
-
-  const anchorPoint = { year: anchorYear, debtPct: country.startingDebtPct };
-  const fanPoints = [anchorPoint, ...projected];
-
-  // Fan-band lower bounds are floored at 0: a confidence band on debt-to-GDP
-  // shouldn't dip into negative territory (debt cannot be negative as a stock).
-  const ci95: FanBand = fanPoints.map((p, idx) => {
-    const sigma_t = sigmaPerStep * Math.sqrt(idx);
-    return {
-      year: p.year,
-      lower: Math.max(0, p.debtPct - Z_95 * sigma_t),
-      upper: p.debtPct + Z_95 * sigma_t,
-    };
+  // Fan bands: deterministic stress envelope, anchored at the last historical
+  // year (baselineYear − 1) with zero width, growing through the projection.
+  //
+  // METHODOLOGY. The identity is re-run on WEO's own baseline inputs
+  // (country.yearlyDefaults) — once unshifted, and four times with adverse /
+  // favorable shifts simultaneously applied to g, r, and pb at every projection
+  // year. The deltas between the shifted runs and the baseline run are the
+  // per-year band widths; we then apply those widths as parallel shifts to
+  // the user's central path. As the user moves sliders, the central line
+  // moves and the bands ride with it — the WIDTH between band and central is
+  // invariant to the user's scenario. This mirrors how the FT 2014 visualisation
+  // renders its precomputed quantile bands (additive parallel shifts).
+  //
+  // Bands fall back to widths computed from the user's sliders if a country
+  // lacks yearlyDefaults (none in v2's filtered dataset, but defensive).
+  const baselineSliders: YearlySliders = country.yearlyDefaults ?? sliders;
+  const baseCentral = runShockedPath(country, baselineSliders, horizonYears);
+  const adverseInner = runShockedPath(country, baselineSliders, horizonYears, {
+    g: -STRESS_INNER.g, r: +STRESS_INNER.r, pb: -STRESS_INNER.pb,
   });
-  const ci90: FanBand = fanPoints.map((p, idx) => {
-    const sigma_t = sigmaPerStep * Math.sqrt(idx);
-    return {
-      year: p.year,
-      lower: Math.max(0, p.debtPct - Z_90 * sigma_t),
-      upper: p.debtPct + Z_90 * sigma_t,
-    };
+  const favorableInner = runShockedPath(country, baselineSliders, horizonYears, {
+    g: +STRESS_INNER.g, r: -STRESS_INNER.r, pb: +STRESS_INNER.pb,
   });
+  const adverseOuter = runShockedPath(country, baselineSliders, horizonYears, {
+    g: -STRESS_OUTER.g, r: +STRESS_OUTER.r, pb: -STRESS_OUTER.pb,
+  });
+  const favorableOuter = runShockedPath(country, baselineSliders, horizonYears, {
+    g: +STRESS_OUTER.g, r: -STRESS_OUTER.r, pb: +STRESS_OUTER.pb,
+  });
+
+  // Per-year widths (clamped non-negative — an adverse shock can rarely flip
+  // sign for a degenerate calibration, so be defensive).
+  const widthUpInner = adverseInner.map((d, i) => Math.max(0, d - baseCentral[i]));
+  const widthDnInner = baseCentral.map((d, i) => Math.max(0, d - favorableInner[i]));
+  const widthUpOuter = adverseOuter.map((d, i) => Math.max(0, d - baseCentral[i]));
+  const widthDnOuter = baseCentral.map((d, i) => Math.max(0, d - favorableOuter[i]));
+
+  // Anchor (year baselineYear − 1) has zero width by construction; the bands
+  // open from the last historical point and fan out as the projection runs.
+  const anchorBand = {
+    year: anchorYear,
+    lower: country.startingDebtPct,
+    upper: country.startingDebtPct,
+  };
+  const innerBand: FanBand = [
+    anchorBand,
+    ...projected.map((p, i) => ({
+      year: p.year,
+      lower: Math.max(0, p.debtPct - widthDnInner[i]),
+      upper: p.debtPct + widthUpInner[i],
+    })),
+  ];
+  const outerBand: FanBand = [
+    anchorBand,
+    ...projected.map((p, i) => ({
+      year: p.year,
+      lower: Math.max(0, p.debtPct - widthDnOuter[i]),
+      upper: p.debtPct + widthUpOuter[i],
+    })),
+  ];
 
   return {
     path,
     decomposition,
     peak,
     endOfHorizon,
-    fanBands: { ci95, ci90 },
+    fanBands: { innerBand, outerBand },
     methodology,
   };
 }
@@ -167,11 +214,36 @@ function readYear(arr: number[], i: number): number {
   return arr[i];
 }
 
-/** Sample standard deviation (n−1 denominator). */
-function historicalStdDev(values: number[]): number {
-  if (values.length < 2) return 0;
-  const mean = values.reduce((a, b) => a + b, 0) / values.length;
-  const sqDiffs = values.map(v => (v - mean) ** 2);
-  const variance = sqDiffs.reduce((a, b) => a + b, 0) / (values.length - 1);
-  return Math.sqrt(variance);
+/**
+ * Run the identity forward `horizonYears` steps from `country.startingDebtPct`,
+ * applying constant per-year shifts to g, r, and pb on top of the supplied
+ * slider arrays. Used to compute the four stressed paths whose deltas from
+ * the unshifted baseline form the fan-band widths.
+ *
+ * Returns the projected debt-to-GDP path only (year metadata is reconstructed
+ * by the caller from baselineYear).
+ */
+function runShockedPath(
+  country: CountryState,
+  sliders: YearlySliders,
+  horizonYears: number,
+  shifts: { g: number; r: number; pb: number } = { g: 0, r: 0, pb: 0 },
+): number[] {
+  const out: number[] = [];
+  let dPrev = country.startingDebtPct;
+  for (let i = 0; i < horizonYears; i += 1) {
+    const r = (readYear(sliders.realInterestRate, i) + shifts.r) * PCT_TO_DEC;
+    const g = (readYear(sliders.realGdpGrowth, i) + shifts.g) * PCT_TO_DEC;
+    const z = readYear(sliders.realFxAppreciation, i) * PCT_TO_DEC;
+    const pb = readYear(sliders.primaryBalance, i) + shifts.pb;
+    const sPrev =
+      (i === 0
+        ? (country.historicalFcuShare ?? country.defaults.fcuShare)
+        : readYear(sliders.fcuShare, i - 1)) * PCT_TO_DEC;
+    const seesaw = (1 + r) / (1 + g);
+    const fxMult = (1 - sPrev) + sPrev / (1 + z);
+    dPrev = dPrev * seesaw * fxMult - pb;
+    out.push(dPrev);
+  }
+  return out;
 }

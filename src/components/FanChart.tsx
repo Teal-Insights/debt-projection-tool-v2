@@ -17,8 +17,8 @@ const MARGIN = { top: 36, right: 56, bottom: 36, left: 48 };
 const HIST_COLOR = '#1f2937';     // dark slate — historical (past, neutral)
 const BASELINE_COLOR = '#3b82f6'; // sky blue — baseline (WEO defaults)
 const USER_COLOR = '#c08a3e';     // amber — user scenario
-const CI95_FILL = '#dfe4ec';
-const CI90_FILL = '#c2cad6';
+const OUTER_BAND_FILL = '#dfe4ec'; // wider envelope — paler
+const INNER_BAND_FILL = '#c2cad6'; // tighter envelope — darker
 
 export function FanChart({ result, baselineResult, country }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -126,17 +126,17 @@ export function FanChart({ result, baselineResult, country }: Props) {
       .curve(d3.curveMonotoneX);
 
     g.append('path')
-      .datum(result.fanBands.ci95)
-      .attr('class', 'fan fan--ci95')
+      .datum(result.fanBands.outerBand)
+      .attr('class', 'fan fan--outer')
       .attr('d', areaGen)
-      .attr('fill', CI95_FILL)
+      .attr('fill', OUTER_BAND_FILL)
       .attr('stroke', 'none');
 
     g.append('path')
-      .datum(result.fanBands.ci90)
-      .attr('class', 'fan fan--ci90')
+      .datum(result.fanBands.innerBand)
+      .attr('class', 'fan fan--inner')
       .attr('d', areaGen)
-      .attr('fill', CI90_FILL)
+      .attr('fill', INNER_BAND_FILL)
       .attr('stroke', 'none');
 
     // ---------- Lines ----------
@@ -404,16 +404,16 @@ export function FanChart({ result, baselineResult, country }: Props) {
         <span className="fan-chart__legend-item">
           <span
             className="fan-chart__legend-fill"
-            style={{ background: CI95_FILL }}
+            style={{ background: OUTER_BAND_FILL }}
           />
-          Illustrative range (95%)
+          Severe stress (±2 pp)
         </span>
         <span className="fan-chart__legend-item">
           <span
             className="fan-chart__legend-fill"
-            style={{ background: CI90_FILL }}
+            style={{ background: INNER_BAND_FILL }}
           />
-          Illustrative range (90%)
+          Moderate stress (±1 pp)
         </span>
       </div>
       <svg ref={svgRef} className="fan-chart__svg" />

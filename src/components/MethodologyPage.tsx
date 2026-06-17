@@ -343,13 +343,23 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             manually.
           </li>
           <li>
-            <strong>Fan bands are illustrative, not stochastic-VCV.</strong>{' '}
-            For each country we compute σ once from the historical debt-to-GDP
-            series, then draw bands as <code>z·σ·√t</code> around the
-            projection — a parametric envelope, not a Monte Carlo. The legend
-            calls these "Illustrative range" precisely because they aren't
-            statistically calibrated. A stochastic-VCV rebuild per TN 2021/005
-            §VI.E is queued for a future iteration.
+            <strong>Fan bands are a deterministic stress envelope, not a
+            stochastic-VCV fan chart.</strong> Two bands surround the projection:
+            a "moderate stress" inner band and a "severe stress" outer band.
+            Each is built by re-running the identity on WEO's own baseline
+            inputs (<InlineMath tex="g_t" />, <InlineMath tex="r_t" />,{' '}
+            <InlineMath tex="pb_t" />) with sustained shifts applied every
+            projection year — ±1 percentage point each for the moderate band,
+            ±2 pp for the severe band, in the direction that pushes debt up
+            (worse <InlineMath tex="g" />, higher <InlineMath tex="r" />, lower{' '}
+            <InlineMath tex="pb" />) and the mirror direction for the lower
+            edge. The deltas between the stressed runs and the WEO baseline
+            run become the per-year band widths, which we then apply as
+            <em> parallel shifts</em> to the user's current central path. This
+            mirrors the way the FT 2014 visualisation renders its (offline,
+            quantile-based) bands — width is invariant to slider state, the
+            band rides with the central line. A full stochastic-VCV rebuild
+            per TN 2021/005 §VI.E remains queued for a future iteration.
           </li>
           <li>
             <strong>v2 user defaults are year-varying.</strong> Each of g, r,
