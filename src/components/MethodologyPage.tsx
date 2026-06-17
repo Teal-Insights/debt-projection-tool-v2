@@ -16,6 +16,53 @@ interface Author {
   email: string;
 }
 
+/**
+ * Inline SVG icons for the author contact links. Simple geometric primitives
+ * — a stroked envelope for email and a generic "in"-style square for the
+ * LinkedIn link. Sized via the parent's font-size + currentColor so they
+ * inherit theme colours and scale with text.
+ */
+function LinkedInIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="2" y="2" width="20" height="20" rx="3" fill="currentColor" />
+      <rect x="6" y="10" width="2.6" height="8" fill="white" />
+      <circle cx="7.3" cy="7" r="1.4" fill="white" />
+      <path
+        d="M11 18v-8h2.5v1.1h.04c.35-.62 1.2-1.27 2.46-1.27 2.63 0 3.12 1.6 3.12 3.7V18h-2.6v-3.7c0-.88-.02-2-1.25-2-1.25 0-1.44.94-1.44 1.93V18H11z"
+        fill="white"
+      />
+    </svg>
+  );
+}
+
+function EmailIcon() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <rect x="2.5" y="4.5" width="19" height="15" rx="2.5" />
+      <path d="m3 6 9 6.5L21 6" />
+    </svg>
+  );
+}
+
 const AUTHORS: Author[] = [
   {
     name: 'Reuben Opondo',
@@ -244,16 +291,18 @@ export function MethodologyPage({ onReturnToTool }: Props) {
                       rel="noopener noreferrer"
                       className="methodology-page__author-link"
                       aria-label={`${author.name} on LinkedIn`}
+                      title="LinkedIn"
                     >
-                      LinkedIn
+                      <LinkedInIcon />
                     </a>
                   )}
                   <a
                     href={`mailto:${author.email}`}
                     className="methodology-page__author-link"
                     aria-label={`Email ${author.name}`}
+                    title="Email"
                   >
-                    Email
+                    <EmailIcon />
                   </a>
                 </span>
               </figcaption>
