@@ -831,7 +831,45 @@ a.toolkit-switcher__item:hover {
   flex-shrink: 0;
 }
 
+/* LEFT block — Teal Insights is the maker. Logo + tagline + dataset
+   attribution sit together as the primary brand identity. */
 .app__footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.app__footer-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  transition: opacity 120ms ease, transform 120ms ease;
+  /* Subtle separator between the TI mark and the tagline stack — a
+     hairline-thick vertical rule made with a right border on the anchor,
+     adjusted via padding. */
+  padding-right: 14px;
+  border-right: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.app__footer-brand-logo:hover {
+  opacity: 0.82;
+  transform: translateY(-1px);
+}
+
+.app__footer-brand-logo:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 4px;
+}
+
+.app__footer-brand-img {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+
+.app__footer-brand-meta {
   display: flex;
   flex-direction: column;
   gap: 3px;
@@ -852,14 +890,16 @@ a.toolkit-switcher__item:hover {
   color: #e2e8f0;
 }
 
-.app__footer-partners {
+/* RIGHT block — Nature Finance, the partner. Eyebrow + smaller logo;
+   smaller intentionally to reinforce maker > partner hierarchy. */
+.app__footer-partnership {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 14px;
   min-width: 0;
 }
 
-.app__footer-partners-label {
+.app__footer-partnership-label {
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.12em;
@@ -867,38 +907,32 @@ a.toolkit-switcher__item:hover {
   color: #94a3b8;
 }
 
-.app__footer-partners-logos {
-  display: flex;
-  align-items: center;
-  gap: 22px;
-}
-
-.app__footer-logo {
+.app__footer-partnership-logo {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   transition: opacity 120ms ease, transform 120ms ease;
 }
 
-.app__footer-logo:hover {
+.app__footer-partnership-logo:hover {
   opacity: 0.82;
   transform: translateY(-1px);
 }
 
-.app__footer-logo:focus-visible {
+.app__footer-partnership-logo:focus-visible {
   outline: none;
   box-shadow: 0 0 0 2px var(--amber);
   border-radius: 4px;
 }
 
-.app__footer-logo-img {
+.app__footer-partnership-img {
   display: block;
-  height: 26px;
+  height: 22px;
   width: auto;
 }
 
-/* Stack the two blocks vertically on narrow viewports so the partner logos
-   don't get squeezed against the brand block. */
+/* Stack the two blocks vertically on narrow viewports so the brand and
+   partnership don't squeeze each other. */
 @media (max-width: 820px) {
   .app__footer {
     flex-direction: column;
@@ -906,10 +940,14 @@ a.toolkit-switcher__item:hover {
     gap: 14px;
     padding: 14px 20px;
   }
-  .app__footer-partners {
+  .app__footer-partnership {
     align-self: stretch;
     justify-content: flex-end;
     flex-wrap: wrap;
+  }
+  .app__footer-brand-logo {
+    border-right: none;
+    padding-right: 0;
   }
 }
 
