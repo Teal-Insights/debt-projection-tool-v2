@@ -17,10 +17,14 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+html {
+  height: 100%;
+}
+
+body, #root {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100%;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   color: var(--ink);
   background: var(--bg);
@@ -91,7 +95,9 @@ html, body, #root {
 
 .app__header-left {
   display: flex;
-  align-items: baseline;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
 }
 
 .app__header-right {
@@ -1023,28 +1029,29 @@ a.toolkit-switcher__item:hover {
   color: var(--gray2);
 }
 
-/* ---------- Tab strip (Tool / Methodology) ---------- */
+/* ---------- Tab strip — pills inline with the title in the header ---------- */
 .app__tabs {
-  display: flex;
-  gap: 0;
-  padding: 0 20px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--rule);
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
 }
 
 .app__tab {
   appearance: none;
-  background: none;
+  background: transparent;
   border: none;
-  padding: 12px 18px;
-  font-size: 13px;
+  padding: 5px 12px;
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--gray2);
   letter-spacing: 0.02em;
   cursor: pointer;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -1px; /* overlap the container's border-bottom so the active underline replaces it */
-  transition: color 120ms ease, border-color 120ms ease;
+  border-radius: 4px;
+  transition: color 120ms ease, background 120ms ease;
 }
 
 .app__tab:hover {
@@ -1052,28 +1059,48 @@ a.toolkit-switcher__item:hover {
 }
 
 .app__tab--active {
-  color: var(--navy);
-  border-bottom-color: var(--amber);
+  color: white;
+  background: var(--navy);
+}
+
+.app__tab--active:hover {
+  color: white;
+  background: #1a3550;
 }
 
 .app__tab:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px var(--amber) inset;
-  border-radius: 2px;
+  box-shadow: 0 0 0 2px var(--amber);
 }
 
-/* ---------- Footer logo: dark container for Teal Insights SVG ---------- */
-.app__logo--teal-bg {
+/* ---------- View mode: methodology releases the viewport lock ----------
+   .app is normally height:100vh + overflow:hidden so the chart and slider
+   columns can use the remaining viewport precisely. The methodology view is
+   long-form content and MUST scroll — so this modifier swaps to auto height
+   and lets the page scroll naturally. */
+.app--methodology {
+  height: auto;
+  max-height: none;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+/* ---------- Footer logos: dark container for white-on-transparent SVGs ----------
+   Both Teal Insights and Nature Finance ship as all-white SVGs (designed for
+   placement on dark backgrounds). A navy pill restores contrast and gives
+   each brand a small, equal footprint in the footer. */
+.app__logo--dark-bg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--navy);
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 6px;
   min-height: 36px;
+  transition: background 120ms ease;
 }
 
-.app__logo--teal-bg:hover {
+.app__logo--dark-bg:hover {
   background: #1a3550;
 }
 

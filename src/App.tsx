@@ -184,7 +184,7 @@ export default function App() {
   const showTool = view === 'tool';
 
   return (
-    <div className="app">
+    <div className={'app' + (showTool ? '' : ' app--methodology')}>
       <header className="app__header">
         <div className="app__header-left">
           <h1 className="app__title">
@@ -192,6 +192,33 @@ export default function App() {
             <span className="app__version">v2</span>
           </h1>
           <ToolkitSwitcher current="v2" />
+          {/* Tab strip lives inline with the title — horizontal primary nav,
+              not a separate row. Tool / Methodology are siblings here, not a
+              page + modal. */}
+          <nav className="app__tabs" role="tablist" aria-label="Sections">
+            <button
+              type="button"
+              role="tab"
+              aria-selected={showTool}
+              className={
+                'app__tab' + (showTool ? ' app__tab--active' : '')
+              }
+              onClick={() => setView('tool')}
+            >
+              Tool
+            </button>
+            <button
+              type="button"
+              role="tab"
+              aria-selected={!showTool}
+              className={
+                'app__tab' + (!showTool ? ' app__tab--active' : '')
+              }
+              onClick={() => setView('methodology')}
+            >
+              Methodology
+            </button>
+          </nav>
         </div>
         {showTool && (
           <div className="app__header-right">
@@ -206,34 +233,6 @@ export default function App() {
           </div>
         )}
       </header>
-
-      {/* Tab strip — primary navigation between the tool and the methodology
-          read. Sits directly under the header so the relationship between the
-          two views is unambiguous. */}
-      <nav className="app__tabs" role="tablist" aria-label="Sections">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={showTool}
-          className={
-            'app__tab' + (showTool ? ' app__tab--active' : '')
-          }
-          onClick={() => setView('tool')}
-        >
-          Tool
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={!showTool}
-          className={
-            'app__tab' + (!showTool ? ' app__tab--active' : '')
-          }
-          onClick={() => setView('methodology')}
-        >
-          Methodology
-        </button>
-      </nav>
 
       {showTool ? (
         <>
