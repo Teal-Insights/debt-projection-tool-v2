@@ -972,6 +972,44 @@ a.toolkit-switcher__item:hover {
   overflow-x: auto;
 }
 
+/* KaTeX block for the debt-accumulation identity. KaTeX brings its own
+   webfonts via katex.min.css; this rule just frames the equation in a
+   paper-coloured card and centers it. */
+.methodology-page__math {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin: 12px 0 16px;
+  overflow-x: auto;
+  font-size: 16px;
+  color: var(--ink);
+}
+
+.methodology-page__math--inline {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+.methodology-page__math .katex-display {
+  margin: 0;
+}
+
+/* Variable-definition list under the equation: a touch more breathing
+   room between entries so each definition lands cleanly. */
+.methodology-page__defs li {
+  margin-bottom: 10px;
+}
+
+.methodology-page__defs li:last-child {
+  margin-bottom: 0;
+}
+
 .methodology-page__footer {
   margin-top: 28px;
   padding-top: 16px;

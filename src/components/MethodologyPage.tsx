@@ -1,5 +1,52 @@
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 import reubenPhoto from '../assets/profiles/reuben_ti.jpeg';
 import ltePhoto from '../assets/profiles/teal_ti.jpeg';
+
+/**
+ * Render a TeX expression in display mode using KaTeX. The output is plain
+ * HTML so it inherits the surrounding font weight and colour cleanly, and
+ * KaTeX's stylesheet ships its own webfonts via `katex.min.css`.
+ */
+function BlockMath({ tex }: { tex: string }) {
+  const html = katex.renderToString(tex, {
+    displayMode: true,
+    throwOnError: false,
+    strict: 'ignore',
+  });
+  return (
+    <div
+      className="methodology-page__math"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
+
+function InlineMath({ tex }: { tex: string }) {
+  const html = katex.renderToString(tex, {
+    displayMode: false,
+    throwOnError: false,
+    strict: 'ignore',
+  });
+  return (
+    <span
+      className="methodology-page__math methodology-page__math--inline"
+      // eslint-disable-next-line react/no-danger
+      dangerouslySetInnerHTML={{ __html: html }}
+    />
+  );
+}
+
+/**
+ * The IMF debt-accumulation identity (2012 real-terms shorthand, per
+ * Technical Notes 2021/005 §III). Each term is defined in the variable
+ * list below the equation.
+ */
+const DEBT_IDENTITY_TEX = String.raw`
+  d_t \;=\; d_{t-1}\,\frac{1 + r_t}{1 + g_t}\,
+  \left[(1 - s_{t-1}) + \frac{s_{t-1}}{1 + z_t}\right] \;-\; pb_t
+`;
 
 interface Props {
   /** Switch back to the tool view (called by the "Back to the tool" button). */
@@ -146,36 +193,62 @@ export function MethodologyPage({ onReturnToTool }: Props) {
           <em>Technical Notes 2021/005</em>, Section III, in its 2012
           real-terms shorthand:
         </p>
-        <pre className="methodology-page__formula">
-          d_t = d_(t-1) × (1 + r_t) / (1 + g_t) × ((1 − s_(t-1)) + s_(t-1) /
-          (1 + z_t)) − pb_t
-        </pre>
-        <p>Where, in plain language, at year t:</p>
-        <ul>
+        <BlockMath tex={DEBT_IDENTITY_TEX} />
+        <p>Where every symbol is defined as follows:</p>
+        <ul className="methodology-page__defs">
           <li>
-            <code>d</code> — debt-to-GDP, % of GDP
+            <InlineMath tex="t" /> — the year index. Subscripts denote the
+            year a quantity refers to:{' '}
+            <InlineMath tex="t" /> is the projection year being computed,{' '}
+            <InlineMath tex="t-1" /> is the immediately preceding year.
           </li>
           <li>
-            <code>g</code> — real GDP growth rate, %
+            <InlineMath tex="d_t" /> — gross general-government debt at the
+            end of year <InlineMath tex="t" />, expressed as a percentage of
+            nominal GDP (% of GDP). <InlineMath tex="d_{t-1}" /> is the same
+            ratio at the end of the previous year and is the engine's
+            starting point for the period.
           </li>
           <li>
-            <code>r</code> — effective real interest rate on the debt stock, %
+            <InlineMath tex="g_t" /> — real GDP growth rate over year{' '}
+            <InlineMath tex="t" />, in percent. Entered as a decimal in the
+            formula (e.g. 3% = 0.03).
           </li>
           <li>
-            <code>pb</code> — primary budget balance, % of GDP (negative = deficit)
+            <InlineMath tex="r_t" /> — effective real interest rate paid on
+            the outstanding debt stock during year <InlineMath tex="t" />, in
+            percent. "Effective" because it is the weighted average across
+            all instruments in the debt portfolio; "real" because inflation
+            has already been netted out.
           </li>
           <li>
-            <code>z</code> — real exchange-rate appreciation against trading partners, %
+            <InlineMath tex="pb_t" /> — primary budget balance over year{' '}
+            <InlineMath tex="t" />, as a percentage of GDP. Positive values
+            are surpluses (which reduce debt); negative values are deficits
+            (which add to it). The primary balance excludes interest payments
+            on debt — those are captured by <InlineMath tex="r_t" />.
           </li>
           <li>
-            <code>s</code> — share of debt issued in foreign currency, %
+            <InlineMath tex="s_{t-1}" /> — share of total debt that is
+            denominated in foreign currency, measured at the end of year{' '}
+            <InlineMath tex="t-1" /> (the beginning of the period). Used with
+            a one-year lag because revaluation operates on debt that already
+            existed when the period began.
+          </li>
+          <li>
+            <InlineMath tex="z_t" /> — real exchange-rate appreciation
+            against the basket of trading partners over year{' '}
+            <InlineMath tex="t" />, in percent. Positive values are
+            appreciations (which shrink the GDP value of foreign-currency
+            debt); negative values are depreciations (which inflate it).
           </li>
         </ul>
         <p>
-          Debt grows when the effective real interest rate exceeds real GDP
-          growth (the "r − g" channel); shrinks when the primary balance is in
-          surplus; and is revalued by real exchange-rate moves through the
-          FCU share.
+          The dynamics fall out of the identity directly: debt grows when the
+          effective real interest rate exceeds real GDP growth (the{' '}
+          <InlineMath tex="r_t - g_t" /> channel); shrinks when the primary
+          balance is in surplus; and is revalued by real exchange-rate moves
+          on the portion of debt held in foreign currency.
         </p>
       </section>
 
