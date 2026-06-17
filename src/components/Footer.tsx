@@ -1,18 +1,18 @@
+import tealInsightsLogo from '../assets/logos/teal_insights_logo_transparent.svg';
+
 interface Props {
-  /** Click handler for the "Methodology" link — opens the methodology view in App.tsx. */
+  /** Click handler for the "Methodology" link — switches App's view to methodology. */
   onOpenMethodology?: () => void;
 }
 
 /**
  * Footer with organisational attribution (Teal Insights + Nature Finance) and
  * author credits (Reuben Opondo + Aniekpeno Ifeh). The "Methodology" link in
- * the footer is one of the two entry points to the methodology page (the
- * other is the description block at the top of the app).
+ * the footer is one of the entry points to the methodology view.
  *
- * Logos are wordmarks rendered in styled type — they read cleanly without
- * needing SVG assets that the orgs may not have supplied yet. Easy to swap
- * for real logos later by replacing the `.app__logo-text` blocks with `<img>`
- * or inline `<svg>` elements.
+ * Teal Insights logo is the real SVG (white text on transparent BG), so we
+ * wrap it in a dark navy pill for legibility. Nature Finance ships as a
+ * styled wordmark until an SVG arrives in `www/logos/`.
  */
 export function Footer({ onOpenMethodology }: Props) {
   return (
@@ -45,15 +45,17 @@ export function Footer({ onOpenMethodology }: Props) {
       </div>
       <div className="app__footer-right">
         <a
-          className="app__logo"
+          className="app__logo app__logo--teal-bg"
           href="https://tealinsights.com"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Teal Insights"
         >
-          <span className="app__logo-text app__logo-text--teal">
-            Teal Insights
-          </span>
+          <img
+            src={tealInsightsLogo}
+            alt="Teal Insights"
+            className="app__logo-img"
+          />
         </a>
         <a
           className="app__logo"

@@ -177,8 +177,11 @@ export default function App() {
 
   const resetSliders = () => setSliders(buildInitialSliders(country));
 
-  // Methodology page visibility. State-driven (no router); modal-style overlay.
-  const [methodologyOpen, setMethodologyOpen] = useState(false);
+  // Top-level navigation. The methodology lives as a sibling view to the tool
+  // (tab-style), not a modal overlay — a stakeholder can deep-link straight to
+  // it later via routing without changing this state machine.
+  const [view, setView] = useState<'tool' | 'methodology'>('tool');
+  const showTool = view === 'tool';
 
   return (
     <div className="app">
@@ -190,128 +193,160 @@ export default function App() {
           </h1>
           <ToolkitSwitcher current="v2" />
         </div>
-        <div className="app__header-right">
-          <CountrySelector
-            countries={COUNTRIES}
-            value={countryIso}
-            onChange={setCountryIso}
-          />
-          <button className="app__reset" type="button" onClick={resetSliders}>
-            ↺ Reset
-          </button>
-        </div>
+        {showTool && (
+          <div className="app__header-right">
+            <CountrySelector
+              countries={COUNTRIES}
+              value={countryIso}
+              onChange={setCountryIso}
+            />
+            <button className="app__reset" type="button" onClick={resetSliders}>
+              ↺ Reset
+            </button>
+          </div>
+        )}
       </header>
 
-      {/* Self-contained context block — visible at first paint so a recipient
-          who lands on the URL by email immediately knows what the tool is. */}
-      <section className="app__intro" aria-label="About this tool">
-        <p className="app__intro-text">
-          A web tool for exploring how sovereign debt-to-GDP evolves under
-          user-set macro assumptions. Replicates the{' '}
-          <a
-            href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            FT 2014 Debt Dynamics Visualizer
-          </a>{' '}
-          with the latest IMF WEO data (April 2026).{' '}
-          <button
-            type="button"
-            className="app__intro-link"
-            onClick={() => setMethodologyOpen(true)}
-          >
-            Read the methodology →
-          </button>
-        </p>
-      </section>
+      {/* Tab strip — primary navigation between the tool and the methodology
+          read. Sits directly under the header so the relationship between the
+          two views is unambiguous. */}
+      <nav className="app__tabs" role="tablist" aria-label="Sections">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={showTool}
+          className={
+            'app__tab' + (showTool ? ' app__tab--active' : '')
+          }
+          onClick={() => setView('tool')}
+        >
+          Tool
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={!showTool}
+          className={
+            'app__tab' + (!showTool ? ' app__tab--active' : '')
+          }
+          onClick={() => setView('methodology')}
+        >
+          Methodology
+        </button>
+      </nav>
 
-      <main className="app__main">
-        {/* LEFT COLUMN — chart on top, three narrative cards below */}
-        <section className="app__left">
-          <div className="app__chart">
-            <FanChart
-              result={result}
-              baselineResult={baselineResult}
-              country={country}
-            />
-          </div>
-          <OutputCards
-            result={result}
-            baselineResult={baselineResult}
-            country={country}
-            sliders={sliders}
-          />
-        </section>
+      {showTool ? (
+        <>
+          {/* Self-contained context block — visible at first paint so a recipient
+              who lands on the URL by email immediately knows what the tool is. */}
+          <section className="app__intro" aria-label="About this tool">
+            <p className="app__intro-text">
+              A web tool for exploring how sovereign debt-to-GDP evolves under
+              user-set macro assumptions. Replicates the{' '}
+              <a
+                href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                FT 2014 Debt Dynamics Visualizer
+              </a>{' '}
+              with the latest IMF WEO data (April 2026).{' '}
+              <button
+                type="button"
+                className="app__intro-link"
+                onClick={() => setView('methodology')}
+              >
+                Read the methodology →
+              </button>
+            </p>
+          </section>
 
-        {/* RIGHT COLUMN — scrollable list of slider cards */}
-        <section className="app__right" aria-label="Inputs (year-by-year)">
-          <h2 className="app__section-title app__section-title--right">
-            Inputs · drag any year
-          </h2>
-          {/* v2 slider min/max match the FT 2014 tool's global bounds, but step
-              is tightened to 0.1 (vs FT's effective integer step) so values
-              display with one decimal place — per the standup recommendation
-              for macroeconomic statistics. */}
-          <SliderRow
-            key={`g-${countryIso}`}
-            label="Real GDP growth rate"
-            years={projectionYears}
-            values={sliders.realGdpGrowth}
-            min={-15}
-            max={15}
-            step={0.1}
-            onChange={(i, v) => updateSlider('realGdpGrowth', i, v)}
-          />
-          <SliderRow
-            key={`r-${countryIso}`}
-            label="Effective real interest rate"
-            years={projectionYears}
-            values={sliders.realInterestRate}
-            min={-10}
-            max={20}
-            step={0.1}
-            onChange={(i, v) => updateSlider('realInterestRate', i, v)}
-          />
-          <SliderRow
-            key={`pb-${countryIso}`}
-            label="Primary budget balance"
-            years={projectionYears}
-            values={sliders.primaryBalance}
-            min={-15}
-            max={15}
-            step={0.1}
-            unit="% of GDP"
-            onChange={(i, v) => updateSlider('primaryBalance', i, v)}
-          />
-          <SliderRow
-            key={`z-${countryIso}`}
-            label="Real exchange rate appreciation"
-            years={projectionYears}
-            values={sliders.realFxAppreciation}
-            min={-50}
-            max={50}
-            step={0.1}
-            onChange={(i, v) => updateSlider('realFxAppreciation', i, v)}
-          />
-          <SliderRow
-            key={`s-${countryIso}`}
-            label="Foreign currency debt share"
-            years={projectionYears}
-            values={sliders.fcuShare}
-            min={0}
-            max={100}
-            step={0.1}
-            onChange={(i, v) => updateSlider('fcuShare', i, v)}
-          />
-        </section>
-      </main>
+          <main className="app__main">
+            {/* LEFT COLUMN — chart on top, three narrative cards below */}
+            <section className="app__left">
+              <div className="app__chart">
+                <FanChart
+                  result={result}
+                  baselineResult={baselineResult}
+                  country={country}
+                />
+              </div>
+              <OutputCards
+                result={result}
+                baselineResult={baselineResult}
+                country={country}
+                sliders={sliders}
+              />
+            </section>
 
-      <Footer onOpenMethodology={() => setMethodologyOpen(true)} />
-
-      {methodologyOpen && (
-        <MethodologyPage onClose={() => setMethodologyOpen(false)} />
+            {/* RIGHT COLUMN — scrollable list of slider cards */}
+            <section className="app__right" aria-label="Inputs (year-by-year)">
+              <h2 className="app__section-title app__section-title--right">
+                Inputs · drag any year
+              </h2>
+              {/* v2 slider min/max match the FT 2014 tool's global bounds, but step
+                  is tightened to 0.1 (vs FT's effective integer step) so values
+                  display with one decimal place — per the standup recommendation
+                  for macroeconomic statistics. */}
+              <SliderRow
+                key={`g-${countryIso}`}
+                label="Real GDP growth rate"
+                years={projectionYears}
+                values={sliders.realGdpGrowth}
+                min={-15}
+                max={15}
+                step={0.1}
+                onChange={(i, v) => updateSlider('realGdpGrowth', i, v)}
+              />
+              <SliderRow
+                key={`r-${countryIso}`}
+                label="Effective real interest rate"
+                years={projectionYears}
+                values={sliders.realInterestRate}
+                min={-10}
+                max={20}
+                step={0.1}
+                onChange={(i, v) => updateSlider('realInterestRate', i, v)}
+              />
+              <SliderRow
+                key={`pb-${countryIso}`}
+                label="Primary budget balance"
+                years={projectionYears}
+                values={sliders.primaryBalance}
+                min={-15}
+                max={15}
+                step={0.1}
+                unit="% of GDP"
+                onChange={(i, v) => updateSlider('primaryBalance', i, v)}
+              />
+              <SliderRow
+                key={`z-${countryIso}`}
+                label="Real exchange rate appreciation"
+                years={projectionYears}
+                values={sliders.realFxAppreciation}
+                min={-50}
+                max={50}
+                step={0.1}
+                onChange={(i, v) => updateSlider('realFxAppreciation', i, v)}
+              />
+              <SliderRow
+                key={`s-${countryIso}`}
+                label="Foreign currency debt share"
+                years={projectionYears}
+                values={sliders.fcuShare}
+                min={0}
+                max={100}
+                step={0.1}
+                onChange={(i, v) => updateSlider('fcuShare', i, v)}
+              />
+            </section>
+          </main>
+        </>
+      ) : (
+        <MethodologyPage onReturnToTool={() => setView('tool')} />
       )}
+
+      <Footer onOpenMethodology={() => setView('methodology')} />
     </div>
   );
 }
