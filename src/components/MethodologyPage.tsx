@@ -1,5 +1,8 @@
 import katex from 'katex';
-import 'katex/dist/katex.min.css';
+// NOTE: KaTeX's stylesheet is loaded from CDN in index.html (not imported
+// via `katex/dist/katex.min.css`) because Vite's import resolver doesn't
+// reliably find the CSS when the dev server is run with a shared/symlinked
+// node_modules tree across the v1 and v2 projects in this repo.
 import reubenPhoto from '../assets/profiles/reuben_ti.jpeg';
 import ltePhoto from '../assets/profiles/teal_ti.jpeg';
 

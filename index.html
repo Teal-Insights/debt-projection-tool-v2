@@ -4,6 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Debt Projection Tool — Version 2</title>
+    <!-- KaTeX stylesheet for the LaTeX-rendered debt-accumulation identity on
+         the Methodology tab. Loaded from CDN so it doesn't depend on
+         node_modules being resolvable from this project's directory (the
+         repo's two projects sometimes share a node_modules tree, and the
+         CSS import path `katex/dist/katex.min.css` doesn't reliably
+         resolve in that setup). Version-pinned to katex 0.16.11. -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <div id="root"></div>
