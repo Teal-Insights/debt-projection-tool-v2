@@ -100,18 +100,18 @@ body, #root {
   flex-wrap: wrap;
 }
 
-/* ---------- Header brand mark (Teal Insights globe) ----------
-   Small navy pill that holds the cropped-globe SVG; sits as the leftmost
-   element of the header, the spot a site logo would normally take. */
+/* ---------- Header brand (Teal Insights full logo) ----------
+   Navy pill at the top-left holding the full Teal Insights logo (globe +
+   wordmark) — matches the footer treatment so the same mark anchors both
+   ends of the page. */
 .app__brand {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: var(--navy);
   border-radius: 6px;
-  padding: 4px 6px;
-  min-height: 32px;
-  min-width: 32px;
+  padding: 5px 12px;
+  min-height: 36px;
   transition: background 120ms ease;
 }
 

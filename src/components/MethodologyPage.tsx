@@ -25,7 +25,7 @@ const AUTHORS: Author[] = [
     email: 'reuben.opondo@tealinsights.com',
   },
   {
-    name: 'Lte Lemery',
+    name: 'Teal Emery',
     org: 'Teal Insights',
     photo: ltePhoto,
     linkedin: 'https://www.linkedin.com/in/ltealemery',
@@ -190,7 +190,7 @@ export function MethodologyPage({ onReturnToTool }: Props) {
         <h2>Credits</h2>
         <p>
           Built by <strong>Reuben Opondo</strong>,{' '}
-          <strong>Lte Lemery</strong>, and{' '}
+          <strong>Teal Emery</strong>, and{' '}
           <strong>Aniekpeno Ifeh</strong> at{' '}
           <a
             href="https://tealinsights.com"

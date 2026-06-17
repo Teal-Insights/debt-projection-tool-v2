@@ -14,7 +14,7 @@ import { FanChart } from './components/FanChart';
 import { OutputCards } from './components/OutputCards';
 import { Footer } from './components/Footer';
 import { MethodologyPage } from './components/MethodologyPage';
-import tealMark from './assets/logos/teal_insights_mark.svg';
+import tealLogo from './assets/logos/teal_insights_logo_transparent.svg';
 
 /**
  * v2 ships the IMF WEO April 2026 dataset. Per-country defaults are sourced
@@ -187,10 +187,9 @@ export default function App() {
     <div className={'app' + (showTool ? '' : ' app--methodology')}>
       <header className="app__header">
         <div className="app__header-left">
-          {/* Teal Insights globe mark — sets the brand right at the top-left,
-              same place a site logo would sit. The mark is a cropped version
-              of the full SVG (just the globe, without the wordmark which is
-              illegible at this size); it links to the LinkedIn company page. */}
+          {/* Teal Insights brand — full logo (globe + "Teal Insights" wordmark)
+              in a navy pill at the top-left, matching the footer treatment.
+              Links to the LinkedIn company page. */}
           <a
             className="app__brand"
             href="https://www.linkedin.com/company/teal-insights/"
@@ -199,7 +198,7 @@ export default function App() {
             aria-label="Teal Insights on LinkedIn"
           >
             <img
-              src={tealMark}
+              src={tealLogo}
               alt="Teal Insights"
               className="app__brand-mark"
             />
@@ -252,30 +251,6 @@ export default function App() {
 
       {showTool ? (
         <>
-          {/* Self-contained context block — visible at first paint so a recipient
-              who lands on the URL by email immediately knows what the tool is. */}
-          <section className="app__intro" aria-label="About this tool">
-            <p className="app__intro-text">
-              A web tool for exploring how sovereign debt-to-GDP evolves under
-              user-set macro assumptions. Replicates the{' '}
-              <a
-                href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                FT 2014 Debt Dynamics Visualizer
-              </a>{' '}
-              with the latest IMF WEO data (April 2026).{' '}
-              <button
-                type="button"
-                className="app__intro-link"
-                onClick={() => setView('methodology')}
-              >
-                Read the methodology →
-              </button>
-            </p>
-          </section>
-
           <main className="app__main">
             {/* LEFT COLUMN — chart on top, three narrative cards below */}
             <section className="app__left">
