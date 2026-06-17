@@ -336,7 +336,7 @@ export default function App() {
         <MethodologyPage onReturnToTool={() => setView('tool')} />
       )}
 
-      <Footer onOpenMethodology={() => setView('methodology')} />
+      <Footer />
     </div>
   );
 }
