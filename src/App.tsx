@@ -236,6 +236,19 @@ export default function App() {
           </nav>
         </div>
         {showTool && (
+          <p className="app__header-context" aria-label="About this tool">
+            Sovereign debt-to-GDP under your own macro assumptions · Based on
+            the{' '}
+            <a
+              href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              FT 2014 Debt Dynamics Visualizer
+            </a>
+          </p>
+        )}
+        {showTool && (
           <div className="app__header-right">
             <CountrySelector
               countries={COUNTRIES}

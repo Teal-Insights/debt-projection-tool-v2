@@ -131,6 +131,43 @@ body, #root {
   gap: 12px;
 }
 
+/* ---------- Header context strip — fills the empty middle of the navbar ----------
+   One-line "what this tool is" description with a Wayback link to the FT
+   visualizer. Sits between .app__header-left (brand + title + tabs) and
+   .app__header-right (country picker + reset). On the tool view only;
+   hidden on the methodology tab (which is itself the context surface). */
+.app__header-context {
+  flex: 1;
+  margin: 0 16px;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--gray2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.app__header-context a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.app__header-context a:hover {
+  text-decoration-color: var(--navy);
+}
+
+/* On narrow viewports the navbar gets too crowded — hide the context strip
+   and rely on the Methodology tab to carry the framing. */
+@media (max-width: 1180px) {
+  .app__header-context {
+    display: none;
+  }
+}
+
 .app__reset {
   background: white;
   border: 1px solid var(--rule);
