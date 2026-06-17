@@ -355,11 +355,7 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             <InlineMath tex="pb" />) and the mirror direction for the lower
             edge. The deltas between the stressed runs and the WEO baseline
             run become the per-year band widths, which we then apply as
-            <em> parallel shifts</em> to the user's current central path. This
-            mirrors the way the FT 2014 visualisation renders its (offline,
-            quantile-based) bands — width is invariant to slider state, the
-            band rides with the central line. A full stochastic-VCV rebuild
-            per TN 2021/005 §VI.E remains queued for a future iteration.
+            <em> parallel shifts</em> to the user's current central path.
           </li>
           <li>
             <strong>v2 user defaults are year-varying.</strong> Each of g, r,
