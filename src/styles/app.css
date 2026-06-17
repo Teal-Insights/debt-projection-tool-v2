@@ -578,3 +578,420 @@ html, body, #root {
     overflow-y: visible;
   }
 }
+
+/* ============================================================================
+ * Part B styling: intro block, toolkit switcher, footer (logos + credits),
+ * methodology page (modal overlay).
+ * ========================================================================== */
+
+/* ---------- Intro block (Issue 01: self-contained context) ---------- */
+.app__intro {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.app__intro-text {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--gray1);
+}
+
+.app__intro-text a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.app__intro-text a:hover {
+  text-decoration-color: var(--navy);
+}
+
+.app__intro-link {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-left: 4px;
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--amber);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app__intro-link:hover,
+.app__intro-link:focus-visible {
+  text-decoration: underline;
+}
+
+.app__intro-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 3px;
+}
+
+/* ---------- Toolkit switcher (Issue 04) ---------- */
+.toolkit-switcher {
+  position: relative;
+  margin-left: 8px;
+}
+
+.toolkit-switcher__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--gray1);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  padding: 2px 9px;
+  cursor: pointer;
+}
+
+.toolkit-switcher__trigger:hover,
+.toolkit-switcher__trigger[aria-expanded='true'] {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.toolkit-switcher__trigger:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+}
+
+.toolkit-switcher__caret {
+  font-size: 9px;
+  color: var(--gray2);
+}
+
+.toolkit-switcher__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 320px;
+  background: white;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(10, 37, 64, 0.10);
+  padding: 10px;
+  z-index: 30;
+}
+
+.toolkit-switcher__intro {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-style: italic;
+  color: var(--gray2);
+  line-height: 1.4;
+}
+
+.toolkit-switcher__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.toolkit-switcher__item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: inherit;
+}
+
+a.toolkit-switcher__item:hover {
+  background: var(--paper);
+}
+
+.toolkit-switcher__item--current {
+  background: rgba(192, 138, 62, 0.08);
+}
+
+.toolkit-switcher__item--disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.toolkit-switcher__label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toolkit-switcher__badge {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--amber);
+  background: white;
+  border: 1px solid var(--amber);
+  border-radius: 8px;
+  padding: 0 5px;
+}
+
+.toolkit-switcher__desc {
+  font-size: 11px;
+  color: var(--gray2);
+  line-height: 1.4;
+}
+
+/* ---------- Footer (Issue 03: logos + credits) — override the lean default ---------- */
+.app__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: 11px;
+  color: var(--gray2);
+  border-top: 1px solid var(--rule);
+  padding: 8px 0;
+  flex-wrap: wrap;
+}
+
+.app__footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.app__footer-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.app__footer-credit strong {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.app__footer-sep {
+  color: var(--gray3);
+}
+
+.app__footer-data {
+  color: var(--gray2);
+}
+
+.app__footer-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-family: inherit;
+  color: var(--navy);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.app__footer-link:hover {
+  text-decoration-color: var(--navy);
+}
+
+.app__footer-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 3px;
+}
+
+.app__logo {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.app__logo-text {
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+
+.app__logo-text--teal {
+  color: white;
+  background: var(--navy);
+}
+
+.app__logo-text--nature {
+  color: var(--navy);
+  border: 1px solid var(--navy);
+  background: white;
+}
+
+.app__logo:hover .app__logo-text {
+  opacity: 0.85;
+}
+
+/* ---------- Methodology page (Issue 02: modal overlay) ---------- */
+.methodology-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 37, 64, 0.45);
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  overflow-y: auto;
+}
+
+.methodology-page {
+  background: white;
+  border-radius: 8px;
+  max-width: 740px;
+  width: 100%;
+  padding: 28px 36px 36px;
+  box-shadow: 0 20px 50px rgba(10, 37, 64, 0.25);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.methodology-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--navy);
+}
+
+.methodology-page__title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.01em;
+}
+
+.methodology-page__close {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  color: var(--gray2);
+  cursor: pointer;
+}
+
+.methodology-page__close:hover {
+  border-color: var(--navy);
+  color: var(--navy);
+}
+
+.methodology-page__close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+}
+
+.methodology-page__section {
+  margin-top: 22px;
+}
+
+.methodology-page__section:first-of-type {
+  margin-top: 0;
+}
+
+.methodology-page__section h2 {
+  margin: 0 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--amber);
+}
+
+.methodology-page__section p {
+  margin: 0 0 10px;
+}
+
+.methodology-page__section ul {
+  margin: 6px 0 12px;
+  padding-left: 20px;
+}
+
+.methodology-page__section li {
+  margin-bottom: 6px;
+}
+
+.methodology-page__section code {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12.5px;
+  background: var(--paper);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+.methodology-page__section a {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+}
+
+.methodology-page__section a:hover {
+  text-decoration-color: var(--navy);
+}
+
+.methodology-page__formula {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin: 8px 0 12px;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.methodology-page__footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  text-align: right;
+}
+
+.methodology-page__close-btn {
+  background: var(--navy);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.methodology-page__close-btn:hover {
+  background: #1a3550;
+}
+
+.methodology-page__close-btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+}

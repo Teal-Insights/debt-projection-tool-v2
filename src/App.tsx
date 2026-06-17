@@ -13,6 +13,8 @@ import { SliderRow } from './components/SliderRow';
 import { FanChart } from './components/FanChart';
 import { OutputCards } from './components/OutputCards';
 import { Footer } from './components/Footer';
+import { MethodologyPage } from './components/MethodologyPage';
+import { ToolkitSwitcher } from './components/ToolkitSwitcher';
 
 /**
  * v2 ships the IMF WEO April 2026 dataset. Per-country defaults are sourced
@@ -175,6 +177,9 @@ export default function App() {
 
   const resetSliders = () => setSliders(buildInitialSliders(country));
 
+  // Methodology page visibility. State-driven (no router); modal-style overlay.
+  const [methodologyOpen, setMethodologyOpen] = useState(false);
+
   return (
     <div className="app">
       <header className="app__header">
@@ -183,6 +188,7 @@ export default function App() {
             Debt Projection Tool
             <span className="app__version">v2</span>
           </h1>
+          <ToolkitSwitcher current="v2" />
         </div>
         <div className="app__header-right">
           <CountrySelector
@@ -195,6 +201,30 @@ export default function App() {
           </button>
         </div>
       </header>
+
+      {/* Self-contained context block — visible at first paint so a recipient
+          who lands on the URL by email immediately knows what the tool is. */}
+      <section className="app__intro" aria-label="About this tool">
+        <p className="app__intro-text">
+          A web tool for exploring how sovereign debt-to-GDP evolves under
+          user-set macro assumptions. Replicates the{' '}
+          <a
+            href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            FT 2014 Debt Dynamics Visualizer
+          </a>{' '}
+          with the latest IMF WEO data (April 2026).{' '}
+          <button
+            type="button"
+            className="app__intro-link"
+            onClick={() => setMethodologyOpen(true)}
+          >
+            Read the methodology →
+          </button>
+        </p>
+      </section>
 
       <main className="app__main">
         {/* LEFT COLUMN — chart on top, three narrative cards below */}
@@ -277,7 +307,11 @@ export default function App() {
         </section>
       </main>
 
-      <Footer />
+      <Footer onOpenMethodology={() => setMethodologyOpen(true)} />
+
+      {methodologyOpen && (
+        <MethodologyPage onClose={() => setMethodologyOpen(false)} />
+      )}
     </div>
   );
 }
