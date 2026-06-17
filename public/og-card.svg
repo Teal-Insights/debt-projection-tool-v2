@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Social card preview for Slack / LinkedIn / X / iMessage etc. Navy
+       backdrop matches the app header pill colour; type echoes the in-app
+       hierarchy (title / subtitle / metadata). 1200×630 is the canonical
+       OpenGraph aspect ratio. -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0a2540"/>
+      <stop offset="100%" stop-color="#13355a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Amber accent rule top-left, echoing the app's amber highlight on
+       the active tab and section headings. -->
+  <rect x="80" y="80" width="56" height="4" fill="#c08a3e"/>
+
+  <!-- Title and subtitle. White for contrast on navy; weight hierarchy
+       mirrors the in-app h1 / lede pairing. -->
+  <text x="80" y="180" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="82" font-weight="800" fill="#ffffff" letter-spacing="-1.5">
+    Debt Projection Tool
+  </text>
+  <text x="80" y="240" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="34" font-weight="600" fill="#c08a3e">
+    v2 · 170 economies · IMF WEO April 2026
+  </text>
+
+  <text x="80" y="340" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="32" font-weight="400" fill="#cbd5e1" letter-spacing="-0.3">
+    Explore how sovereign debt-to-GDP evolves
+  </text>
+  <text x="80" y="384" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="32" font-weight="400" fill="#cbd5e1" letter-spacing="-0.3">
+    under your own macro assumptions.
+  </text>
+
+  <!-- Bottom rule + attribution. Two organisations are credited as in the
+       app footer. -->
+  <line x1="80" y1="510" x2="1120" y2="510" stroke="#1f3d63" stroke-width="1"/>
+
+  <text x="80" y="556" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="22" font-weight="700" fill="#ffffff" letter-spacing="0.5">
+    TEAL INSIGHTS · NATURE FINANCE
+  </text>
+  <text x="80" y="586" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+        font-size="20" font-weight="400" fill="#94a3b8">
+    Replicates the FT 2014 Debt Dynamics Visualizer
+  </text>
+</svg>

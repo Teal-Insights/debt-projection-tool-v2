@@ -1098,6 +1098,11 @@ a.toolkit-switcher__item:hover {
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
+  /* All three author headshots are portrait-oriented with the face in the
+     upper third of the frame. With `object-fit: cover` and a square crop,
+     the default `center center` cuts the face awkwardly; biasing the focal
+     point upward (center 25%) keeps the face fully in the avatar circle. */
+  object-position: center 25%;
   border: 2px solid white;
   box-shadow: 0 1px 3px rgba(10, 37, 64, 0.18);
   flex-shrink: 0;
