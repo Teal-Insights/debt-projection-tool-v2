@@ -1,22 +1,72 @@
-import katex from 'katex';
-// NOTE: KaTeX's stylesheet is loaded from CDN in index.html (not imported
-// via `katex/dist/katex.min.css`) because Vite's import resolver doesn't
-// reliably find the CSS when the dev server is run with a shared/symlinked
-// node_modules tree across the v1 and v2 projects in this repo.
+import { useEffect, useState } from 'react';
 import reubenPhoto from '../assets/profiles/reuben_ti.jpeg';
 import ltePhoto from '../assets/profiles/teal_ti.jpeg';
 
+// KaTeX is loaded entirely from CDN via <link> + <script> tags in index.html
+// (not as an npm import) because v1/v2 share a hoisted node_modules tree in
+// this repo and the `katex` package isn't always resolvable from v2's source
+// files. The global is typed here so we don't need a separate .d.ts.
+declare global {
+  interface Window {
+    katex?: {
+      renderToString: (
+        tex: string,
+        options?: {
+          displayMode?: boolean;
+          throwOnError?: boolean;
+          strict?: 'error' | 'warn' | 'ignore';
+        },
+      ) => string;
+    };
+  }
+}
+
+/** Try to render via window.katex; if the script hasn't loaded yet, poll. */
+function useKatexHtml(tex: string, displayMode: boolean): string {
+  const [html, setHtml] = useState<string>('');
+  useEffect(() => {
+    let cancelled = false;
+    const attempt = () => {
+      if (cancelled) return;
+      const k = window.katex;
+      if (k) {
+        try {
+          const rendered = k.renderToString(tex, {
+            displayMode,
+            throwOnError: false,
+            strict: 'ignore',
+          });
+          if (!cancelled) setHtml(rendered);
+        } catch {
+          // Fall back to raw TeX text; nothing to do here.
+        }
+        return;
+      }
+      // Script not loaded yet — try again on the next macrotask.
+      setTimeout(attempt, 50);
+    };
+    attempt();
+    return () => {
+      cancelled = true;
+    };
+  }, [tex, displayMode]);
+  return html;
+}
+
 /**
- * Render a TeX expression in display mode using KaTeX. The output is plain
- * HTML so it inherits the surrounding font weight and colour cleanly, and
- * KaTeX's stylesheet ships its own webfonts via `katex.min.css`.
+ * Render a TeX expression in display (block) mode. Returns a styled card with
+ * the KaTeX HTML inside; while waiting for the CDN script we show a quiet
+ * monospace fallback so the section still renders text immediately.
  */
 function BlockMath({ tex }: { tex: string }) {
-  const html = katex.renderToString(tex, {
-    displayMode: true,
-    throwOnError: false,
-    strict: 'ignore',
-  });
+  const html = useKatexHtml(tex, true);
+  if (!html) {
+    return (
+      <pre className="methodology-page__math methodology-page__math--fallback">
+        {tex.trim()}
+      </pre>
+    );
+  }
   return (
     <div
       className="methodology-page__math"
@@ -27,11 +77,12 @@ function BlockMath({ tex }: { tex: string }) {
 }
 
 function InlineMath({ tex }: { tex: string }) {
-  const html = katex.renderToString(tex, {
-    displayMode: false,
-    throwOnError: false,
-    strict: 'ignore',
-  });
+  const html = useKatexHtml(tex, false);
+  if (!html) {
+    return (
+      <code className="methodology-page__math--inline-fallback">{tex}</code>
+    );
+  }
   return (
     <span
       className="methodology-page__math methodology-page__math--inline"

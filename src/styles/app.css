@@ -996,6 +996,21 @@ a.toolkit-switcher__item:hover {
   vertical-align: baseline;
 }
 
+/* Fallbacks shown only while the KaTeX CDN script is still loading. */
+.methodology-page__math--fallback {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+.methodology-page__math--inline-fallback {
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12.5px;
+  background: var(--paper);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
 .methodology-page__math .katex-display {
   margin: 0;
 }
