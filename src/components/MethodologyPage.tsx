@@ -166,6 +166,12 @@ function EmailIcon() {
 
 const AUTHORS: Author[] = [
   {
+    name: 'Aniekpeno Ifeh',
+    org: 'Teal Insights',
+    initials: 'AI',
+    email: 'aniekpeno.ifeh@tealinsights.com',
+  },
+  {
     name: 'Reuben Opondo',
     org: 'Teal Insights',
     photo: reubenPhoto,
@@ -178,12 +184,6 @@ const AUTHORS: Author[] = [
     photo: ltePhoto,
     linkedin: 'https://www.linkedin.com/in/ltealemery',
     email: 'lte@tealinsights.com',
-  },
-  {
-    name: 'Aniekpeno Ifeh',
-    org: 'Teal Insights',
-    initials: 'AI',
-    email: 'aniekpeno.ifeh@tealinsights.com',
   },
 ];
 

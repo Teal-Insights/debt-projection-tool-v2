@@ -1063,21 +1063,34 @@ a.toolkit-switcher__item:hover {
 
 .methodology-page__authors {
   display: flex;
-  flex-wrap: wrap;
-  gap: 24px;
+  flex-wrap: nowrap;
+  gap: 12px;
   margin-top: 18px;
+  align-items: stretch;
 }
 
 .methodology-page__author {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   margin: 0;
-  padding: 10px 14px;
+  padding: 10px 12px;
   background: var(--paper);
   border: 1px solid var(--rule);
   border-radius: 6px;
-  min-width: 240px;
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* On viewports too narrow for three cards side by side, stack vertically
+   so names + emails stay readable rather than getting truncated. */
+@media (max-width: 720px) {
+  .methodology-page__authors {
+    flex-wrap: wrap;
+  }
+  .methodology-page__author {
+    flex: 1 1 100%;
+  }
 }
 
 .methodology-page__author-photo {
