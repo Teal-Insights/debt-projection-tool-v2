@@ -20,7 +20,8 @@ export function Footer({ onOpenMethodology }: Props) {
     <footer className="app__footer">
       <div className="app__footer-left">
         <span className="app__footer-credit">
-          Built by <strong>Reuben Opondo</strong> and{' '}
+          Built by <strong>Reuben Opondo</strong>,{' '}
+          <strong>Lte Lemery</strong>, and{' '}
           <strong>Aniekpeno Ifeh</strong>
         </span>
         <span className="app__footer-sep" aria-hidden="true">

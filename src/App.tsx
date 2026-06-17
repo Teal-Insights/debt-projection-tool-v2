@@ -14,7 +14,7 @@ import { FanChart } from './components/FanChart';
 import { OutputCards } from './components/OutputCards';
 import { Footer } from './components/Footer';
 import { MethodologyPage } from './components/MethodologyPage';
-import { ToolkitSwitcher } from './components/ToolkitSwitcher';
+import tealMark from './assets/logos/teal_insights_mark.svg';
 
 /**
  * v2 ships the IMF WEO April 2026 dataset. Per-country defaults are sourced
@@ -187,11 +187,27 @@ export default function App() {
     <div className={'app' + (showTool ? '' : ' app--methodology')}>
       <header className="app__header">
         <div className="app__header-left">
+          {/* Teal Insights globe mark — sets the brand right at the top-left,
+              same place a site logo would sit. The mark is a cropped version
+              of the full SVG (just the globe, without the wordmark which is
+              illegible at this size); it links to the LinkedIn company page. */}
+          <a
+            className="app__brand"
+            href="https://www.linkedin.com/company/teal-insights/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Teal Insights on LinkedIn"
+          >
+            <img
+              src={tealMark}
+              alt="Teal Insights"
+              className="app__brand-mark"
+            />
+          </a>
           <h1 className="app__title">
             Debt Projection Tool
             <span className="app__version">v2</span>
           </h1>
-          <ToolkitSwitcher current="v2" />
           {/* Tab strip lives inline with the title — horizontal primary nav,
               not a separate row. Tool / Methodology are siblings here, not a
               page + modal. */}

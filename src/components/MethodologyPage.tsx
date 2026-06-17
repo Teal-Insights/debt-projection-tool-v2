@@ -1,10 +1,43 @@
 import reubenPhoto from '../assets/profiles/reuben_ti.jpeg';
-import colleaguePhoto from '../assets/profiles/teal_ti.jpeg';
+import ltePhoto from '../assets/profiles/teal_ti.jpeg';
 
 interface Props {
   /** Switch back to the tool view (called by the "Back to the tool" button). */
   onReturnToTool: () => void;
 }
+
+interface Author {
+  name: string;
+  org: string;
+  photo?: string;
+  /** Two-letter initials used when no photo is available. */
+  initials?: string;
+  linkedin?: string;
+  email: string;
+}
+
+const AUTHORS: Author[] = [
+  {
+    name: 'Reuben Opondo',
+    org: 'Teal Insights',
+    photo: reubenPhoto,
+    linkedin: 'https://ke.linkedin.com/in/reuben-opondo-ab8156a6',
+    email: 'reuben.opondo@tealinsights.com',
+  },
+  {
+    name: 'Lte Lemery',
+    org: 'Teal Insights',
+    photo: ltePhoto,
+    linkedin: 'https://www.linkedin.com/in/ltealemery',
+    email: 'lte@tealinsights.com',
+  },
+  {
+    name: 'Aniekpeno Ifeh',
+    org: 'Teal Insights',
+    initials: 'AI',
+    email: 'aniekpeno.ifeh@tealinsights.com',
+  },
+];
 
 /**
  * Methodology page — rendered inline as a sibling view to the tool (NOT a
@@ -156,7 +189,8 @@ export function MethodologyPage({ onReturnToTool }: Props) {
       <section className="methodology-page__section methodology-page__credits">
         <h2>Credits</h2>
         <p>
-          Built by <strong>Reuben Opondo</strong> and{' '}
+          Built by <strong>Reuben Opondo</strong>,{' '}
+          <strong>Lte Lemery</strong>, and{' '}
           <strong>Aniekpeno Ifeh</strong> at{' '}
           <a
             href="https://tealinsights.com"
@@ -178,38 +212,53 @@ export function MethodologyPage({ onReturnToTool }: Props) {
         </p>
 
         <div className="methodology-page__authors">
-          <figure className="methodology-page__author">
-            <img
-              src={reubenPhoto}
-              alt="Reuben Opondo"
-              className="methodology-page__author-photo"
-              loading="lazy"
-            />
-            <figcaption className="methodology-page__author-caption">
-              <span className="methodology-page__author-name">
-                Reuben Opondo
-              </span>
-              <span className="methodology-page__author-org">
-                Teal Insights
-              </span>
-            </figcaption>
-          </figure>
-          <figure className="methodology-page__author">
-            <img
-              src={colleaguePhoto}
-              alt="Aniekpeno Ifeh"
-              className="methodology-page__author-photo"
-              loading="lazy"
-            />
-            <figcaption className="methodology-page__author-caption">
-              <span className="methodology-page__author-name">
-                Aniekpeno Ifeh
-              </span>
-              <span className="methodology-page__author-org">
-                Teal Insights
-              </span>
-            </figcaption>
-          </figure>
+          {AUTHORS.map(author => (
+            <figure key={author.email} className="methodology-page__author">
+              {author.photo ? (
+                <img
+                  src={author.photo}
+                  alt={author.name}
+                  className="methodology-page__author-photo"
+                  loading="lazy"
+                />
+              ) : (
+                <span
+                  className="methodology-page__author-photo methodology-page__author-initials"
+                  aria-hidden="true"
+                >
+                  {author.initials}
+                </span>
+              )}
+              <figcaption className="methodology-page__author-caption">
+                <span className="methodology-page__author-name">
+                  {author.name}
+                </span>
+                <span className="methodology-page__author-org">
+                  {author.org}
+                </span>
+                <span className="methodology-page__author-links">
+                  {author.linkedin && (
+                    <a
+                      href={author.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="methodology-page__author-link"
+                      aria-label={`${author.name} on LinkedIn`}
+                    >
+                      LinkedIn
+                    </a>
+                  )}
+                  <a
+                    href={`mailto:${author.email}`}
+                    className="methodology-page__author-link"
+                    aria-label={`Email ${author.name}`}
+                  >
+                    Email
+                  </a>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
