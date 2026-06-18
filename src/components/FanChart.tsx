@@ -354,19 +354,39 @@ export function FanChart({ result, baselineResult, country }: Props) {
              </div>`
           : '';
 
+      // "vs baseline" delta — only shown when we have both projection and
+      // baseline values for the hovered year (i.e. not on historical years).
+      // Sign convention: positive = above baseline, negative = below. The
+      // `pp` (percentage points) suffix is explicit so the delta isn't
+      // misread as a percent of GDP.
+      const deltaRow =
+        !isHistorical && baselinePct != null
+          ? (() => {
+              const d = userPct - baselinePct;
+              const sign = d > 0 ? '+' : d < 0 ? '−' : '±';
+              const magnitude = Math.abs(d).toFixed(1);
+              return `<div class="fan-chart__tooltip-row fan-chart__tooltip-delta">
+                <span class="fan-chart__tooltip-swatch fan-chart__tooltip-swatch--blank"></span>
+                <span class="fan-chart__tooltip-label">vs baseline</span>
+                <strong>${sign}${magnitude} pp</strong>
+              </div>`;
+            })()
+          : '';
+
       tooltip
         .style('display', 'block')
         .style('left', flipLeft ? 'auto' : `${tooltipX + 12}px`)
         .style('right', flipLeft ? `${width - tooltipX + 12}px` : 'auto')
         .style('top', `${tooltipY - 8}px`)
         .html(`
-          <div class="fan-chart__tooltip-year">${y}</div>
+          <div class="fan-chart__tooltip-year">${y} · Debt-to-GDP</div>
           <div class="fan-chart__tooltip-row">
             <span class="fan-chart__tooltip-swatch" style="background:${userRowColor}"></span>
             <span class="fan-chart__tooltip-label">${userRowLabel}</span>
             <strong>${userPct.toFixed(1)}%</strong>
           </div>
           ${baselineRow}
+          ${deltaRow}
           <div class="fan-chart__tooltip-summary">${summary}</div>
         `);
     });

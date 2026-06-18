@@ -289,17 +289,24 @@ export default function App() {
               <h2 className="app__section-title app__section-title--right">
                 Inputs · drag any year
               </h2>
-              {/* v2 slider min/max match the FT 2014 tool's global bounds, but step
-                  is tightened to 0.1 (vs FT's effective integer step) so values
-                  display with one decimal place — per the standup recommendation
-                  for macroeconomic statistics. */}
+              {/* v2 slider ranges tightened around what's realistic for the
+                  WEO universe (Jun 2026 standup feedback — Yves: "they're not
+                  going to grow 14%"). Ranges now sit roughly at p1/p99 of the
+                  observed WEO baseline distribution across 170 economies,
+                  plus headroom. Step stays at 0.1pp = 10 basis points,
+                  finer than Yves's 25bps target. A handful of exotic
+                  outliers (e.g. Suriname growth, Kuwait rates) will have
+                  their WEO notch visually clamped to the slider edge — the
+                  underlying slider value is preserved, only the notch slides
+                  to the boundary. */}
               <SliderRow
                 key={`g-${countryIso}`}
                 label="Real GDP growth rate"
                 years={projectionYears}
                 values={sliders.realGdpGrowth}
-                min={-15}
-                max={15}
+                baselineValues={country.yearlyDefaults?.realGdpGrowth}
+                min={-10}
+                max={12}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realGdpGrowth', i, v)}
               />
@@ -308,8 +315,9 @@ export default function App() {
                 label="Effective real interest rate"
                 years={projectionYears}
                 values={sliders.realInterestRate}
+                baselineValues={country.yearlyDefaults?.realInterestRate}
                 min={-10}
-                max={20}
+                max={15}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realInterestRate', i, v)}
               />
@@ -318,8 +326,9 @@ export default function App() {
                 label="Primary budget balance"
                 years={projectionYears}
                 values={sliders.primaryBalance}
-                min={-15}
-                max={15}
+                baselineValues={country.yearlyDefaults?.primaryBalance}
+                min={-10}
+                max={8}
                 step={0.1}
                 unit="% of GDP"
                 onChange={(i, v) => updateSlider('primaryBalance', i, v)}
@@ -329,8 +338,9 @@ export default function App() {
                 label="Real exchange rate appreciation"
                 years={projectionYears}
                 values={sliders.realFxAppreciation}
-                min={-50}
-                max={50}
+                baselineValues={country.yearlyDefaults?.realFxAppreciation}
+                min={-15}
+                max={15}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realFxAppreciation', i, v)}
               />
@@ -339,6 +349,7 @@ export default function App() {
                 label="Foreign currency debt share"
                 years={projectionYears}
                 values={sliders.fcuShare}
+                baselineValues={country.yearlyDefaults?.fcuShare}
                 min={0}
                 max={100}
                 step={0.1}

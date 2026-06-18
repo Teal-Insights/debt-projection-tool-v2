@@ -7,6 +7,13 @@ interface Props {
   years: number[];
   /** Per-year values. */
   values: number[];
+  /**
+   * Per-year WEO baseline values for this indicator (same shape as `values`).
+   * When provided, a small notch is drawn on each year's track at the baseline
+   * position so users can see at a glance whether they've moved above or
+   * below the WEO default. Optional — pass undefined to suppress notches.
+   */
+  baselineValues?: number[];
   min: number;
   max: number;
   step: number;
@@ -28,6 +35,7 @@ export function SliderRow({
   label,
   years,
   values,
+  baselineValues,
   min,
   max,
   step,
@@ -138,6 +146,57 @@ export function SliderRow({
             strokeLinecap="round"
           />
         ))}
+
+        {/* WEO baseline notches — small horizontal tick on each year's track at
+            the baseline value position. Lets users see at a glance whether
+            they've moved above or below the WEO default. Rendered between
+            tracks and the connector so the user's projection line + thumbs
+            sit visually on top of the notch. Color matches the FanChart's
+            baseline line color (#3b82f6) for cross-component consistency.
+            Visually clamped to [min, max] for the rare outlier countries
+            whose baseline sits outside the slider domain (e.g. Suriname
+            growth ~43%); the actual slider value is preserved untouched —
+            the notch just slides to the edge. */}
+        {baselineValues &&
+          baselineValues.map((b, i) => {
+            const clamped = Math.max(min, Math.min(max, b));
+            const yNotch = yScale(clamped);
+            // When the WEO baseline sits outside the slider domain (a few
+            // outliers — Suriname growth, Kuwait rates, Ukraine balance —
+            // see the standup audit), draw a small chevron pointing in the
+            // direction of the off-screen baseline so users know the tick
+            // glued to the edge isn't the actual WEO value.
+            const overshootDir =
+              b > max ? 'up' : b < min ? 'down' : null;
+            return (
+              <g key={`notch-${i}`} aria-hidden="true">
+                <line
+                  className="slider-card__notch"
+                  x1={xPositions[i] - 7}
+                  x2={xPositions[i] + 7}
+                  y1={yNotch}
+                  y2={yNotch}
+                  stroke="#3b82f6"
+                  strokeWidth={2}
+                  strokeLinecap="round"
+                />
+                {overshootDir === 'up' && (
+                  <polygon
+                    className="slider-card__notch-arrow"
+                    points={`${xPositions[i]},${yNotch - 7} ${xPositions[i] - 4},${yNotch - 1} ${xPositions[i] + 4},${yNotch - 1}`}
+                    fill="#3b82f6"
+                  />
+                )}
+                {overshootDir === 'down' && (
+                  <polygon
+                    className="slider-card__notch-arrow"
+                    points={`${xPositions[i]},${yNotch + 7} ${xPositions[i] - 4},${yNotch + 1} ${xPositions[i] + 4},${yNotch + 1}`}
+                    fill="#3b82f6"
+                  />
+                )}
+              </g>
+            );
+          })}
 
         {/* Connecting line through all circles. */}
         <path

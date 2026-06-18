@@ -611,6 +611,25 @@ body, #root {
   color: var(--gray2);
 }
 
+/* "vs baseline" delta row — sits right under the Projection / Baseline pair,
+   shows the absolute gap in percentage points so users can read intervention
+   size at a glance. Bold numeric, navy color; the swatch slot stays empty
+   so the label/value columns align with the rows above. */
+.fan-chart__tooltip-delta {
+  margin-top: 2px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--rule);
+}
+
+.fan-chart__tooltip-delta strong {
+  color: var(--amber);
+  font-variant-numeric: tabular-nums;
+}
+
+.fan-chart__tooltip-swatch--blank {
+  background: transparent;
+}
+
 .fan-chart__tooltip-summary {
   margin-top: 5px;
   padding-top: 4px;

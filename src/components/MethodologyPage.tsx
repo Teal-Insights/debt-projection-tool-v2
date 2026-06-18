@@ -318,10 +318,32 @@ export function MethodologyPage({ onReturnToTool }: Props) {
           </li>
           <li>
             <strong>v2 (this tool)</strong>: IMF WEO April 2026 — debt-to-GDP
-            from <code>GGXWDG_NGDP</code>, real GDP growth from{' '}
-            <code>NGDP_RPCH</code>, primary balance from{' '}
-            <code>GGXONLB_NGDP</code>. Historical window 2022–2025; projection
-            horizon 2026–2031 (matching the last WEO projection year).
+            from{' '}
+            <a
+              href="https://www.imf.org/external/datamapper/GGXWDG_NGDP@WEO/OEMDC/ADVEC/WEOWORLD"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <code>GGXWDG_NGDP</code>
+            </a>
+            , real GDP growth from{' '}
+            <a
+              href="https://www.imf.org/external/datamapper/NGDP_RPCH@WEO/OEMDC/ADVEC/WEOWORLD"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <code>NGDP_RPCH</code>
+            </a>
+            , primary balance from{' '}
+            <a
+              href="https://www.imf.org/external/datamapper/GGXONLB_NGDP@WEO/OEMDC/ADVEC/WEOWORLD"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <code>GGXONLB_NGDP</code>
+            </a>
+            . Historical window 2022–2025; projection horizon 2026–2031
+            (matching the last WEO projection year).
           </li>
         </ul>
       </section>
