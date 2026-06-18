@@ -104,7 +104,7 @@ const DEBT_IDENTITY_TEX = String.raw`
 `;
 
 interface Props {
-  /** Switch back to the tool view (called by the "Back to the tool" button). */
+  /** Switch back to the Scenarios view (called by the "Back to Scenarios" button). */
   onReturnToTool: () => void;
 }
 
@@ -474,7 +474,7 @@ export function MethodologyPage({ onReturnToTool }: Props) {
           className="methodology-page__close-btn"
           onClick={onReturnToTool}
         >
-          ← Back to the tool
+          ← Back to Scenarios
         </button>
       </footer>
     </article>

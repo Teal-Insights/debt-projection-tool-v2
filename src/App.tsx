@@ -210,7 +210,7 @@ export default function App() {
             <span className="app__version">v2</span>
           </h1>
           {/* Tab strip lives inline with the title — horizontal primary nav,
-              not a separate row. Tool / Methodology are siblings here, not a
+              not a separate row. Scenarios / Methodology are siblings here, not a
               page + modal. */}
           <nav className="app__tabs" role="tablist" aria-label="Sections">
             <button
