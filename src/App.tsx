@@ -222,7 +222,7 @@ export default function App() {
               }
               onClick={() => setView('tool')}
             >
-              Tool
+              Scenarios
             </button>
             <button
               type="button"
