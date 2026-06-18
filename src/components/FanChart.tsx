@@ -370,9 +370,10 @@ export function FanChart({ result, baselineResult, country }: Props) {
 
       // "vs baseline" delta — only shown when we have both projection and
       // baseline values for the hovered year (i.e. not on historical years).
-      // Sign convention: positive = above baseline, negative = below. The
-      // `pp` (percentage points) suffix is explicit so the delta isn't
-      // misread as a percent of GDP.
+      // Sign convention: positive = above baseline, negative = below.
+      // Rendered with a `%` suffix to keep units consistent with the rest of
+      // the tool (we deliberately use % over the strictly-more-correct "pp"
+      // because the user-facing rule is: one unit symbol everywhere).
       const deltaRow =
         !isHistorical && baselinePct != null
           ? (() => {
@@ -382,7 +383,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
               return `<div class="fan-chart__tooltip-row fan-chart__tooltip-delta">
                 <span class="fan-chart__tooltip-swatch fan-chart__tooltip-swatch--blank"></span>
                 <span class="fan-chart__tooltip-label">vs baseline</span>
-                <strong>${sign}${magnitude} pp</strong>
+                <strong>${sign}${magnitude}%</strong>
               </div>`;
             })()
           : '';
@@ -393,7 +394,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
         .style('right', flipLeft ? `${width - tooltipX + 12}px` : 'auto')
         .style('top', `${tooltipY - 8}px`)
         .html(`
-          <div class="fan-chart__tooltip-year">${y} · Debt-to-GDP</div>
+          <div class="fan-chart__tooltip-year">${y} · Debt to GDP ratio</div>
           <div class="fan-chart__tooltip-row">
             <span class="fan-chart__tooltip-swatch" style="background:${userRowColor}"></span>
             <span class="fan-chart__tooltip-label">${userRowLabel}</span>
@@ -440,14 +441,14 @@ export function FanChart({ result, baselineResult, country }: Props) {
             className="fan-chart__legend-fill"
             style={{ background: OUTER_BAND_FILL }}
           />
-          Severe stress (±2 pp)
+          Severe stress (±2%)
         </span>
         <span className="fan-chart__legend-item">
           <span
             className="fan-chart__legend-fill"
             style={{ background: INNER_BAND_FILL }}
           />
-          Moderate stress (±1 pp)
+          Moderate stress (±1%)
         </span>
       </div>
       <svg ref={svgRef} className="fan-chart__svg" />

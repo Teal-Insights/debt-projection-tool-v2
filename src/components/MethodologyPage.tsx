@@ -374,7 +374,7 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             inputs (<InlineMath tex="g_t" />, <InlineMath tex="r_t" />,{' '}
             <InlineMath tex="pb_t" />) with sustained shifts applied every
             projection year — ±1 percentage point each for the moderate band,
-            ±2 pp for the severe band, in the direction that pushes debt up
+            ±2% for the severe band, in the direction that pushes debt up
             (worse <InlineMath tex="g" />, higher <InlineMath tex="r" />, lower{' '}
             <InlineMath tex="pb" />) and the mirror direction for the lower
             edge. The deltas between the stressed runs and the WEO baseline

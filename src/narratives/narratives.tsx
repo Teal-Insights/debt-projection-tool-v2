@@ -51,8 +51,8 @@ export function whereScenarioLands(
     return (
       <>
         Under these inputs the model implies <strong>full repayment by {yearCrossed}</strong> —
-        the projected debt-to-GDP crosses zero within the horizon. Real-world fiscal
-        dynamics would diverge from the identity well before this point.
+        the projected Debt to GDP ratio crosses zero within the horizon. Real-world
+        fiscal dynamics would diverge from the identity well before this point.
       </>
     );
   }
@@ -66,14 +66,14 @@ export function whereScenarioLands(
   } else if (deltaVsBaseline > 0) {
     comparison = (
       <>
-        <strong>{fmt1(deltaVsBaseline)}pp higher</strong> than the baseline of{' '}
+        <strong>{fmt1(deltaVsBaseline)}% higher</strong> than the baseline of{' '}
         <strong>{fmt1(baselineEnd)}%</strong>
       </>
     );
   } else {
     comparison = (
       <>
-        <strong>{fmt1(Math.abs(deltaVsBaseline))}pp lower</strong> than the baseline of{' '}
+        <strong>{fmt1(Math.abs(deltaVsBaseline))}% lower</strong> than the baseline of{' '}
         <strong>{fmt1(baselineEnd)}%</strong>
       </>
     );
@@ -167,7 +167,7 @@ export function whatsMovingTheDebt(
   const domSentence = (
     <>
       Over the projection horizon, the <strong>{dom.name}</strong> {domAction}{' '}
-      <strong>{fmt1(Math.abs(dom.value))}pp</strong> cumulatively — the dominant force.
+      <strong>{fmt1(Math.abs(dom.value))}%</strong> cumulatively — the dominant force.
     </>
   );
 
@@ -180,7 +180,7 @@ export function whatsMovingTheDebt(
       <>
         {' '}
         The <strong>{second.name}</strong> {secondAction}{' '}
-        <strong>{fmt1(Math.abs(second.value))}pp</strong>
+        <strong>{fmt1(Math.abs(second.value))}%</strong>
         {compounds ? ', compounding the move' : ', partially offsetting'}.
       </>
     );
@@ -194,7 +194,7 @@ export function whatsMovingTheDebt(
       <>
         {' '}
         The <strong>{third.name}</strong> {thirdAction}{' '}
-        <strong>{fmt1(Math.abs(third.value))}pp</strong>.
+        <strong>{fmt1(Math.abs(third.value))}%</strong>.
       </>
     );
   }
@@ -222,7 +222,7 @@ export function whatsMovingTheDebt(
       {domSentence}
       {secondSentence}
       {thirdSentence}
-      {fxNote} Net change: <strong>{signed1(net)}pp</strong> from the{' '}
+      {fxNote} Net change: <strong>{signed1(net)}%</strong> from the{' '}
       {country.baselineYear - 1} starting level.
     </>
   );
@@ -271,7 +271,7 @@ export function whatIfYouAdjusted(
   if (Math.abs(dom.perPp) < 0.5) {
     return (
       <>
-        Your scenario is <strong>robust</strong> to ±1pp shifts in any single
+        Your scenario is <strong>robust</strong> to ±1% shifts in any single
         slider. To see meaningful changes, move multiple sliders together — or
         push individual sliders further from their defaults.
       </>
@@ -302,8 +302,8 @@ export function whatIfYouAdjusted(
       Raising it to <strong>{valFmt(up.proposedValue)}</strong> would end debt
       near <strong>{fmt1(up.endDebt)}%</strong>; lowering to{' '}
       <strong>{valFmt(down.proposedValue)}</strong> would end debt near{' '}
-      <strong>{fmt1(down.endDebt)}%</strong>. Each 1pp shift moves end-of-horizon
-      debt by about <strong>{fmt1(Math.abs(dom.perPp))}pp</strong>.
+      <strong>{fmt1(down.endDebt)}%</strong>. Each 1% shift moves end-of-horizon
+      debt by about <strong>{fmt1(Math.abs(dom.perPp))}%</strong>.
     </>
   );
 }
