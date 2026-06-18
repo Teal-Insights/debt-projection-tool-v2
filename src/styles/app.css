@@ -573,7 +573,8 @@ body, #root {
   font-size: 11px;
   color: var(--ink);
   box-shadow: 0 4px 10px rgba(10, 37, 64, 0.08);
-  min-width: 160px;
+  min-width: 240px;
+  max-width: 280px;
   z-index: 5;
   line-height: 1.35;
 }
@@ -628,6 +629,58 @@ body, #root {
 
 .fan-chart__tooltip-swatch--blank {
   background: transparent;
+}
+
+/* Section break — used by the YoY block and the decomposition block. Acts
+   as a visual divider between the headline values at the top of the
+   tooltip and the supporting detail below. */
+.fan-chart__tooltip-section {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--rule);
+}
+
+/* Two-line head for a section: small-caps uppercase label on the left,
+   optional sublabel (e.g. 'Δ from 2027') on the right. */
+.fan-chart__tooltip-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 3px;
+}
+
+.fan-chart__tooltip-section-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gray2);
+}
+
+.fan-chart__tooltip-section-sublabel {
+  font-size: 10px;
+  color: var(--gray3);
+  font-style: italic;
+}
+
+/* Decomposition rows — label on the left, signed value on the right. */
+.fan-chart__tooltip-decomp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 1px 0;
+  font-size: 11.5px;
+}
+
+.fan-chart__tooltip-decomp-label {
+  color: var(--gray1);
+}
+
+.fan-chart__tooltip-decomp-row strong {
+  font-weight: 600;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
 }
 
 .fan-chart__tooltip-summary {

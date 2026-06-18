@@ -353,7 +353,9 @@ export function FanChart({ result, baselineResult, country }: Props) {
       // Position tooltip near the hovered point. Flip left when near right edge.
       const tooltipX = cx + MARGIN.left;
       const tooltipY = yScale(userPct) + MARGIN.top;
-      const flipLeft = tooltipX > width - 200;
+      // Tooltip is now richer (YoY + decomposition sections), so reserve
+      // more horizontal room when deciding whether to flip it to the left.
+      const flipLeft = tooltipX > width - 280;
 
       const summary = `Peak ${result.peak.debtPct.toFixed(1)}% in ${result.peak.year} · → ${result.endOfHorizon.debtPct.toFixed(1)}% by ${result.endOfHorizon.year}`;
 
@@ -368,24 +370,85 @@ export function FanChart({ result, baselineResult, country }: Props) {
              </div>`
           : '';
 
-      // "vs baseline" delta — only shown when we have both projection and
-      // baseline values for the hovered year (i.e. not on historical years).
-      // Sign convention: positive = above baseline, negative = below.
-      // Rendered with a `%` suffix to keep units consistent with the rest of
-      // the tool (we deliberately use % over the strictly-more-correct "pp"
-      // because the user-facing rule is: one unit symbol everywhere).
+      // Sign-formatting helper used by delta, YoY, and decomposition rows.
+      // Uses '+' / '−' / '±' so the polarity is unambiguous; '%' suffix
+      // keeps units consistent with the rest of the tool. Values that
+      // round to 0.0% are rendered with '±' to avoid '+0.0%' / '−0.0%'
+      // misleading the user about direction when the underlying number
+      // is just numerical noise (or an exact-zero channel like deltaFx
+      // for countries with no foreign-currency debt).
+      const fmtSigned = (v: number): string => {
+        const sign = Math.abs(v) < 0.05 ? '±' : v > 0 ? '+' : '−';
+        return `${sign}${Math.abs(v).toFixed(1)}%`;
+      };
+
+      // "vs baseline" delta — only on projection years where we have a
+      // baseline value to compare against. Sign convention: positive =
+      // above baseline, negative = below.
       const deltaRow =
         !isHistorical && baselinePct != null
-          ? (() => {
-              const d = userPct - baselinePct;
-              const sign = d > 0 ? '+' : d < 0 ? '−' : '±';
-              const magnitude = Math.abs(d).toFixed(1);
-              return `<div class="fan-chart__tooltip-row fan-chart__tooltip-delta">
-                <span class="fan-chart__tooltip-swatch fan-chart__tooltip-swatch--blank"></span>
-                <span class="fan-chart__tooltip-label">vs baseline</span>
-                <strong>${sign}${magnitude}%</strong>
-              </div>`;
-            })()
+          ? `<div class="fan-chart__tooltip-row fan-chart__tooltip-delta">
+              <span class="fan-chart__tooltip-swatch fan-chart__tooltip-swatch--blank"></span>
+              <span class="fan-chart__tooltip-label">vs baseline</span>
+              <strong>${fmtSigned(userPct - baselinePct)}</strong>
+            </div>`
+          : '';
+
+      // Year-on-year change — works on both history and projection so the
+      // user can read the change in any direction. Skipped for the first
+      // available year (no prior year to compare to).
+      const prevYearPct = result.path.find(p => p.year === y - 1)?.debtPct;
+      const yoyRow =
+        prevYearPct != null
+          ? `<div class="fan-chart__tooltip-section">
+              <div class="fan-chart__tooltip-section-head">
+                <span class="fan-chart__tooltip-section-label">YEAR-ON-YEAR</span>
+                <span class="fan-chart__tooltip-section-sublabel">Δ from ${y - 1}</span>
+              </div>
+              <div class="fan-chart__tooltip-decomp-row">
+                <span class="fan-chart__tooltip-decomp-label">Change</span>
+                <strong>${fmtSigned(userPct - prevYearPct)}</strong>
+              </div>
+            </div>`
+          : '';
+
+      // Decomposition — for projection years only, surface the channels
+      // that drove this year's change in the Debt to GDP ratio. The
+      // engine already publishes deltaRG / deltaFx / deltaPb / deltaOther
+      // per year; sum should equal the YoY change (modulo the floor-clamp
+      // adjustment absorbed into deltaPb).
+      const decomp = result.decomposition.find(d => d.year === y);
+      const decompSection =
+        !isHistorical && decomp
+          ? `<div class="fan-chart__tooltip-section">
+              <div class="fan-chart__tooltip-section-head">
+                <span class="fan-chart__tooltip-section-label">
+                  WHAT DROVE THIS YEAR'S CHANGE
+                </span>
+              </div>
+              <div class="fan-chart__tooltip-decomp-row">
+                <span class="fan-chart__tooltip-decomp-label">
+                  r − g (rates vs growth)
+                </span>
+                <strong>${fmtSigned(decomp.deltaRG)}</strong>
+              </div>
+              <div class="fan-chart__tooltip-decomp-row">
+                <span class="fan-chart__tooltip-decomp-label">FX revaluation</span>
+                <strong>${fmtSigned(decomp.deltaFx)}</strong>
+              </div>
+              <div class="fan-chart__tooltip-decomp-row">
+                <span class="fan-chart__tooltip-decomp-label">Primary balance</span>
+                <strong>${fmtSigned(decomp.deltaPb)}</strong>
+              </div>
+              ${
+                Math.abs(decomp.deltaOther) > 0.05
+                  ? `<div class="fan-chart__tooltip-decomp-row">
+                      <span class="fan-chart__tooltip-decomp-label">Other</span>
+                      <strong>${fmtSigned(decomp.deltaOther)}</strong>
+                    </div>`
+                  : ''
+              }
+            </div>`
           : '';
 
       tooltip
@@ -394,7 +457,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
         .style('right', flipLeft ? `${width - tooltipX + 12}px` : 'auto')
         .style('top', `${tooltipY - 8}px`)
         .html(`
-          <div class="fan-chart__tooltip-year">${y} · Debt to GDP ratio</div>
+          <div class="fan-chart__tooltip-year">${y} · Debt to GDP ratio (%)</div>
           <div class="fan-chart__tooltip-row">
             <span class="fan-chart__tooltip-swatch" style="background:${userRowColor}"></span>
             <span class="fan-chart__tooltip-label">${userRowLabel}</span>
@@ -402,6 +465,8 @@ export function FanChart({ result, baselineResult, country }: Props) {
           </div>
           ${baselineRow}
           ${deltaRow}
+          ${yoyRow}
+          ${decompSection}
           <div class="fan-chart__tooltip-summary">${summary}</div>
         `);
     });
