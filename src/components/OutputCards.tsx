@@ -33,8 +33,8 @@ export function OutputCards({ result, baselineResult, country, sliders }: Props)
     [result, country],
   );
   const card3 = useMemo(
-    () => whatIfYouAdjusted(country, sliders),
-    [country, sliders],
+    () => whatIfYouAdjusted(country, sliders, result),
+    [country, sliders, result],
   );
 
   return (

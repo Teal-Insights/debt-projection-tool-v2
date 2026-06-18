@@ -237,7 +237,25 @@ export function whatsMovingTheDebt(
 export function whatIfYouAdjusted(
   country: CountryState,
   sliders: YearlySliders,
+  result: RecomputeResult,
 ): ReactNode {
+  // At-the-floor guard. When the engine clamps end-of-horizon debt at 0,
+  // ±1pp sensitivity measurements collapse to ~0 on the downside (debt
+  // can't go below the floor), and the "robust" branch below would fire
+  // with misleading framing ("your scenario is robust"). The honest read
+  // is: the projection has bottomed out under these assumptions; further
+  // surplus or growth doesn't move it.
+  if (result.endOfHorizon.debtPct <= 0.01) {
+    return (
+      <>
+        Debt has reached <strong>zero</strong> under these inputs — the model
+        has no further downside lever. Loosen the surplus, lower the growth
+        rate, or raise the interest rate to explore paths that keep debt
+        above the floor.
+      </>
+    );
+  }
+
   const sens = computeSensitivities(country, sliders);
   const dom = dominantSlider(sens);
 

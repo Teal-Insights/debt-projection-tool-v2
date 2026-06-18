@@ -102,13 +102,24 @@ export function recompute(input: RecomputeInput): RecomputeResult {
     const dAfterFx = dAfterSeesaw * fxMultiplier;
 
     // Primary balance subtracts directly in percent-of-GDP terms (TN 2021/005 §III).
-    const dThisYear = dAfterFx - pb;
+    // FLOOR AT 0: debt-to-GDP cannot be negative — that would imply the
+    // sovereign holds net financial claims (creditor regime), which is a
+    // different model. At extreme favourable inputs (large surplus + high
+    // growth + low rates) the unclamped identity drifts below zero; we
+    // truncate at the floor and absorb the truncation into deltaPb so the
+    // sum of channel deltas continues to equal (dThisYear − dPrev).
+    const dRaw = dAfterFx - pb;
+    const dThisYear = Math.max(0, dRaw);
+    const truncated = dThisYear - dRaw; // ≥ 0; >0 only when clamped this year
 
     // Decomposition of Δd_t = d_t − d_{t-1} across channels (TN 2021/005 §III + §VII
     // table conventions). Each Δ is in percentage-points of GDP.
     const deltaRG = dPrev * (seesaw - 1);                // r-g channel
     const deltaFx = dAfterSeesaw * (fxMultiplier - 1);   // FX revaluation channel
-    const deltaPb = -pb;                                  // primary balance channel
+    // The truncation lives in the primary-balance channel because pb is the
+    // only purely additive term; r-g and FX are multiplicative on dPrev and
+    // naturally collapse to 0 once dPrev hits the floor.
+    const deltaPb = -pb + truncated;                      // primary balance channel
     // deltaOther: TN 2021/005 §III "other identified debt-creating flows" residual.
     // Hard-coded to 0 in both methodology branches today — the LCU/FCU rate split
     // and stock-flow residual from the 2021 full identity are iteration-2 work.
@@ -242,7 +253,11 @@ function runShockedPath(
         : readYear(sliders.fcuShare, i - 1)) * PCT_TO_DEC;
     const seesaw = (1 + r) / (1 + g);
     const fxMult = (1 - sPrev) + sPrev / (1 + z);
-    dPrev = dPrev * seesaw * fxMult - pb;
+    // Match the central-path floor — without this the favorable-stress
+    // baseline can go negative, inflating `widthDn` artificially. With
+    // clamping in both places, band widths stay economically meaningful
+    // at extreme inputs.
+    dPrev = Math.max(0, dPrev * seesaw * fxMult - pb);
     out.push(dPrev);
   }
   return out;

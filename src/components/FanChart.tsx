@@ -24,27 +24,50 @@ export function FanChart({ result, baselineResult, country }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
-  // Locked per country: stops the y-axis from reflowing when sliders move.
-  // Always anchored at 0 so the 10 ticks span the full debt-to-GDP range from
-  // zero up to (max observed value + headroom). yScale.nice() rounds the top
-  // to a clean tick boundary.
+  // High-water mark for the y-axis upper bound. Per country, the y-axis can
+  // only GROW — never shrink. This means:
+  //   - First render: yMax sized from historical + WEO baseline + headroom.
+  //   - User pushes sliders to a worst-case combo and debt projection
+  //     exceeds the locked range → yMax grows to fit the new projection
+  //     (otherwise the projection line would clip off the top of the chart).
+  //   - User backs off sliders → yMax stays at its new height; chart feels
+  //     stable (the FT tool has this same property).
+  //   - User selects a different country → yMax resets to that country's
+  //     baseline-derived value (HWM keyed on country.iso).
+  const yHighWaterRef = useRef<{ iso: string; yMax: number } | null>(null);
   const yDomain = useMemo<[number, number]>(() => {
     const histVals = country.historical.map(h => h.debtPct);
-    const projVals = country.baselineProjection?.map(p => p.debtPct) ?? [];
+    const baseProjVals = country.baselineProjection?.map(p => p.debtPct) ?? [];
+    const userProjVals = result.path.map(p => p.debtPct);
+    const bandUpper = result.fanBands.outerBand.map(b => b.upper);
     const maxObserved = Math.max(
       ...histVals,
-      ...projVals,
+      ...baseProjVals,
+      ...userProjVals,
+      ...bandUpper,
       country.startingDebtPct,
     );
-    // 30% headroom above the highest observed point so the user's projection
-    // line has room to grow under stress without immediately clipping.
-    const yMax = maxObserved * 1.3;
-    return [0, yMax];
+    // 15% headroom — tighter than the previous 30% because the band upper
+    // edge is already included in maxObserved, so we don't need as much
+    // extra room. d3.scaleLinear().nice() will round up to a clean tick.
+    const candidate = maxObserved * 1.15;
+    // Reset HWM when country changes; otherwise only grow.
+    if (
+      !yHighWaterRef.current ||
+      yHighWaterRef.current.iso !== country.iso
+    ) {
+      yHighWaterRef.current = { iso: country.iso, yMax: candidate };
+    } else if (candidate > yHighWaterRef.current.yMax) {
+      yHighWaterRef.current.yMax = candidate;
+    }
+    return [0, yHighWaterRef.current.yMax];
   }, [
     country.iso,
     country.startingDebtPct,
     country.historical,
     country.baselineProjection,
+    result.path,
+    result.fanBands.outerBand,
   ]);
 
   useEffect(() => {
