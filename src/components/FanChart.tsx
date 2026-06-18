@@ -24,17 +24,16 @@ export function FanChart({ result, baselineResult, country }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
 
-  // High-water mark for the y-axis upper bound. Per country, the y-axis can
-  // only GROW — never shrink. This means:
-  //   - First render: yMax sized from historical + WEO baseline + headroom.
-  //   - User pushes sliders to a worst-case combo and debt projection
-  //     exceeds the locked range → yMax grows to fit the new projection
-  //     (otherwise the projection line would clip off the top of the chart).
-  //   - User backs off sliders → yMax stays at its new height; chart feels
-  //     stable (the FT tool has this same property).
-  //   - User selects a different country → yMax resets to that country's
-  //     baseline-derived value (HWM keyed on country.iso).
-  const yHighWaterRef = useRef<{ iso: string; yMax: number } | null>(null);
+  // Y-axis upper bound is fully data-driven — adjusts both UP (when worst-case
+  // sliders push the projection past the country's baseline range) and DOWN
+  // (when best-case sliders drive debt toward the floor). This is symmetric
+  // by design: previously the axis only grew, which left the chart zoomed-out
+  // when debt fell, making the descent look like a small squiggle at the
+  // bottom. Now the descent gets the visual prominence it deserves.
+  //
+  // Historical and WEO baseline values are always included in the max
+  // calculation so the y-axis can never zoom in tighter than the "where
+  // we came from" range — there's always context for the user's path.
   const yDomain = useMemo<[number, number]>(() => {
     const histVals = country.historical.map(h => h.debtPct);
     const baseProjVals = country.baselineProjection?.map(p => p.debtPct) ?? [];
@@ -47,20 +46,12 @@ export function FanChart({ result, baselineResult, country }: Props) {
       ...bandUpper,
       country.startingDebtPct,
     );
-    // 15% headroom — tighter than the previous 30% because the band upper
-    // edge is already included in maxObserved, so we don't need as much
-    // extra room. d3.scaleLinear().nice() will round up to a clean tick.
-    const candidate = maxObserved * 1.15;
-    // Reset HWM when country changes; otherwise only grow.
-    if (
-      !yHighWaterRef.current ||
-      yHighWaterRef.current.iso !== country.iso
-    ) {
-      yHighWaterRef.current = { iso: country.iso, yMax: candidate };
-    } else if (candidate > yHighWaterRef.current.yMax) {
-      yHighWaterRef.current.yMax = candidate;
-    }
-    return [0, yHighWaterRef.current.yMax];
+    // 15% headroom above the highest observed point so the projection line
+    // never grazes the top frame. d3.scaleLinear().nice() will round up to
+    // a clean tick. A 10pp hard floor prevents collapse to a micro-band on
+    // countries with extremely low debt (or when projection bottoms at 0).
+    const yMax = Math.max(maxObserved * 1.15, 10);
+    return [0, yMax];
   }, [
     country.iso,
     country.startingDebtPct,
