@@ -219,6 +219,82 @@ body, #root {
   box-shadow: 0 0 0 2px var(--amber);
 }
 
+/* ============== Prototype callout ==============
+   Slim amber-accented banner that sits below the navbar on both views.
+   Non-dismissible by design — Jun 19 standup feedback (Yves): the
+   "this is an early prototype, please send feedback" framing must be
+   visible on first paint so a forwarded recipient without context
+   sees it immediately. Sized to take ~36px of vertical space so the
+   viewport-locked tool view doesn't lose meaningful chart real estate. */
+.app__callout {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(192, 138, 62, 0.07);
+  border-left: 3px solid var(--amber);
+  border-radius: 0 4px 4px 0;
+  padding: 8px 14px;
+  margin: 4px 0 0;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--ink);
+  flex-shrink: 0;
+}
+
+.app__callout-label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: rgba(192, 138, 62, 0.14);
+  border: 1px solid rgba(192, 138, 62, 0.35);
+  padding: 3px 8px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.app__callout-text {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.app__callout-link {
+  color: var(--navy);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--rule);
+  text-underline-offset: 2px;
+  white-space: nowrap;
+  transition: color 120ms ease, text-decoration-color 120ms ease;
+}
+
+.app__callout-link:hover {
+  color: var(--amber);
+  text-decoration-color: var(--amber);
+}
+
+.app__callout-link:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--amber);
+  border-radius: 2px;
+}
+
+/* On narrow viewports the badge stacks above the text so the line
+   doesn't compress. */
+@media (max-width: 760px) {
+  .app__callout {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 12px;
+  }
+}
+
 /* ============== Two-column layout ============== */
 .app__main {
   flex: 1;

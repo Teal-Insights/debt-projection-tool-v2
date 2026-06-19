@@ -264,6 +264,26 @@ export default function App() {
         )}
       </header>
 
+      {/* Prototype callout — Jun 19 standup feedback (Yves). Visible on
+          first paint, non-dismissible, shown on both Scenarios and
+          Methodology so a forwarded recipient cannot miss it. Frames the
+          tool as an early iteration and actively invites feedback. */}
+      <aside className="app__callout" role="note" aria-label="About this prototype">
+        <span className="app__callout-label">Prototype</span>
+        <p className="app__callout-text">
+          Early iteration — this tool takes IMF WEO data and lets you adjust
+          macro assumptions to project sovereign Debt to GDP ratios. We
+          welcome feedback from policymakers and analysts on how to make it
+          more useful.{' '}
+          <a
+            className="app__callout-link"
+            href="mailto:reuben.opondo@tealinsights.com,lte@tealinsights.com,aniekpeno.ifeh@tealinsights.com?subject=Debt%20Projection%20Tool%20%E2%80%94%20Feedback"
+          >
+            Share feedback →
+          </a>
+        </p>
+      </aside>
+
       {showTool ? (
         <>
           <main className="app__main">
