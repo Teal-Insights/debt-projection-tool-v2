@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:fx-share": "node scripts/build-fx-share.mjs",
     "preview": "vite preview",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "vitest"

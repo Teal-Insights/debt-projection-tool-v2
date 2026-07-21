@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import type { ReactNode } from 'react';
 import * as d3 from 'd3';
 
 interface Props {
@@ -20,6 +21,12 @@ interface Props {
   unit?: string;
   /** Called when the user drags one of the year markers. */
   onChange: (yearIndex: number, value: number) => void;
+  /**
+   * Optional provenance footnote rendered below the mini-chart (e.g. the
+   * FX-share source line, or the labeled zero-fallback notice). The caller
+   * supplies a fully-formed node; SliderRow only positions it.
+   */
+  footnote?: ReactNode;
 }
 
 /**
@@ -41,6 +48,7 @@ export function SliderRow({
   step,
   unit = '%',
   onChange,
+  footnote,
 }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
 
@@ -259,6 +267,7 @@ export function SliderRow({
           </text>
         ))}
       </svg>
+      {footnote}
     </div>
   );
 }

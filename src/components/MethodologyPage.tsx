@@ -345,6 +345,21 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             . Historical window 2022–2025; projection horizon 2026–2031
             (matching the last WEO projection year).
           </li>
+          <li>
+            <strong>Foreign-currency debt share</strong>: our own DSA
+            FX-share dataset, extracted from the most recent published IMF
+            debt sustainability analysis (DSA) for each country and reviewed
+            value by value by a human before release. Coverage: 167
+            economies — 64 of the 68 countries assessed under the LIC-DSF
+            and 103 of the 123 assessed under the MAC SRDSF. Each value
+            carries full provenance: the source report URL, the PDF page and
+            table or figure it was read from, the definitional basis
+            (currency-denomination vs residency), and the debt perimeter
+            (central government, general government, public sector, or
+            non-financial public sector). The per-country basis and
+            perimeter are shown directly under the Foreign currency debt
+            share slider, with a link to the exact source page.
+          </li>
         </ul>
       </section>
 
@@ -360,11 +375,48 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             defaults — a defensible "what WEO is implying" reading.
           </li>
           <li>
-            <strong>FX appreciation and FCU share default to 0.</strong> WEO
-            does not publish forward real-FX-appreciation forecasts or
-            FCU-share data, so the FX channel is inert at defaults. Users can
-            still move both sliders to explore the FX-revaluation channel
-            manually.
+            <strong>Foreign-currency share defaults come from IMF DSAs;
+            missing values fall back to a labeled 0.</strong> Where our DSA
+            FX-share dataset has a value, it is the country's default: the
+            latest actual-year FX share from that country's most recent
+            published DSA, held flat across the projection horizon (no
+            institution publishes a forward FX-share path). Where no value
+            exists, the default stays at 0% and the tool says so under the
+            slider: that zero is an unsourced placeholder that switches off
+            the FX-revaluation channel, not a data point. It is never
+            presented as sourced data.
+          </li>
+          <li>
+            <strong>Residency vs currency (the LIC-DSF caveat).</strong> The
+            economically correct input for the FX-revaluation channel is the
+            share of debt denominated in foreign currency. Many LIC-DSF
+            tables split debt by residency (external vs domestic) rather
+            than by currency. Where a report states its external/domestic
+            definition is currency-based, we use the external-debt share
+            directly. Where only a residency-based split is published, we
+            use it as a proxy and flag it: those countries show "residency
+            basis (external debt used as a proxy)" under the slider. The
+            proxy overstates the FX share where external debt includes
+            local-currency instruments held by non-residents, and
+            understates it where residents hold FX-denominated domestic
+            debt. 134 of the 167 values are currency-based; 33 are residency
+            proxies.
+          </li>
+          <li>
+            <strong>Debt perimeters differ across countries.</strong> Each
+            DSA defines its own public-debt coverage (central government,
+            general government, public sector, or non-financial public
+            sector, with varying treatment of the central bank, guarantees,
+            and SOE debt). The FX share we carry is the share within that
+            report's perimeter, which may differ from the WEO
+            general-government debt stock the projection runs on. The
+            perimeter is disclosed per country under the slider.
+          </li>
+          <li>
+            <strong>FX appreciation still defaults to 0.</strong> WEO does
+            not publish forward real-FX-appreciation forecasts, so the FX
+            channel is inert at defaults even where the FX share is sourced.
+            Move the appreciation slider to activate it.
           </li>
           <li>
             <strong>Fan bands are a deterministic stress envelope, not a
