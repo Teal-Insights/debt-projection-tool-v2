@@ -8,6 +8,8 @@ import type {
   YearlySliders,
 } from './engine';
 import countriesData from './data/countries.json';
+import { getFxShare } from './fxShare';
+import { FxShareFootnote } from './components/FxShareFootnote';
 import { CountrySelector } from './components/CountrySelector';
 import { SliderRow } from './components/SliderRow';
 import { FanChart } from './components/FanChart';
@@ -61,8 +63,38 @@ function isFullyPopulated(c: RawCountry): c is RawCountry & { yearlyDefaults: Ye
   });
 }
 
-const COUNTRIES: CountryState[] = (countriesData as CountriesFile).countries
-  .filter(isFullyPopulated) as unknown as CountryState[];
+/**
+ * TEA-880: wire the adjudicated DSA FX-share dataset in as the FCU-share
+ * default. WEO publishes no FX-share series, so countries.json ships
+ * fcuShare = 0 everywhere. Where the dataset has an adjudicated value we
+ * use it — for the scalar default, the per-year default path, AND the
+ * historical anchor s_{t-1} that the engine revalues in the first
+ * projection step. Where it doesn't, the 0 stays but is labeled in the UI
+ * as an unsourced fallback (see FxShareFootnote), never presented as data.
+ *
+ * The value is the latest ACTUAL year in the country's most recent
+ * published DSA, applied flat across the projection horizon (no published
+ * forward path exists; composition is user-explorable via the slider).
+ */
+function applyFxShareDefault(c: CountryState): CountryState {
+  const fx = getFxShare(c.iso);
+  if (!fx) return c;
+  const flat = Array.from({ length: HORIZON_YEARS }, () => fx.valuePct);
+  return {
+    ...c,
+    defaults: { ...c.defaults, fcuShare: fx.valuePct },
+    historicalFcuShare: fx.valuePct,
+    yearlyDefaults: c.yearlyDefaults
+      ? { ...c.yearlyDefaults, fcuShare: flat }
+      : c.yearlyDefaults,
+  };
+}
+
+const COUNTRIES: CountryState[] = (
+  (countriesData as CountriesFile).countries.filter(
+    isFullyPopulated,
+  ) as unknown as CountryState[]
+).map(applyFxShareDefault);
 
 /**
  * Build the initial YearlySliders for a country. Prefer the WEO-sourced
@@ -374,6 +406,12 @@ export default function App() {
                 max={100}
                 step={0.1}
                 onChange={(i, v) => updateSlider('fcuShare', i, v)}
+                footnote={
+                  <FxShareFootnote
+                    entry={getFxShare(country.iso)}
+                    countryName={country.name}
+                  />
+                }
               />
             </section>
           </main>

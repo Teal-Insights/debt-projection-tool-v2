@@ -1544,3 +1544,30 @@ a.toolkit-switcher__item:hover {
   height: 22px;
   width: auto;
 }
+
+
+/* FX-share provenance footnote (TEA-880). Two states: sourced (quiet gray
+   provenance line with a source link) and unsourced fallback (amber notice
+   that the 0% default is a placeholder, not data). */
+.slider-card__footnote {
+  margin: 4px 0 2px;
+  padding-top: 4px;
+  border-top: 1px dashed var(--rule);
+  font-size: 10.5px;
+  line-height: 1.45;
+  color: var(--gray2);
+}
+
+.slider-card__footnote a {
+  color: #3b82f6;
+  text-decoration: underline;
+}
+
+.slider-card__footnote--fallback {
+  border-top: none;
+  border-left: 3px solid #d97706;
+  background: #fef3c7;
+  border-radius: 3px;
+  padding: 5px 7px;
+  color: #78350f;
+}
