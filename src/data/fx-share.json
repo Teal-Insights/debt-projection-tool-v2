@@ -3,7 +3,7 @@
     "name": "DSA FX-share dataset (adjudicated)",
     "description": "Foreign-currency share of public debt, latest actual year per country, extracted from the most recent published IMF DSA for each country (LIC-DSF and MAC SRDSF staff reports) and human-adjudicated.",
     "source_csv": "data/fx-share/proposed-corrected-dataset.csv",
-    "source_csv_sha256": "a44dff6429d0211fff4498b8a786910cd55ee0fe4b7fc9f054cee16ed8bdfd80",
+    "source_csv_sha256": "56790042fa64840b9cf3ce6800ec730f35de36469352b0cf712e0c2876bd7804",
     "source_package": "SovTech/Workstreams/2026-07_DSA-FX-Share-Extraction/04-Dataset/TEA-878-adjudication-20260717/02-Proposed-Dataset (Drive)",
     "row_count": 167,
     "coverage": {
@@ -28,7 +28,7 @@
       "reportTitle": "Islamic Republic of Afghanistan: First Review Under the Under the Extended Credit Facility Arrangement and Request for Modification of Performance Criteria-Press Release; Staff Report; and Statement by the Executive Director for Islamic Republic of Afghanistan",
       "reportDate": "2021-06-28",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2021/138/002.2021.issue-138-en.xml",
-      "pdfPage": "82",
+      "pdfPage": "81",
       "printedPage": "6",
       "tableRef": "Table 2. Islamic Republic of Afghanistan: Public Sector Debt Sustainability Framework, Baseline Scenario, 2020–41"
     },
@@ -236,7 +236,7 @@
       "reportTitle": "Bangladesh: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Bangladesh",
       "reportDate": "2026-01-30",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/024/002.2026.issue-024-en.xml",
-      "pdfPage": "88",
+      "pdfPage": "87",
       "printedPage": "22",
       "tableRef": "Table 2. Bangladesh: Public Sector Debt Sustainability Framework, Baseline Scenario, FY23–FY46"
     },
@@ -332,7 +332,7 @@
       "reportTitle": "Brazil: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Brazil",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/194/002.2025.issue-194-en.xml",
-      "pdfPage": "6",
+      "pdfPage": "5",
       "printedPage": "4",
       "tableRef": "Table 1. Brazil: Selected Economic Indicators, 2023–30"
     },
@@ -684,7 +684,7 @@
       "reportTitle": "Arab Republic of Egypt: Fifth and Sixth Reviews Under the Extended Arrangement Under the Extended Fund Facility and First Review Under the Resilience and Sustainability Arrangement, Requests for Rephasing of Access, Extension of the Arrangements, Waiver of Nonobservance of Performance Criterion, and Modification of Performance Criteria-Press Release; and Staff Report",
       "reportDate": "2026-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/069/002.2026.issue-069-en.xml",
-      "pdfPage": "57",
+      "pdfPage": "56",
       "printedPage": "51",
       "tableRef": "Figure 3. Egypt: Public Debt Structure Indicators — Debt by Currency"
     },
@@ -2652,7 +2652,7 @@
       "reportTitle": "South Africa: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for South Africa",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/034/002.2026.issue-034-en.xml",
-      "pdfPage": "59",
+      "pdfPage": "58",
       "printedPage": "54",
       "tableRef": "Figure 3. South Africa: Public Debt Structure Indicators — Debt by Currency (Percent of GDP)"
     },
@@ -2668,7 +2668,7 @@
       "reportTitle": "Zambia: Sixth Review Under The Extended Credit Facility Arrangement, Request for a waiver of Nonobservance of a Quantitative Performance Criterion, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for Zambia",
       "reportDate": "2026-02-02",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/021/002.2026.issue-021-en.xml",
-      "pdfPage": "115",
+      "pdfPage": "114",
       "printedPage": "6",
       "tableRef": "Table 1. Zambia: Public and Publicly Guaranteed Debt Stock—Creditor Composition and Contracted Debt Service"
     },
