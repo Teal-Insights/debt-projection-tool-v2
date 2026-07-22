@@ -10,7 +10,7 @@
       "primaryBalance": "WEO GGXONLB_NGDP (% of GDP), baselineYear value",
       "realInterestRate": "Implicit effective real rate \u2014 back-solved from r = (d_t + pb) \u00d7 (1+g/100) / d_{t-1} - 1 using WEO GGXWDG_NGDP at baselineYear and the previously-extracted g/pb/d_{t-1}. Clamped to [-20%, +50%]; outliers set null.",
       "realFxAppreciation": "Default 0 (WEO does not publish forward real FX appreciation); curate per-country in v3+",
-      "fcuShare": "Default 0 (WEO does not publish FCU share); curate from IMF Article IV / BIS in v3+",
+      "fcuShare": "Base WEO extract placeholder 0 only. At runtime the DSA adapter replaces it with an observed value or a separately tagged 0% calculation fallback when reviewed source coverage is missing.",
       "startingDebtPct": "WEO GGXWDG_NGDP at (baselineYear-1)",
       "historical": "WEO GGXWDG_NGDP from (baselineYear-4) to (baselineYear-1)",
       "baselineProjection": "WEO GGXWDG_NGDP year-by-year from baselineYear (2026) to last published projection year (2031). This is WEO's own debt-to-GDP path \u2014 used as the chart's baseline line. The user's projection line is recomputed from sliders by the engine.",
@@ -24,7 +24,7 @@
     "notes": [
       "172 of 189 countries have realInterestRate populated via the implicit method; 17 are null (6 computed outliers outside [-20%, +50%]; 11 missing input data for g/pb/d_t).",
       "realFxAppreciation defaults to 0; WEO does not publish forward real FX appreciation.",
-      "fcuShare defaults to 0; WEO does not publish; flagged for future curation.",
+      "The base extract carries 0 because WEO does not publish FCU share. Runtime loading replaces it from the adjudicated DSA dataset or applies a tagged 0% calculation fallback without converting missing coverage into an observation.",
       "Note: for some countries the LATEST_ACTUAL_ANNUAL_DATA is 2024 or earlier; 2025 values are then WEO projections, not actuals. All values come from the WEO download.",
       "Some countries report on fiscal year (e.g., FY2024/25). Calendar-year columns in the WEO database reflect WEO staff conversions; values taken as-is."
     ],

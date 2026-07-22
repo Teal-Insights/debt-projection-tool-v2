@@ -18,6 +18,4 @@ export type {
   RecomputeInput,
   RecomputeResult,
   YearDecomposition,
-  FanBand,
-  FanBands,
 } from '../types';

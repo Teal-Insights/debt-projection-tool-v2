@@ -17,8 +17,6 @@ const MARGIN = { top: 36, right: 56, bottom: 36, left: 48 };
 const HIST_COLOR = '#1f2937';     // dark slate — historical (past, neutral)
 const BASELINE_COLOR = '#3b82f6'; // sky blue — baseline (WEO defaults)
 const USER_COLOR = '#c08a3e';     // amber — user scenario
-const OUTER_BAND_FILL = '#dfe4ec'; // wider envelope — paler
-const INNER_BAND_FILL = '#c2cad6'; // tighter envelope — darker
 
 export function FanChart({ result, baselineResult, country }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
@@ -68,12 +66,10 @@ export function FanChart({ result, baselineResult, country }: Props) {
     const histVals = country.historical.map(h => h.debtPct);
     const baseProjVals = country.baselineProjection?.map(p => p.debtPct) ?? [];
     const userProjVals = result.path.map(p => p.debtPct);
-    const bandUpper = result.fanBands.outerBand.map(b => b.upper);
     const maxObserved = Math.max(
       ...histVals,
       ...baseProjVals,
       ...userProjVals,
-      ...bandUpper,
       country.startingDebtPct,
     );
     // 15% headroom above the highest observed point so the projection line
@@ -88,7 +84,6 @@ export function FanChart({ result, baselineResult, country }: Props) {
     country.historical,
     country.baselineProjection,
     result.path,
-    result.fanBands.outerBand,
   ]);
 
   useEffect(() => {
@@ -161,29 +156,6 @@ export function FanChart({ result, baselineResult, country }: Props) {
       .attr('text-anchor', 'start')
       .text('Debt to GDP ratio (%)');
 
-    // ---------- Fan bands (around the USER projection — uncertainty wraps the
-    //                       scenario the user is exploring, not the baseline) ----------
-    const areaGen = d3
-      .area<{ year: number; lower: number; upper: number }>()
-      .x(d => xScale(d.year))
-      .y0(d => yScale(d.lower))
-      .y1(d => yScale(d.upper))
-      .curve(d3.curveMonotoneX);
-
-    g.append('path')
-      .datum(result.fanBands.outerBand)
-      .attr('class', 'fan fan--outer')
-      .attr('d', areaGen)
-      .attr('fill', OUTER_BAND_FILL)
-      .attr('stroke', 'none');
-
-    g.append('path')
-      .datum(result.fanBands.innerBand)
-      .attr('class', 'fan fan--inner')
-      .attr('d', areaGen)
-      .attr('fill', INNER_BAND_FILL)
-      .attr('stroke', 'none');
-
     // ---------- Lines ----------
     const histPath = result.path.filter(p => p.year < country.baselineYear);
 
@@ -255,7 +227,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
       .attr('font-weight', 700)
       .attr('letter-spacing', '0.08em')
       .attr('fill', '#707070')
-      .text('HISTORICAL');
+      .text('PRE-2026 WEO PATH');
 
     const projMidX = (anchorX + innerW) / 2;
     g.append('text')
@@ -272,8 +244,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
     // Peak + end-of-horizon read-outs live in the app header, not on the chart.
     // (Removed the on-chart "Peak X.X%" and "→ Y.Y% by year" labels.)
 
-    // Legend lives outside the plot area as an HTML overlay (see JSX below) so it
-    // never collides with data lines or the fan band.
+    // Legend lives outside the plot area as an HTML overlay (see JSX below).
 
     // ---------- Hover tooltip ----------
     // Indicator group: vertical guide line + dots for each line at the hovered year.
@@ -390,13 +361,13 @@ export function FanChart({ result, baselineResult, country }: Props) {
 
       const summary = `Peak ${result.peak.debtPct.toFixed(1)}% in ${result.peak.year} · → ${result.endOfHorizon.debtPct.toFixed(1)}% by ${result.endOfHorizon.year}`;
 
-      const userRowLabel = isHistorical ? 'Historical' : 'Projection';
+      const userRowLabel = isHistorical ? 'Pre-2026 WEO path' : 'Your scenario';
       const userRowColor = isHistorical ? HIST_COLOR : USER_COLOR;
       const baselineRow =
         !isHistorical && baselinePct != null
           ? `<div class="fan-chart__tooltip-row">
                <span class="fan-chart__tooltip-swatch" style="background:${BASELINE_COLOR}"></span>
-               <span class="fan-chart__tooltip-label">Baseline</span>
+               <span class="fan-chart__tooltip-label">IMF WEO baseline</span>
                <strong>${baselinePct.toFixed(1)}%</strong>
              </div>`
           : '';
@@ -420,7 +391,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
         !isHistorical && baselinePct != null
           ? `<div class="fan-chart__tooltip-row fan-chart__tooltip-delta">
               <span class="fan-chart__tooltip-swatch fan-chart__tooltip-swatch--blank"></span>
-              <span class="fan-chart__tooltip-label">vs baseline</span>
+              <span class="fan-chart__tooltip-label">vs WEO baseline</span>
               <strong>${fmtSigned(userPct - baselinePct)}</strong>
             </div>`
           : '';
@@ -516,35 +487,21 @@ export function FanChart({ result, baselineResult, country }: Props) {
             className="fan-chart__legend-line"
             style={{ background: HIST_COLOR }}
           />
-          Historical
+          Pre-2026 WEO path
         </span>
         <span className="fan-chart__legend-item">
           <span
             className="fan-chart__legend-line"
             style={{ background: BASELINE_COLOR }}
           />
-          Baseline
+          IMF WEO baseline
         </span>
         <span className="fan-chart__legend-item">
           <span
             className="fan-chart__legend-line"
             style={{ background: USER_COLOR }}
           />
-          Projection
-        </span>
-        <span className="fan-chart__legend-item">
-          <span
-            className="fan-chart__legend-fill"
-            style={{ background: OUTER_BAND_FILL }}
-          />
-          Severe stress (±2%)
-        </span>
-        <span className="fan-chart__legend-item">
-          <span
-            className="fan-chart__legend-fill"
-            style={{ background: INNER_BAND_FILL }}
-          />
-          Moderate stress (±1%)
+          Your scenario
         </span>
       </div>
       <svg ref={svgRef} className="fan-chart__svg" />

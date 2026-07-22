@@ -113,29 +113,6 @@ export interface YearDecomposition {
   deltaOther: number;
 }
 
-/** A single fan band: per-year lower/upper bounds. */
-export type FanBand = Array<{ year: Year; lower: number; upper: number }>;
-
-/**
- * Two nested fan bands derived from a deterministic shock envelope. Both
- * are anchored at baselineYear − 1 (zero width) and widen forward.
- *
- * Width calibration: the identity is re-run on WEO's own baseline inputs
- * (`yearlyDefaults`) with adverse and favorable shifts applied to g, r, and
- * pb simultaneously. The deltas between the shifted runs and the baseline
- * run become the per-year widths — and those widths are then applied as
- * **parallel shifts** to the user's central path. So as the user moves
- * sliders, the bands translate with the central line by the same Δ; the
- * band width itself is invariant to slider state. This mirrors how the
- * FT 2014 visualization renders its precomputed percentile bands.
- */
-export interface FanBands {
-  /** Moderate stress envelope (±1 pp / ±1 % of GDP shifts to g, r, pb). */
-  innerBand: FanBand;
-  /** Severe stress envelope (±2 pp / ±2 % of GDP shifts to g, r, pb). */
-  outerBand: FanBand;
-}
-
 /** Engine output. */
 export interface RecomputeResult {
   /** Year-by-year projection (length = historical.length + horizonYears, starting at the earliest historical year). */
@@ -146,8 +123,6 @@ export interface RecomputeResult {
   peak: { year: Year; debtPct: number };
   /** End-of-horizon point. */
   endOfHorizon: { year: Year; debtPct: number };
-  /** Two nested fan bands (95% and 90%). Both anchored at baselineYear − 1 with zero width. */
-  fanBands: FanBands;
   /** Methodology used. */
   methodology: 'fc2012' | 'imf2021';
 }
