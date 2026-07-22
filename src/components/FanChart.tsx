@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import type { CountryState, RecomputeResult } from '../engine';
 
@@ -23,6 +23,36 @@ const INNER_BAND_FILL = '#c2cad6'; // tighter envelope — darker
 export function FanChart({ result, baselineResult, country }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [chartSize, setChartSize] = useState({ width: 0, height: 0 });
+
+  // The tool changes from a viewport-locked two-column layout to a scrolling
+  // single-column layout at compact widths. Redraw when that container changes
+  // size so a live browser resize cannot leave a chart stretched from its old
+  // viewBox dimensions.
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+
+    const updateSize = (width: number, height: number) => {
+      const next = {
+        width: Math.round(width),
+        height: Math.round(height),
+      };
+      setChartSize(current =>
+        current.width === next.width && current.height === next.height
+          ? current
+          : next,
+      );
+    };
+
+    updateSize(wrap.clientWidth, wrap.clientHeight);
+    const observer = new ResizeObserver(entries => {
+      const entry = entries[0];
+      if (entry) updateSize(entry.contentRect.width, entry.contentRect.height);
+    });
+    observer.observe(wrap);
+    return () => observer.disconnect();
+  }, []);
 
   // Y-axis upper bound is fully data-driven — adjusts both UP (when worst-case
   // sliders push the projection past the country's baseline range) and DOWN
@@ -70,10 +100,11 @@ export function FanChart({ result, baselineResult, country }: Props) {
     // Old tooltip divs accumulate across renders if not cleared — strip them.
     d3.select(wrap).selectAll('.fan-chart__tooltip').remove();
 
-    const width = wrap.clientWidth || 700;
-    const height = wrap.clientHeight || 360;
-    const innerW = width - MARGIN.left - MARGIN.right;
-    const innerH = height - MARGIN.top - MARGIN.bottom;
+    const width = chartSize.width || wrap.clientWidth || 700;
+    const height = chartSize.height || wrap.clientHeight || 360;
+    const margin = width < 480 ? { ...MARGIN, top: 64 } : MARGIN;
+    const innerW = width - margin.left - margin.right;
+    const innerH = height - margin.top - margin.bottom;
 
     const root = d3
       .select(svg)
@@ -82,7 +113,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
 
     const g = root
       .append('g')
-      .attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
     // X domain: full path span (history + projection). result.path is always
     // non-empty (≥3 entries: 2 history + 1 projection), so d3.extent never
@@ -125,7 +156,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
 
     g.append('text')
       .attr('class', 'axis-title')
-      .attr('x', -MARGIN.left + 12)
+      .attr('x', -margin.left + 12)
       .attr('y', -14)
       .attr('text-anchor', 'start')
       .text('Debt to GDP ratio (%)');
@@ -351,8 +382,8 @@ export function FanChart({ result, baselineResult, country }: Props) {
       }
 
       // Position tooltip near the hovered point. Flip left when near right edge.
-      const tooltipX = cx + MARGIN.left;
-      const tooltipY = yScale(userPct) + MARGIN.top;
+      const tooltipX = cx + margin.left;
+      const tooltipY = yScale(userPct) + margin.top;
       // Tooltip is now richer (YoY + decomposition sections), so reserve
       // more horizontal room when deciding whether to flip it to the left.
       const flipLeft = tooltipX > width - 280;
@@ -375,8 +406,8 @@ export function FanChart({ result, baselineResult, country }: Props) {
       // keeps units consistent with the rest of the tool. Values that
       // round to 0.0% are rendered with '±' to avoid '+0.0%' / '−0.0%'
       // misleading the user about direction when the underlying number
-      // is just numerical noise (or an exact-zero channel like deltaFx
-      // for countries with no foreign-currency debt).
+      // is just numerical noise (or an exact-zero channel when the current
+      // scenario's FX-share input is 0%).
       const fmtSigned = (v: number): string => {
         const sign = Math.abs(v) < 0.05 ? '±' : v > 0 ? '+' : '−';
         return `${sign}${Math.abs(v).toFixed(1)}%`;
@@ -475,7 +506,7 @@ export function FanChart({ result, baselineResult, country }: Props) {
       hover.style('display', 'none');
       tooltip.style('display', 'none');
     });
-  }, [result, baselineResult, country, yDomain]);
+  }, [result, baselineResult, country, yDomain, chartSize]);
 
   return (
     <div ref={wrapRef} className="fan-chart">

@@ -8,7 +8,10 @@ import type {
   YearlySliders,
 } from './engine';
 import countriesData from './data/countries.json';
-import { getFxShare } from './fxShare';
+import {
+  applyFxShareDefault as applyFxShareDefaultToCountry,
+  getFxShareDefault,
+} from './fxShare';
 import { FxShareFootnote } from './components/FxShareFootnote';
 import { CountrySelector } from './components/CountrySelector';
 import { SliderRow } from './components/SliderRow';
@@ -64,30 +67,14 @@ function isFullyPopulated(c: RawCountry): c is RawCountry & { yearlyDefaults: Ye
 }
 
 /**
- * TEA-880: wire the adjudicated DSA FX-share dataset in as the FCU-share
- * default. WEO publishes no FX-share series, so countries.json ships
- * fcuShare = 0 everywhere. Where the dataset has an adjudicated value we
- * use it — for the scalar default, the per-year default path, AND the
- * historical anchor s_{t-1} that the engine revalues in the first
- * projection step. Where it doesn't, the 0 stays but is labeled in the UI
- * as an unsourced fallback (see FxShareFootnote), never presented as data.
- *
- * The value is the latest ACTUAL year in the country's most recent
- * published DSA, applied flat across the projection horizon (no published
- * forward path exists; composition is user-explorable via the slider).
+ * TEA-880: resolve source coverage separately from the numerical model
+ * default. Observations, including observed 0 percent values, retain their
+ * provenance. Missing coverage stays null at the source boundary, then a
+ * tagged 0 percent calculation fallback is applied to the scalar default,
+ * per-year path, and opening stock so the engine can run.
  */
 function applyFxShareDefault(c: CountryState): CountryState {
-  const fx = getFxShare(c.iso);
-  if (!fx) return c;
-  const flat = Array.from({ length: HORIZON_YEARS }, () => fx.valuePct);
-  return {
-    ...c,
-    defaults: { ...c.defaults, fcuShare: fx.valuePct },
-    historicalFcuShare: fx.valuePct,
-    yearlyDefaults: c.yearlyDefaults
-      ? { ...c.yearlyDefaults, fcuShare: flat }
-      : c.yearlyDefaults,
-  };
+  return applyFxShareDefaultToCountry(c, getFxShareDefault(c.iso));
 }
 
 const COUNTRIES: CountryState[] = (
@@ -166,6 +153,8 @@ export default function App() {
     () => COUNTRIES.find(c => c.iso === countryIso) ?? COUNTRIES[0],
     [countryIso],
   );
+  const fxShareDefault =
+    country.fxShareDefault ?? getFxShareDefault(country.iso);
 
   const [sliders, setSliders] = useState<YearlySliders>(
     buildInitialSliders(country),
@@ -408,8 +397,9 @@ export default function App() {
                 onChange={(i, v) => updateSlider('fcuShare', i, v)}
                 footnote={
                   <FxShareFootnote
-                    entry={getFxShare(country.iso)}
+                    defaultState={fxShareDefault}
                     countryName={country.name}
+                    values={sliders.fcuShare}
                   />
                 }
               />

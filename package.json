@@ -3,7 +3,7 @@
   "private": true,
   "version": "2.0.0",
   "type": "module",
-  "description": "Debt Projection Tool — Version 2. Same methodology as v1 (FT-2014-replica), but with the latest IMF WEO data (April 2026) and the full WEO universe (189 economies, 172 fully projectable). Baseline line is WEO's own published debt-to-GDP path; user's projection diverges from sliders.",
+  "description": "Debt Projection Tool — Version 2. Same methodology as v1 (FT-2014-replica), but with the latest IMF WEO data (April 2026) and the full WEO universe (189 economies, 170 fully projectable in the six-year UI). Baseline line is WEO's own published debt-to-GDP path; user's projection diverges from sliders.",
   "homepage": "https://<owner>.github.io/<repo-name>/",
   "scripts": {
     "dev": "vite",

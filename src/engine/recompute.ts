@@ -12,8 +12,9 @@
  *
  * Year-by-year inputs: the engine reads sliders.<key>[i] for each projection
  * step i (i = 0 corresponds to baselineYear). For s_{t-1} at i = 0, the
- * historical anchor (country.defaults.fcuShare) is used as a proxy until the
- * data layer provides a separate historical s field.
+ * data layer supplies an explicit historical anchor plus fxShareDefault state.
+ * The numeric anchor may be an observation or a tagged model fallback; callers
+ * must use the attached state rather than infer provenance from the number.
  *
  * All inputs are entered as percent (e.g. 2.5 for 2.5%); the function converts
  * to decimal internally.
@@ -80,8 +81,9 @@ export function recompute(input: RecomputeInput): RecomputeResult {
 
     // s_{t-1}: prior-year FCU share — the composition of the debt stock that
     // year-t exchange-rate movement revalues. For i = 0 (first projection year),
-    // prefer the explicit historical anchor; fall back to defaults.fcuShare as
-    // a proxy when historicalFcuShare is not provided.
+    // prefer the explicit historical anchor. Adapted countries attach source
+    // state separately, so a numerical 0 here does not imply an observed zero.
+    // Fall back to defaults.fcuShare only for legacy callers.
     const sPrev =
       (i === 0
         ? (country.historicalFcuShare ?? country.defaults.fcuShare)
