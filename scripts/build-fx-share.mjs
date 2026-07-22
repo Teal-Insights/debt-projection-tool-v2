@@ -20,7 +20,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC_CSV = join(ROOT, 'data', 'fx-share', 'proposed-corrected-dataset.csv');
 const OUT_JSON = join(ROOT, 'src', 'data', 'fx-share.json');
 const EXPECTED_SHA256 =
-  'a44dff6429d0211fff4498b8a786910cd55ee0fe4b7fc9f054cee16ed8bdfd80';
+  '56790042fa64840b9cf3ce6800ec730f35de36469352b0cf712e0c2876bd7804';
 const EXPECTED_ROWS = 167;
 
 /** Minimal RFC-4180 CSV parser (handles quoted fields, embedded commas,
