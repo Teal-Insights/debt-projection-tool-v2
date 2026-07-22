@@ -284,6 +284,15 @@ body, #root {
   border-radius: 2px;
 }
 
+.app__callout-button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
 /* On narrow viewports the badge stacks above the text so the line
    doesn't compress. */
 @media (max-width: 760px) {
@@ -321,6 +330,18 @@ body, #root {
   padding: 10px;
   overflow: hidden;
   min-height: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  gap: 4px;
+}
+
+.app__chart-note {
+  margin: 0;
+  padding: 4px 8px 0;
+  border-top: 1px solid var(--rule);
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--gray2);
 }
 
 /* The narrative cards bring their own borders — no outer container chrome needed. */
@@ -546,8 +567,10 @@ body, #root {
 
 .slider-card__svg {
   width: 100%;
+  max-width: 520px;
   height: auto;
   display: block;
+  margin: 0 auto;
   touch-action: none;
   user-select: none;
 }
@@ -628,13 +651,6 @@ body, #root {
   display: inline-block;
   width: 14px;
   height: 2px;
-  border-radius: 1px;
-}
-
-.fan-chart__legend-fill {
-  display: inline-block;
-  width: 12px;
-  height: 8px;
   border-radius: 1px;
 }
 
@@ -1576,6 +1592,24 @@ a.toolkit-switcher__item:hover {
   text-decoration: underline;
 }
 
+.slider-card__footnote-link {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: #3b82f6;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.slider-card__footnote a:focus-visible,
+.slider-card__footnote-link:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 .slider-card__footnote--fallback {
   border-left-color: #b45309;
   background: #fff7ed;
@@ -1585,6 +1619,23 @@ a.toolkit-switcher__item:hover {
 .slider-card__footnote--source {
   border-left-color: #287a55;
   background: #f4fbf7;
+}
+
+.slider-card__footnote--published {
+  border-left-color: #287a55;
+  background: #f4fbf7;
+}
+
+.slider-card__footnote--derived {
+  border-left-color: #6554c0;
+  background: #f7f5ff;
+  color: #40356f;
+}
+
+.slider-card__footnote--assumption {
+  border-left-color: #b45309;
+  background: #fff7ed;
+  color: #78350f;
 }
 
 .slider-card__footnote--observed-zero {

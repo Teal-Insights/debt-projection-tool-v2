@@ -13,19 +13,21 @@ import {
   getFxShareDefault,
 } from './fxShare';
 import { FxShareFootnote } from './components/FxShareFootnote';
+import { InputProvenanceNote } from './components/InputProvenanceNote';
 import { CountrySelector } from './components/CountrySelector';
 import { SliderRow } from './components/SliderRow';
 import { FanChart } from './components/FanChart';
 import { OutputCards } from './components/OutputCards';
 import { Footer } from './components/Footer';
 import { MethodologyPage } from './components/MethodologyPage';
+import { getWeoDataMapperUrl } from './inputProvenance';
 import tealMark from './assets/logos/teal_insights_mark.svg';
 
 /**
- * v2 ships the IMF WEO April 2026 dataset. Per-country defaults are sourced
- * verbatim from WEO except `realInterestRate`, which is back-solved from the
- * debt-dynamics identity using WEO's own published debt path (the standup's
- * "implicit effective real rate from WEO" approach).
+ * v2 ships the IMF WEO April 2026 dataset. Growth and primary-balance defaults
+ * are published WEO series; `realInterestRate` is back-solved from the WEO debt
+ * path; real-FX appreciation is an explicit 0% assumption; and FX-share
+ * defaults are added by the provenance-aware DSA adapter below.
  *
  * Some countries arrive from WEO with missing inputs (e.g. Afghanistan,
  * Lebanon, Venezuela) — filter them at load time so the dropdown only shows
@@ -115,8 +117,8 @@ function buildInitialSliders(country: CountryState): YearlySliders {
  * from defaults. The user's projection line is still engine output, so the
  * two lines overlap at defaults and diverge as the user moves sliders.
  *
- * Synthesise a RecomputeResult-shaped object so the existing FanChart and
- * OutputCards components can consume it without modification.
+ * Synthesise a RecomputeResult-shaped object so the chart and output cards
+ * can consume the published WEO path through the same interface.
  */
 function buildWeoBaselineResult(country: CountryState): RecomputeResult {
   const histPath = [...country.historical];
@@ -142,7 +144,6 @@ function buildWeoBaselineResult(country: CountryState): RecomputeResult {
     decomposition: [],
     peak,
     endOfHorizon,
-    fanBands: { innerBand: [], outerBand: [] }, // FanChart uses result.fanBands, not baseline's.
     methodology: 'fc2012',
   };
 }
@@ -155,6 +156,10 @@ export default function App() {
   );
   const fxShareDefault =
     country.fxShareDefault ?? getFxShareDefault(country.iso);
+  const defaultSliders = useMemo(
+    () => buildInitialSliders(country),
+    [country],
+  );
 
   const [sliders, setSliders] = useState<YearlySliders>(
     buildInitialSliders(country),
@@ -163,7 +168,7 @@ export default function App() {
   // Reset sliders to defaults whenever the country changes.
   const [prevIso, setPrevIso] = useState<string>(country.iso);
   if (prevIso !== country.iso) {
-    setSliders(buildInitialSliders(country));
+    setSliders(defaultSliders);
     setPrevIso(country.iso);
   }
 
@@ -196,7 +201,7 @@ export default function App() {
     });
   };
 
-  const resetSliders = () => setSliders(buildInitialSliders(country));
+  const resetSliders = () => setSliders(defaultSliders);
 
   // Top-level navigation. The methodology lives as a sibling view to the tool
   // (tab-style), not a modal overlay — a stakeholder can deep-link straight to
@@ -260,8 +265,8 @@ export default function App() {
         </div>
         {showTool && (
           <p className="app__header-context" aria-label="About this tool">
-            Sovereign Debt to GDP ratio (%) under user-defined macro
-            assumptions · Based on the{' '}
+            Deterministic debt scenarios from adjustable, traceable
+            defaults · Based on the{' '}
             <a
               href="https://web.archive.org/web/20160719165542/https://ig.ft.com/sites/2014/debt-to-gdp-ratio/"
               target="_blank"
@@ -292,10 +297,20 @@ export default function App() {
       <aside className="app__callout" role="note" aria-label="About this prototype">
         <span className="app__callout-label">Prototype</span>
         <p className="app__callout-text">
-          Early iteration — this tool takes IMF WEO data and lets you adjust
-          macro assumptions to project sovereign Debt to GDP ratios. We
-          welcome feedback from policymakers and analysts on how to make it
-          more useful.{' '}
+          Start with reasonable, adjustable defaults and clear provenance.
+          IMF WEO April 2026 supplies growth and the primary balance; the
+          effective real interest rate is derived from its debt path; IMF DSAs
+          supply foreign-currency debt shares where available; and real
+          exchange-rate appreciation starts from an explicit 0% assumption.
+          These are starting points, not recommended forecasts.{' '}
+          <button
+            type="button"
+            className="app__callout-link app__callout-button"
+            onClick={() => setView('methodology')}
+          >
+            Review methodology
+          </button>{' '}
+          ·{' '}
           <a
             className="app__callout-link"
             href="mailto:reuben.opondo@tealinsights.com,lte@tealinsights.com,aniekpeno.ifeh@tealinsights.com?subject=Debt%20Projection%20Tool%20%E2%80%94%20Feedback"
@@ -316,6 +331,11 @@ export default function App() {
                   baselineResult={baselineResult}
                   country={country}
                 />
+                <p className="app__chart-note">
+                  Published WEO debt path versus the deterministic scenario
+                  generated by the documented inputs. No probability or
+                  forecast-uncertainty bands are estimated.
+                </p>
               </div>
               <OutputCards
                 result={result}
@@ -345,52 +365,101 @@ export default function App() {
                 label="Real GDP growth rate"
                 years={projectionYears}
                 values={sliders.realGdpGrowth}
-                baselineValues={country.yearlyDefaults?.realGdpGrowth}
+                defaultValues={defaultSliders.realGdpGrowth}
                 min={-10}
                 max={12}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realGdpGrowth', i, v)}
+                footnote={
+                  <InputProvenanceNote
+                    kind="published"
+                    defaultTitle="Published WEO default"
+                    defaultDetail="IMF WEO April 2026 real GDP growth (NGDP_RPCH), 2026–2031."
+                    values={sliders.realGdpGrowth}
+                    defaultValues={defaultSliders.realGdpGrowth}
+                    sourceUrl={getWeoDataMapperUrl('NGDP_RPCH', country.iso)}
+                    onMethodology={() => setView('methodology')}
+                  />
+                }
               />
               <SliderRow
                 key={`r-${countryIso}`}
                 label="Effective real interest rate"
                 years={projectionYears}
                 values={sliders.realInterestRate}
-                baselineValues={country.yearlyDefaults?.realInterestRate}
+                defaultValues={defaultSliders.realInterestRate}
                 min={-10}
                 max={15}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realInterestRate', i, v)}
+                footnote={
+                  <InputProvenanceNote
+                    kind="derived"
+                    defaultTitle="WEO-derived default"
+                    defaultDetail="Calculated year by year from WEO debt, growth, and primary balance; this is not a published WEO series."
+                    values={sliders.realInterestRate}
+                    defaultValues={defaultSliders.realInterestRate}
+                    sourceUrl={getWeoDataMapperUrl('GGXWDG_NGDP', country.iso)}
+                    sourceLabel="Open WEO debt source"
+                    methodologyLabel="See derivation"
+                    onMethodology={() => setView('methodology')}
+                  />
+                }
               />
               <SliderRow
                 key={`pb-${countryIso}`}
                 label="Primary budget balance"
                 years={projectionYears}
                 values={sliders.primaryBalance}
-                baselineValues={country.yearlyDefaults?.primaryBalance}
+                defaultValues={defaultSliders.primaryBalance}
                 min={-10}
                 max={8}
                 step={0.1}
                 unit="% of GDP"
                 onChange={(i, v) => updateSlider('primaryBalance', i, v)}
+                footnote={
+                  <InputProvenanceNote
+                    kind="published"
+                    defaultTitle="Published WEO default"
+                    defaultDetail="IMF WEO April 2026 general government primary net lending/borrowing (GGXONLB_NGDP), 2026–2031."
+                    values={sliders.primaryBalance}
+                    defaultValues={defaultSliders.primaryBalance}
+                    sourceUrl={getWeoDataMapperUrl(
+                      'GGXONLB_NGDP',
+                      country.iso,
+                    )}
+                    onMethodology={() => setView('methodology')}
+                  />
+                }
               />
               <SliderRow
                 key={`z-${countryIso}`}
                 label="Real exchange rate appreciation"
                 years={projectionYears}
                 values={sliders.realFxAppreciation}
-                baselineValues={country.yearlyDefaults?.realFxAppreciation}
+                defaultValues={defaultSliders.realFxAppreciation}
                 min={-15}
                 max={15}
                 step={0.1}
                 onChange={(i, v) => updateSlider('realFxAppreciation', i, v)}
+                footnote={
+                  <InputProvenanceNote
+                    kind="assumption"
+                    defaultTitle="Explicit calculation assumption: 0.0%"
+                    defaultDetail="WEO does not publish the forward real-exchange-rate series required for this input."
+                    values={sliders.realFxAppreciation}
+                    defaultValues={defaultSliders.realFxAppreciation}
+                    methodologyLabel="Why this assumption is used"
+                    onMethodology={() => setView('methodology')}
+                  />
+                }
               />
               <SliderRow
                 key={`s-${countryIso}`}
                 label="Foreign currency debt share"
                 years={projectionYears}
                 values={sliders.fcuShare}
-                baselineValues={country.yearlyDefaults?.fcuShare}
+                defaultValues={defaultSliders.fcuShare}
                 min={0}
                 max={100}
                 step={0.1}

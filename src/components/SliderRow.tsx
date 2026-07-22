@@ -9,12 +9,12 @@ interface Props {
   /** Per-year values. */
   values: number[];
   /**
-   * Per-year WEO baseline values for this indicator (same shape as `values`).
-   * When provided, a small notch is drawn on each year's track at the baseline
-   * position so users can see at a glance whether they've moved above or
-   * below the WEO default. Optional — pass undefined to suppress notches.
+   * Per-year reset defaults for this indicator (same shape as `values`).
+   * When provided, a small blue notch is drawn on each year's track so users
+   * can compare their scenario with the documented starting value. The source
+   * can be published, derived, or assumed and is identified in the footnote.
    */
-  baselineValues?: number[];
+  defaultValues?: number[];
   min: number;
   max: number;
   step: number;
@@ -42,7 +42,7 @@ export function SliderRow({
   label,
   years,
   values,
-  baselineValues,
+  defaultValues,
   min,
   max,
   step,
@@ -155,18 +155,17 @@ export function SliderRow({
           />
         ))}
 
-        {/* WEO baseline notches — small horizontal tick on each year's track at
-            the baseline value position. Lets users see at a glance whether
-            they've moved above or below the WEO default. Rendered between
+        {/* Reset-default notches show the documented starting point for each
+            year. Rendered between
             tracks and the connector so the user's projection line + thumbs
-            sit visually on top of the notch. Color matches the FanChart's
-            baseline line color (#3b82f6) for cross-component consistency.
+            sit visually on top of the notch. Color matches the chart's WEO
+            baseline line (#3b82f6) for cross-component consistency.
             Visually clamped to [min, max] for the rare outlier countries
             whose baseline sits outside the slider domain (e.g. Suriname
             growth ~43%); the actual slider value is preserved untouched —
             the notch just slides to the edge. */}
-        {baselineValues &&
-          baselineValues.map((b, i) => {
+        {defaultValues &&
+          defaultValues.map((b, i) => {
             const clamped = Math.max(min, Math.min(max, b));
             const yNotch = yScale(clamped);
             // When the WEO baseline sits outside the slider domain (a few
