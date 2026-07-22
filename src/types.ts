@@ -5,6 +5,8 @@
  * The 2012 simplified shorthand used by default mirrors the FT Tool's displayed identity.
  */
 
+import type { FxShareDefaultState } from './fxShare';
+
 /** ISO-3 country code, lowercase (e.g. "gbr", "usa"). */
 export type CountryIso = string;
 
@@ -54,11 +56,17 @@ export interface CountryState {
   /** Default slider values at the baseline year (WEO projections). */
   defaults: SliderValues;
   /**
+   * Provenance-aware foreign-currency-share default. An observed 0 and a
+   * tagged 0 percent calculation fallback have different discriminants even
+   * though the numerical engine input is the same.
+   */
+  fxShareDefault?: FxShareDefaultState;
+  /**
    * Foreign-currency debt share at the end of (baselineYear − 1), percent.
    * This is s_{t-1} for the first projection step — the composition of the debt
-   * stock the year-t FX move revalues. Optional: when absent, the engine falls
-   * back to `defaults.fcuShare` as a proxy. To be populated from authoritative
-   * data in the WEO populate task.
+   * stock the year-t FX move revalues. `fxShareDefault` says whether this
+   * numeric value is observed or a tagged calculation fallback. Optional for
+   * legacy callers; when absent, the engine uses `defaults.fcuShare`.
    */
   historicalFcuShare?: number;
   /**

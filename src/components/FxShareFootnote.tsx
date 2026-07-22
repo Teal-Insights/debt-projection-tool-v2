@@ -1,62 +1,112 @@
-import type { FxShareEntry } from '../fxShare';
-import { frameworkLabel, perimeterLabel } from '../fxShare';
+import {
+  frameworkLabel,
+  getFxShareScenarioState,
+  perimeterLabel,
+  type FxShareDefaultState,
+} from '../fxShare';
 
 interface Props {
-  /** Sourced dataset entry, or undefined when the country has no value. */
-  entry: FxShareEntry | undefined;
+  defaultState: FxShareDefaultState;
   countryName: string;
+  /** Current per-year scenario values, used to distinguish reset from edits. */
+  values: number[];
 }
 
-/**
- * Provenance footnote for the "Foreign currency debt share" slider card.
- *
- * Two states (TEA-880, transparency request from Plamen Iossifov, IMF SPR):
- *
- * 1. SOURCED — the default comes from the adjudicated DSA FX-share dataset.
- *    Show the value's basis (currency vs residency), the debt perimeter,
- *    the reference year, and a link to the exact page of the source report,
- *    so an IMF reader can see the definitional basis at a glance.
- *
- * 2. UNSOURCED FALLBACK — no adjudicated value exists. The default stays 0,
- *    but the zero is clearly labeled as a placeholder that switches off the
- *    FX-revaluation channel, NOT as data.
- */
-export function FxShareFootnote({ entry, countryName }: Props) {
-  if (!entry) {
-    return (
-      <p className="slider-card__footnote slider-card__footnote--fallback">
-        <strong>Unsourced default.</strong> No published DSA value for{' '}
-        {countryName} in the current dataset, so the default is 0% — a
-        placeholder, not data. At 0% the FX-revaluation channel is switched
-        off; drag the slider to explore it.
-      </p>
-    );
-  }
+export interface FxShareFootnotePresentation {
+  title: string;
+  detail: string;
+  tone: 'source' | 'observed-zero' | 'fallback' | 'user-defined';
+}
 
-  const basis =
-    entry.definitionBasis === 'currency'
+function getFxShareFootnotePresentation(
+  defaultState: FxShareDefaultState,
+  countryName: string,
+  values: number[],
+): FxShareFootnotePresentation {
+  const scenario = getFxShareScenarioState(defaultState, values);
+  if (scenario.kind === 'fallback_default') {
+    return {
+      title: 'FX-share coverage unavailable',
+      detail:
+        `No reviewed DSA value is available in the current dataset for ${countryName}. ` +
+        'The model starts from a 0% calculation fallback so the projection can run. ' +
+        `This does not establish the actual foreign-currency debt share for ${countryName}.`,
+      tone: 'fallback',
+    };
+  }
+  if (scenario.kind === 'observed_zero_default') {
+    return {
+      title: 'Observed DSA value: 0.0%',
+      detail:
+        'The source reports an observed 0% foreign-currency share. ' +
+        'This is a sourced observation, not the missing-coverage fallback.',
+      tone: 'observed-zero',
+    };
+  }
+  if (scenario.kind === 'user_defined') {
+    const sourceContext =
+      defaultState.kind === 'fallback'
+        ? 'No reviewed DSA value is available in the current dataset, so the source coverage gap remains.'
+        : `The sourced DSA default is ${defaultState.sourceValuePct.toFixed(1)}%.`;
+    return {
+      title: 'User-defined FX-share scenario',
+      detail: `${sourceContext} The current slider path is a scenario assumption.`,
+      tone: 'user-defined',
+    };
+  }
+  return {
+    title: `Sourced DSA default: ${defaultState.modelValuePct.toFixed(1)}%`,
+    detail: 'The latest eligible actual stock share is held constant until changed.',
+    tone: 'source',
+  };
+}
+
+/** Provenance and coverage state for the foreign-currency-share input. */
+export function FxShareFootnote({
+  defaultState,
+  countryName,
+  values,
+}: Props) {
+  const presentation = getFxShareFootnotePresentation(
+    defaultState,
+    countryName,
+    values,
+  );
+  const entry = defaultState.kind === 'observed' ? defaultState.entry : null;
+  const pageRef = entry
+    ? entry.printedPage
+      ? `p. ${entry.printedPage} (PDF p. ${entry.pdfPage})`
+      : `PDF p. ${entry.pdfPage}`
+    : null;
+  const basis = entry
+    ? entry.definitionBasis === 'currency'
       ? 'currency-denomination basis'
-      : 'residency basis (external debt used as a proxy for FX-denominated debt)';
-  const pageRef = entry.printedPage
-    ? `p. ${entry.printedPage} (PDF p. ${entry.pdfPage})`
-    : `PDF p. ${entry.pdfPage}`;
+      : 'residency basis (external debt used as an FX-share proxy)'
+    : null;
 
   return (
     <p
-      className="slider-card__footnote"
-      title={`${entry.tableRef} — ${entry.reportTitle}`}
+      className={`slider-card__footnote slider-card__footnote--${presentation.tone}`}
+      data-fx-share-state={presentation.tone}
+      aria-live="polite"
+      title={entry ? `${entry.tableRef}; ${entry.reportTitle}` : undefined}
     >
-      Default {entry.valuePct}% ({entry.year}) from the latest IMF{' '}
-      {frameworkLabel(entry.framework)} DSA, {basis}, {perimeterLabel(entry.debtPerimeter)}{' '}
-      perimeter ·{' '}
-      <a
-        href={entry.publicationUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        source
-      </a>{' '}
-      ({pageRef})
+      <strong>{presentation.title}.</strong> {presentation.detail}
+      {entry && (
+        <>
+          {' '}
+          Source: {entry.year}, {frameworkLabel(entry.framework)}, {basis},{' '}
+          {perimeterLabel(entry.debtPerimeter)} perimeter.{' '}
+          <a
+            href={entry.publicationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            IMF report
+          </a>{' '}
+          ({pageRef}).
+        </>
+      )}
     </p>
   );
 }

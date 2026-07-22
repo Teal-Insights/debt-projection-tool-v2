@@ -346,19 +346,18 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             (matching the last WEO projection year).
           </li>
           <li>
-            <strong>Foreign-currency debt share</strong>: our own DSA
-            FX-share dataset, extracted from the most recent published IMF
-            debt sustainability analysis (DSA) for each country and reviewed
-            value by value by a human before release. Coverage: 167
-            economies — 64 of the 68 countries assessed under the LIC-DSF
-            and 103 of the 123 assessed under the MAC SRDSF. Each value
-            carries full provenance: the source report URL, the PDF page and
-            table or figure it was read from, the definitional basis
-            (currency-denomination vs residency), and the debt perimeter
-            (central government, general government, public sector, or
-            non-financial public sector). The per-country basis and
-            perimeter are shown directly under the Foreign currency debt
-            share slider, with a link to the exact source page.
+            <strong>Foreign-currency debt share</strong>: when available, the
+            latest eligible actual observation in a published IMF debt
+            sustainability analysis (DSA). Eligible sources are DSAs produced
+            under the Low-Income Country Debt Sustainability Framework (LIC
+            DSF) and the Sovereign Risk and Debt Sustainability Framework for
+            Market Access Countries (MAC SRDSF). The 21 July 2026 v0.1.1
+            snapshot contains 167 reviewed values: 64 of 68 LIC DSF countries
+            and 103 of 123 MAC SRDSF countries. Among the 170 economies shown
+            in this tool, 152 have a reviewed value and 18 have missing source
+            coverage. Every sourced value carries its IMF report URL, page,
+            table or figure, reference year, definition basis, and debt
+            perimeter. Those details appear under the slider.
           </li>
         </ul>
       </section>
@@ -375,16 +374,16 @@ export function MethodologyPage({ onReturnToTool }: Props) {
             defaults — a defensible "what WEO is implying" reading.
           </li>
           <li>
-            <strong>Foreign-currency share defaults come from IMF DSAs;
-            missing values fall back to a labeled 0.</strong> Where our DSA
-            FX-share dataset has a value, it is the country's default: the
-            latest actual-year FX share from that country's most recent
-            published DSA, held flat across the projection horizon (no
-            institution publishes a forward FX-share path). Where no value
-            exists, the default stays at 0% and the tool says so under the
-            slider: that zero is an unsourced placeholder that switches off
-            the FX-revaluation channel, not a data point. It is never
-            presented as sourced data.
+            <strong>Source value and calculation fallback remain separate.</strong>{' '}
+            A reviewed DSA value becomes the opening stock share and is held
+            constant across the projection horizon until the user changes it.
+            A source-reported 0% remains an observed zero. When coverage is
+            missing, the source value remains missing; the calculator applies
+            a separately tagged 0% fallback at load and reset solely so the
+            projection can run. That fallback does not establish the country's
+            actual foreign-currency debt share. If the user moves the slider, the
+            resulting path is labeled as a user-defined scenario while the
+            coverage gap remains disclosed.
           </li>
           <li>
             <strong>Residency vs currency (the LIC-DSF caveat).</strong> The

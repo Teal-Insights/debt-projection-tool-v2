@@ -10,6 +10,7 @@
  */
 
 import type { ReactNode } from 'react';
+import { getFxShareScenarioState } from '../fxShare';
 import type { CountryState, RecomputeResult, YearlySliders } from '../types';
 import {
   computeSensitivities,
@@ -137,6 +138,7 @@ export function whereScenarioLands(
 export function whatsMovingTheDebt(
   result: RecomputeResult,
   country: CountryState,
+  sliders: YearlySliders,
 ): ReactNode {
   const sums = result.decomposition.reduce(
     (acc, d) => ({
@@ -205,10 +207,26 @@ export function whatsMovingTheDebt(
   // where all channels are very small and FX happens to top the ranking).
   let fxNote: ReactNode = null;
   if (Math.abs(sums.fx) < 0.3 && dom.key !== 'fx') {
-    const reason =
-      country.defaults.fcuShare === 0
-        ? 'no foreign-currency debt'
-        : 'the FX move is small';
+    let reason = 'the real FX move is zero or small';
+    if (country.fxShareDefault) {
+      const scenario = getFxShareScenarioState(
+        country.fxShareDefault,
+        sliders.fcuShare,
+      );
+      if (scenario.kind === 'fallback_default') {
+        reason =
+          'no reviewed FX-share observation is available in the current dataset; the calculation retains a tagged 0% model fallback, which does not establish the actual foreign-currency debt share';
+      } else if (scenario.kind === 'observed_zero_default') {
+        reason = 'the DSA reports an observed 0% foreign-currency share';
+      } else if (
+        scenario.kind === 'user_defined' &&
+        scenario.allValuesZero
+      ) {
+        reason = 'this user-defined scenario uses a 0% foreign-currency share';
+      }
+    } else if (sliders.fcuShare.every(value => value === 0)) {
+      reason = 'this scenario uses a 0% model input';
+    }
     fxNote = (
       <>
         {' '}

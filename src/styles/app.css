@@ -638,6 +638,18 @@ body, #root {
   border-radius: 1px;
 }
 
+@media (max-width: 480px) {
+  .fan-chart__legend {
+    left: 8px;
+    right: 8px;
+    max-width: none;
+    justify-content: center;
+    gap: 2px 8px;
+    font-size: 9px;
+    line-height: 1.2;
+  }
+}
+
 /* ---------- Hover tooltip ---------- */
 .fan-chart__tooltip {
   position: absolute;
@@ -812,7 +824,7 @@ body, #root {
 /* (Footer styles live further down in the file — the dark band override.) */
 
 /* Responsive: stack columns on narrow viewports */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .app__main {
     grid-template-columns: 1fr;
   }
@@ -1546,13 +1558,14 @@ a.toolkit-switcher__item:hover {
 }
 
 
-/* FX-share provenance footnote (TEA-880). Two states: sourced (quiet gray
-   provenance line with a source link) and unsourced fallback (amber notice
-   that the 0% default is a placeholder, not data). */
+/* FX-share provenance footnote (TEA-880). Source, observed-zero, missing-
+   coverage fallback, and user-defined states use the same compact shape. */
 .slider-card__footnote {
   margin: 4px 0 2px;
-  padding-top: 4px;
-  border-top: 1px dashed var(--rule);
+  padding: 5px 7px;
+  border-left: 3px solid var(--rule);
+  border-radius: 3px;
+  background: white;
   font-size: 10.5px;
   line-height: 1.45;
   color: var(--gray2);
@@ -1564,10 +1577,111 @@ a.toolkit-switcher__item:hover {
 }
 
 .slider-card__footnote--fallback {
-  border-top: none;
-  border-left: 3px solid #d97706;
-  background: #fef3c7;
-  border-radius: 3px;
-  padding: 5px 7px;
+  border-left-color: #b45309;
+  background: #fff7ed;
   color: #78350f;
+}
+
+.slider-card__footnote--source {
+  border-left-color: #287a55;
+  background: #f4fbf7;
+}
+
+.slider-card__footnote--observed-zero {
+  border-left-color: #047857;
+  background: #ecfdf5;
+  color: #064e3b;
+}
+
+.slider-card__footnote--user-defined {
+  border-left-color: #3b82f6;
+  background: #eff6ff;
+  color: #1e3a8a;
+}
+
+/* Once the two tool columns stack, the page becomes document-height content.
+   Release the desktop viewport lock so inputs and the footer stay reachable. */
+@media (max-width: 1100px) {
+  .app {
+    height: auto;
+    max-height: none;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .app__header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .app__header-left,
+  .app__header-right {
+    width: 100%;
+  }
+
+  .app__header-right {
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 720px) {
+  .app {
+    padding: 10px 14px 8px;
+  }
+
+  .app__footer {
+    margin: 0 -14px -8px;
+    padding: 14px;
+  }
+
+  .app__header {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 2px;
+  }
+
+  .app__header-left {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .app__title {
+    font-size: 17px;
+  }
+
+  .app__tabs {
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .app__header-right {
+    width: 100%;
+  }
+
+  .country-selector {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .country-selector__label {
+    display: none;
+  }
+
+  .country-selector__trigger {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .country-selector__panel {
+    right: auto;
+    left: 0;
+    width: min(280px, calc(100vw - 28px));
+  }
+
+  .output-cards {
+    flex-direction: column;
+  }
 }

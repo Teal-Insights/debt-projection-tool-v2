@@ -10,11 +10,13 @@
  * dimensions an IMF reader will ask about first: definition basis
  * (currency vs residency) and debt perimeter.
  *
- * Countries WITHOUT an entry keep the historical default of 0 percent.
- * That zero is an UNSOURCED FALLBACK, not data — the UI and methodology
- * page must label it as such (TEA-880, transparency request from IMF SPR).
+ * Missing source coverage and an observed zero are different facts. The
+ * lookup layer therefore returns a discriminated coverage state. A separate
+ * default-resolution step may apply a tagged 0 percent model fallback so the
+ * calculator can run, but it never turns missing coverage into an observation.
  */
 import fxShareData from './data/fx-share.json';
+import type { CountryState } from './types';
 
 export interface FxShareEntry {
   /** FX share of public debt, percent of total debt (0-100). */
@@ -36,6 +38,61 @@ export interface FxShareEntry {
   tableRef: string;
 }
 
+export interface ObservedFxShareCoverage {
+  kind: 'observed';
+  iso: string;
+  sourceValuePct: number;
+  entry: FxShareEntry;
+}
+
+export interface MissingFxShareCoverage {
+  kind: 'missing';
+  iso: string;
+  /** A missing source value stays missing at the data boundary. */
+  sourceValuePct: null;
+  reason: 'missing_source_coverage';
+}
+
+export type FxShareCoverage =
+  | ObservedFxShareCoverage
+  | MissingFxShareCoverage;
+
+export interface ObservedFxShareDefault {
+  kind: 'observed';
+  iso: string;
+  sourceValuePct: number;
+  modelValuePct: number;
+  observedZero: boolean;
+  usesFallback: false;
+  entry: FxShareEntry;
+}
+
+export interface FallbackFxShareDefault {
+  kind: 'fallback';
+  iso: string;
+  /** The economic fact remains unavailable. */
+  sourceValuePct: null;
+  /** Separate calculation assumption used only to keep the model runnable. */
+  modelValuePct: 0;
+  observedZero: false;
+  usesFallback: true;
+  reason: 'missing_source_coverage';
+}
+
+export type FxShareDefaultState =
+  | ObservedFxShareDefault
+  | FallbackFxShareDefault;
+
+export type FxShareScenarioState =
+  | { kind: 'sourced_default'; defaultState: ObservedFxShareDefault }
+  | { kind: 'observed_zero_default'; defaultState: ObservedFxShareDefault }
+  | { kind: 'fallback_default'; defaultState: FallbackFxShareDefault }
+  | {
+      kind: 'user_defined';
+      defaultState: FxShareDefaultState;
+      allValuesZero: boolean;
+    };
+
 interface FxShareFile {
   _meta: {
     row_count: number;
@@ -50,13 +107,107 @@ const DATA = fxShareData as unknown as FxShareFile;
 /** Dataset-level metadata (row count, coverage, source hash). */
 export const FX_SHARE_META = DATA._meta;
 
-/**
- * Look up the sourced FX-share entry for a country (ISO-3, any case).
- * Returns undefined when the country has no adjudicated value — callers
- * must then treat the 0-percent default as an unsourced fallback and say so.
- */
+/** Load source coverage without manufacturing a numeric value for a gap. */
+export function getFxShareCoverage(isoValue: string): FxShareCoverage {
+  const iso = isoValue.toLowerCase();
+  const entry = DATA.countries[iso];
+  if (entry) {
+    return {
+      kind: 'observed',
+      iso,
+      sourceValuePct: entry.valuePct,
+      entry,
+    };
+  }
+  return {
+    kind: 'missing',
+    iso,
+    sourceValuePct: null,
+    reason: 'missing_source_coverage',
+  };
+}
+
+/** Resolve a model default while retaining the source-coverage state. */
+export function resolveFxShareDefault(
+  coverage: FxShareCoverage,
+): FxShareDefaultState {
+  if (coverage.kind === 'observed') {
+    return {
+      kind: 'observed',
+      iso: coverage.iso,
+      sourceValuePct: coverage.sourceValuePct,
+      modelValuePct: coverage.sourceValuePct,
+      observedZero: coverage.sourceValuePct === 0,
+      usesFallback: false,
+      entry: coverage.entry,
+    };
+  }
+  return {
+    kind: 'fallback',
+    iso: coverage.iso,
+    sourceValuePct: null,
+    modelValuePct: 0,
+    observedZero: false,
+    usesFallback: true,
+    reason: coverage.reason,
+  };
+}
+
+export function getFxShareDefault(iso: string): FxShareDefaultState {
+  return resolveFxShareDefault(getFxShareCoverage(iso));
+}
+
+/** Backward-compatible sourced-entry lookup. Prefer the typed coverage API. */
 export function getFxShare(iso: string): FxShareEntry | undefined {
-  return DATA.countries[iso.toLowerCase()];
+  const coverage = getFxShareCoverage(iso);
+  return coverage.kind === 'observed' ? coverage.entry : undefined;
+}
+
+/**
+ * Apply the resolved state to every numeric engine path and attach the state
+ * to the country so downstream transformations never infer provenance from 0.
+ */
+export function applyFxShareDefault(
+  country: CountryState,
+  defaultState: FxShareDefaultState,
+): CountryState {
+  const valuePct = defaultState.modelValuePct;
+  return {
+    ...country,
+    fxShareDefault: defaultState,
+    defaults: { ...country.defaults, fcuShare: valuePct },
+    historicalFcuShare: valuePct,
+    yearlyDefaults: country.yearlyDefaults
+      ? {
+          ...country.yearlyDefaults,
+          fcuShare: country.yearlyDefaults.fcuShare.map(() => valuePct),
+        }
+      : country.yearlyDefaults,
+  };
+}
+
+/** Classify the current scenario without losing the tagged default state. */
+export function getFxShareScenarioState(
+  defaultState: FxShareDefaultState,
+  values: number[],
+): FxShareScenarioState {
+  const usesDefault =
+    values.length > 0 &&
+    values.every(value => Math.abs(value - defaultState.modelValuePct) < 1e-9);
+  if (!usesDefault) {
+    return {
+      kind: 'user_defined',
+      defaultState,
+      allValuesZero: values.length > 0 && values.every(value => value === 0),
+    };
+  }
+  if (defaultState.kind === 'fallback') {
+    return { kind: 'fallback_default', defaultState };
+  }
+  if (defaultState.observedZero) {
+    return { kind: 'observed_zero_default', defaultState };
+  }
+  return { kind: 'sourced_default', defaultState };
 }
 
 /** Human-readable label for the debt perimeter codes used in the dataset. */

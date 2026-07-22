@@ -29,8 +29,8 @@ export function OutputCards({ result, baselineResult, country, sliders }: Props)
     [result, baselineResult, country],
   );
   const card2 = useMemo(
-    () => whatsMovingTheDebt(result, country),
-    [result, country],
+    () => whatsMovingTheDebt(result, country, sliders),
+    [result, country, sliders],
   );
   const card3 = useMemo(
     () => whatIfYouAdjusted(country, sliders, result),
