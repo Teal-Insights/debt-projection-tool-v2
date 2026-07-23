@@ -1,7 +1,11 @@
 import {
+  auditSentence,
+  derivationSentence,
+  formatFxShareValue,
   frameworkLabel,
   getFxShareScenarioState,
   perimeterLabel,
+  yearStatusSentence,
   type FxShareDefaultState,
 } from '../fxShare';
 
@@ -39,7 +43,8 @@ function getFxShareFootnotePresentation(
       title: 'Observed DSA value: 0.0%',
       detail:
         'The source reports an observed 0% foreign-currency share. ' +
-        'This is a sourced observation, not the missing-coverage fallback.',
+        'This is a sourced observation, not the missing-coverage fallback. ' +
+        (defaultState.kind === 'observed' ? auditSentence(defaultState.entry) : ''),
       tone: 'observed-zero',
     };
   }
@@ -47,16 +52,28 @@ function getFxShareFootnotePresentation(
     const sourceContext =
       defaultState.kind === 'fallback'
         ? 'No reviewed DSA value is available in the current dataset, so the source coverage gap remains.'
-        : `The sourced DSA default is ${defaultState.sourceValuePct.toFixed(1)}%.`;
+        : `The sourced DSA default is ${formatFxShareValue(defaultState.entry)}.`;
     return {
       title: 'User-defined FX-share scenario',
       detail: `${sourceContext} The current slider path is a scenario assumption.`,
       tone: 'user-defined',
     };
   }
+  // Sourced nonzero default at reset.
+  const entry = defaultState.kind === 'observed' ? defaultState.entry : null;
+  const chartTag =
+    entry?.extractionMethod === 'figure' ? ' (chart-derived)' : '';
+  const sentences = [
+    entry ? derivationSentence(entry) : '',
+    entry ? (yearStatusSentence(entry) ?? '') : '',
+    'The value is held constant across the projection until changed.',
+    entry ? auditSentence(entry) : '',
+  ].filter(Boolean);
   return {
-    title: `Sourced DSA default: ${defaultState.modelValuePct.toFixed(1)}%`,
-    detail: 'The latest eligible actual stock share is held constant until changed.',
+    title: `Sourced DSA default: ${
+      entry ? formatFxShareValue(entry) : `${defaultState.modelValuePct.toFixed(1)}%`
+    }${chartTag}`,
+    detail: sentences.join(' '),
     tone: 'source',
   };
 }
@@ -83,6 +100,9 @@ export function FxShareFootnote({
       ? 'currency-denomination basis'
       : 'residency basis (external debt used as an FX-share proxy)'
     : null;
+  const yearLabel = entry
+    ? `${entry.year} (${entry.yearStatus === 'estimate' ? 'staff estimate' : 'actual'})`
+    : null;
 
   return (
     <p
@@ -95,7 +115,7 @@ export function FxShareFootnote({
       {entry && (
         <>
           {' '}
-          Source: {entry.year}, {frameworkLabel(entry.framework)}, {basis},{' '}
+          Source: {yearLabel}, {frameworkLabel(entry.framework)}, {basis},{' '}
           {perimeterLabel(entry.debtPerimeter)} perimeter.{' '}
           <a
             href={entry.publicationUrl}

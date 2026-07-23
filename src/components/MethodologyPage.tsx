@@ -375,19 +375,79 @@ export function MethodologyPage({ onReturnToTool }: Props) {
           </li>
           <li>
             <strong>Foreign-currency debt share</strong>: when available, the
-            latest eligible actual observation in a published IMF debt
+            latest eligible observation in a published IMF debt
             sustainability analysis (DSA). Eligible sources are DSAs produced
             under the Low-Income Country Debt Sustainability Framework (LIC
             DSF) and the Sovereign Risk and Debt Sustainability Framework for
-            Market Access Countries (MAC SRDSF). The 21 July 2026 v0.1.1
+            Market Access Countries (MAC SRDSF). The 23 July 2026 v0.1.2
             snapshot contains 167 reviewed values: 64 of 68 LIC DSF countries
             and 103 of 123 MAC SRDSF countries. Among the 170 economies shown
             in this tool, 152 have a reviewed value and 18 have missing source
             coverage. Every sourced value carries its IMF report URL, page,
-            table or figure, reference year, definition basis, and debt
-            perimeter. Those details appear under the slider.
+            table or figure, reference year and status, definition basis,
+            debt perimeter, and the exact arithmetic connecting it to the
+            cited page. Those details appear under the slider; the section
+            below explains how the dataset was built and checked.
           </li>
         </ul>
+      </section>
+
+      <section className="methodology-page__section">
+        <h2>The foreign-currency share: how it is built, and how to check it</h2>
+        <p>
+          DSAs publish currency composition in three forms, and the dataset
+          records which form each value came from: printed tables (the DSF
+          baseline tables in LIC-DSF reports), printed text statements, and
+          the Debt-by-Currency charts of the SRDSF debt-structure annex. Of
+          the 167 values, 89 come from charts. Table and text values are
+          transcribed digits and display with one decimal. Chart values are
+          measured estimates: the foreign-currency and total bands are read
+          at the latest pre-projection year, and the share is their ratio.
+          They display as approximate integers (for example ≈42%) because a
+          chart read is not precise to one decimal.
+        </p>
+        <p>
+          Most source pages print the ingredients rather than the share
+          itself: foreign-currency (or external) debt and total public debt,
+          each in percent of GDP. The share shown here is their ratio. The
+          footnote under the slider shows that arithmetic for every country
+          (numerator, denominator, and the cited page and report), so any
+          number in this tool can be reproduced from the linked IMF document
+          in under a minute. Where the report states the share directly, the
+          footnote quotes that instead.
+        </p>
+        <p>
+          Reference years follow a disclosed policy: the default is the
+          newest eligible observation the DSA publishes, whether the report
+          labels it an actual or a staff estimate, and the label is shown per
+          country. Eleven of the 167 values sit on estimate columns; where
+          the same report also prints a hard actual, the footnote shows the
+          value that column would imply. Projection-year values are never
+          used as observations.
+        </p>
+        <p>
+          Quality assurance runs at three levels. First, extraction:
+          machine-read values were cross-checked against QPSD and World Bank
+          IDS aggregates where the definitions are comparable, and every row
+          was human-adjudicated (17 July 2026). Second, an independent audit
+          on 23 July 2026 re-read all 167 cited source pages and re-measured
+          every chart: 161 values reproduced within tolerance, and 6 were
+          corrected after re-measurement (five chart reads, and one
+          projection-year value moved back to the latest actual). Each
+          correction is documented in the dataset's notes with the visible
+          arithmetic. Third, the build: the app refuses to compile if any
+          published value stops reproducing from its recorded numerator and
+          denominator, or if the dataset file's hash differs from the
+          adjudicated, audited version.
+        </p>
+        <p>
+          To check any number yourself: open the IMF report linked under the
+          slider at the cited page, find the debt-by-currency table, chart,
+          or statement named there, and apply the arithmetic the footnote
+          shows. If what you find disagrees with what we show, please use
+          the feedback link; that is exactly the kind of scrutiny this
+          dataset is built for.
+        </p>
       </section>
 
       <section className="methodology-page__section">
