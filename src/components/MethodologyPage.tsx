@@ -427,11 +427,13 @@ export function MethodologyPage({ onReturnToTool }: Props) {
         </p>
         <p>
           Quality assurance runs at three levels. First, extraction:
-          machine-read values were cross-checked against QPSD and World Bank
-          IDS aggregates where the definitions are comparable, and every row
-          was human-adjudicated (17 July 2026). Second, an independent audit
-          on 23 July 2026 re-read all 167 cited source pages and re-measured
-          every chart: 161 values reproduced within tolerance, and 6 were
+          machine-read
+          values were cross-checked against QPSD and World Bank IDS aggregates
+          where the definitions are comparable, with human rulings on flagged
+          rows and on every definitional policy (17 July 2026). Second, a second, independent
+          machine pass on 23 July 2026 re-read all 167 cited source pages and
+          re-measured every chart, with every discrepancy then ruled on against
+          the page image: 161 values reproduced within tolerance, and 6 were
           corrected after re-measurement (five chart reads, and one
           projection-year value moved back to the latest actual). Each
           correction is documented in the dataset's notes with the visible
