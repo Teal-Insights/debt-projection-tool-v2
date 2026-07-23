@@ -1,16 +1,33 @@
 {
   "_meta": {
-    "name": "DSA FX-share dataset (adjudicated)",
-    "description": "Foreign-currency share of public debt, latest actual year per country, extracted from the most recent published IMF DSA for each country (LIC-DSF and MAC SRDSF staff reports) and human-adjudicated.",
+    "name": "DSA FX-share dataset (adjudicated + audited)",
+    "description": "Foreign-currency share of public debt, latest available eligible observation per country (actual or staff estimate, labeled), extracted from the most recent published IMF DSA for each country (LIC-DSF and MAC SRDSF staff reports), human-adjudicated, and independently audited against every cited source page.",
+    "dataset_version": "v0.1.2",
     "source_csv": "data/fx-share/proposed-corrected-dataset.csv",
-    "source_csv_sha256": "56790042fa64840b9cf3ce6800ec730f35de36469352b0cf712e0c2876bd7804",
-    "source_package": "SovTech/Workstreams/2026-07_DSA-FX-Share-Extraction/04-Dataset/TEA-878-adjudication-20260717/02-Proposed-Dataset (Drive)",
+    "source_csv_sha256": "e74f12d457a9af717508c447edf661dd01e3dc03ce6bdcb798e800fd63489f18",
+    "source_package": "TEA-878 adjudicated final (row-identical to TEA-879 dataset-final.csv) plus TEA-880 QA corrections of 2026-07-23 (BWA, GAB, KWT, LBN, SVK, KIR)",
+    "qa_overlay": "data/fx-share/qa-overlay.json",
+    "qa_audit": {
+      "date": "2026-07-23",
+      "coverage": "all 167 cited source pages independently re-read",
+      "outcomes": {
+        "CONFIRMED": 83,
+        "CONFIRMED_APPROX": 78,
+        "CORRECTED": 6
+      }
+    },
+    "policy": {
+      "year": "latest available eligible observation (actual or staff estimate), status labeled per country",
+      "figure_precision": "chart-derived values are estimates; UI displays them as approximate integers"
+    },
     "row_count": 167,
     "coverage": {
       "LIC_DSF": 64,
       "MAC_SRDSF": 103,
       "LIC_DSF_roster": 68,
-      "MAC_SRDSF_roster": 123
+      "MAC_SRDSF_roster": 123,
+      "estimate_year_rows": 11,
+      "figure_sourced_rows": 89
     },
     "generated_by": "scripts/build-fx-share.mjs",
     "linear_issue": "TEA-880"
@@ -19,28 +36,62 @@
     "afg": {
       "valuePct": 100,
       "year": "2020",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 100,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Islamic Republic of Afghanistan: First Review Under the Under the Extended Credit Facility Arrangement and Request for Modification of Performance Criteria-Press Release; Staff Report; and Statement by the Executive Director for Islamic Republic of Afghanistan",
       "reportDate": "2021-06-28",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2021/138/002.2021.issue-138-en.xml",
-      "pdfPage": "81",
+      "pdfPage": "82",
       "printedPage": "6",
       "tableRef": "Table 2. Islamic Republic of Afghanistan: Public Sector Debt Sustainability Framework, Baseline Scenario, 2020–41"
     },
     "ago": {
       "valuePct": 70,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 70,
+        "denominatorPctGdp": 100,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Angola: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Angola",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/094/002.2026.issue-094-en.xml",
@@ -51,12 +102,29 @@
     "alb": {
       "valuePct": 42.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 23,
+        "denominatorPctGdp": 54.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 42,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Albania: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/345/002.2025.issue-345-en.xml",
@@ -67,12 +135,29 @@
     "are": {
       "valuePct": 56,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 55.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "United Arab Emirates: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for United Arab Emirates",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/327/002.2025.issue-327-en.xml",
@@ -83,12 +168,29 @@
     "arg": {
       "valuePct": 55.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 56.3,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Argentina: 2026 Article IV Consultation, Second Review under the Extended Arragnement under the Extended Fund Facility, Requests for a Waiver of Nonobservance of a Performance Criterion, Modification of Performance Criteria, and Financing Assurances Review-Press Release; Staff Report; Staff Supplement; and Statement by the Executive Director for Argentina",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/105/002.2026.issue-105-en.xml",
@@ -99,12 +201,29 @@
     "arm": {
       "valuePct": 48.8,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 23.9,
+        "denominatorPctGdp": 49,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Armenia: First Review Under the Stand-By Arrangement, Request for  Modification of Performance Criteria and Monetary Policy Consultation Clause-Press Release; and Staff Report",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/132/002.2026.issue-132-en.xml",
@@ -115,12 +234,29 @@
     "atg": {
       "valuePct": 35.1,
       "year": "2025",
+      "yearStatus": "estimate",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 24,
+        "denominatorPctGdp": 68.3,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 35.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 39,
       "reportTitle": "Antigua and Barbuda: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Antigua and Barbuda",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/097/002.2026.issue-097-en.xml",
@@ -131,12 +267,29 @@
     "aus": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Australia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Australia",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/038/002.2026.issue-038-en.xml",
@@ -147,12 +300,29 @@
     "aze": {
       "valuePct": 41.5,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 40.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Azerbaijan: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Azerbaijan",
       "reportDate": "2025-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/098/002.2025.issue-098-en.xml",
@@ -163,12 +333,29 @@
     "bdi": {
       "valuePct": 25.8,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 727.6,
+        "denominatorPctGdp": 2818.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Burundi: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Burundi",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/150/002.2026.issue-150-en.xml",
@@ -179,12 +366,29 @@
     "bel": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Belgium: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Belgium",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/049/002.2026.issue-049-en.xml",
@@ -195,12 +399,29 @@
     "ben": {
       "valuePct": 78.3,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 47.4,
+        "denominatorPctGdp": 60.5,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Benin: Seventh Reviews Under the Extended Fund Facility and the Extended Credit Facility Arrangements and Fourth Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Benin",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/086/002.2026.issue-086-en.xml",
@@ -211,12 +432,29 @@
     "bfa": {
       "valuePct": 44.6,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 25.5,
+        "denominatorPctGdp": 57.2,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Burkina Faso: Fourth Review Under the Extended Credit Facility Arrangement, Financing Assurances Review, and Request for an Arrangement Under the Resilience and Sustainability Facility-Press Release; Staff Report; and Statement by the Executive Director for Burkina Faso",
       "reportDate": "2026-03-23",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/064/002.2026.issue-064-en.xml",
@@ -227,28 +465,62 @@
     "bgd": {
       "valuePct": 46.3,
       "year": "FY25",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 19.5,
+        "denominatorPctGdp": 42.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Bangladesh: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Bangladesh",
       "reportDate": "2026-01-30",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/024/002.2026.issue-024-en.xml",
-      "pdfPage": "87",
+      "pdfPage": "88",
       "printedPage": "22",
       "tableRef": "Table 2. Bangladesh: Public Sector Debt Sustainability Framework, Baseline Scenario, FY23–FY46"
     },
     "bgr": {
       "valuePct": 70.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 17,
+        "denominatorPctGdp": 24,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 73.3,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Bulgaria: 2025 Article IV Consultation-Press Release; Staff Report; and Staff Supplement",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/306/002.2025.issue-306-en.xml",
@@ -259,12 +531,29 @@
     "bhs": {
       "valuePct": 47.6,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 40,
+        "denominatorPctGdp": 84,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 47.6,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "The Bahamas: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for The Bahamas",
       "reportDate": "2025-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/008/002.2025.issue-008-en.xml",
@@ -275,12 +564,29 @@
     "bih": {
       "valuePct": 66.1,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 65.2,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Bosnia and Herzegovina: 2025 Article IV Consultation-Press Release; Staff Report; Staff Supplement; and Statement  by the Alternate Executive Director for Bosnia and Herzegovina",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/252/002.2025.issue-252-en.xml",
@@ -291,12 +597,29 @@
     "blz": {
       "valuePct": 63.1,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 63.4,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Belize: 2024 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2024-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/124/002.2024.issue-124-en.xml",
@@ -307,12 +630,29 @@
     "bol": {
       "valuePct": 31.6,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 30,
+        "denominatorPctGdp": 95,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 29.1,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Bolivia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Bolivia",
       "reportDate": "2025-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/116/002.2025.issue-116-en.xml",
@@ -323,28 +663,62 @@
     "bra": {
       "valuePct": 5.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 4.5,
+        "denominatorPctGdp": 87.3,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Brazil: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Brazil",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/194/002.2025.issue-194-en.xml",
-      "pdfPage": "5",
+      "pdfPage": "6",
       "printedPage": "4",
       "tableRef": "Table 1. Brazil: Selected Economic Indicators, 2023–30"
     },
     "brb": {
       "valuePct": 40,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 38.4,
+        "denominatorPctGdp": 96,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 40.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Barbados: 2026 Article IV Consultation and Request for a Stand-By Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Barbados",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/155/002.2026.issue-155-en.xml",
@@ -355,12 +729,29 @@
     "btn": {
       "valuePct": 91,
       "year": "FY2024/25",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 91,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Bhutan: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-27",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/019/002.2026.issue-019-en.xml",
@@ -369,14 +760,31 @@
       "tableRef": "Paragraph 3 and Composition of Outstanding PPG Debt"
     },
     "bwa": {
-      "valuePct": 38.7,
+      "valuePct": 33.3,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 11,
+        "denominatorPctGdp": 33,
+        "printedSharePct": null,
+        "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 38.7 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Botswana: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Botswana",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/325/002.2025.issue-325-en.xml",
@@ -387,12 +795,29 @@
     "caf": {
       "valuePct": 52.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 32,
+        "denominatorPctGdp": 60.7,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Central African Republic: Third and Fourth Review Under the Extended Credit Facility, Requests for a Waiver of Nonobservance of Performance Criteria, and Financing Assurance Review",
       "reportDate": "2025-06-23",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/140/002.2025.issue-140-en.xml",
@@ -403,12 +828,29 @@
     "can": {
       "valuePct": 5.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 6,
+        "denominatorPctGdp": 109,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 6.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Canada: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/012/002.2026.issue-012-en.xml",
@@ -419,12 +861,29 @@
     "chl": {
       "valuePct": 35,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 34.1,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Chile: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Chile",
       "reportDate": "2026-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/169/002.2026.issue-169-en.xml",
@@ -435,12 +894,29 @@
     "civ": {
       "valuePct": 63.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 38.3,
+        "denominatorPctGdp": 60,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Côte d’Ivoire: Fourth Reviews Under the Extended Arrangement Under the Extended Fund Facility and the Arrangement Under the Extended Credit Facility, Request for Modification of a Quantitative Performance Criterion, and Third Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Côte d’Ivoire",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/218/002.2025.issue-218-en.xml",
@@ -451,12 +927,29 @@
     "cmr": {
       "valuePct": 65.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 28.4,
+        "denominatorPctGdp": 43.4,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Cameroon: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Cameroon",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/081/002.2026.issue-081-en.xml",
@@ -467,12 +960,29 @@
     "cod": {
       "valuePct": 64.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 14.5,
+        "denominatorPctGdp": 22.5,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Democratic Republic of the Congo: First Review Under the Extended Credit Facility Arrangement, Requests for Waivers of Nonobservance of Performance Criteria, Modification of Quantitative Performance Criteria, and Financing Assurances Review -Press Release; Staff Report; and Statement by the Executive Director for the Democratic Republic of the Congo",
       "reportDate": "2025-07-16",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/195/002.2025.issue-195-en.xml",
@@ -483,12 +993,29 @@
     "cog": {
       "valuePct": 39.8,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 39.4,
+        "denominatorPctGdp": 99,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Congo: Sixth Review Under the Three-Year Arrangement Under the Extended Credit Facility, Request for Waivers of Nonobservance of Performance Criteria, and Financing Assurances Review",
       "reportDate": "2025-03-24",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/075/002.2025.issue-075-en.xml",
@@ -499,12 +1026,29 @@
     "col": {
       "valuePct": 47.1,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 46.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Colombia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Colombia",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/280/002.2025.issue-280-en.xml",
@@ -515,12 +1059,29 @@
     "cpv": {
       "valuePct": 64.3,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 80.2,
+        "denominatorPctGdp": 124.7,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Cabo Verde: Fifth Review Under the Extended Credit Facility Arrangement, Request for a Waiver of Nonobservance of Quantitative Performance Criterion, Modification of Quantitative Performance Criteria, and Second Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Cabo Verde",
       "reportDate": "2025-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/043/002.2025.issue-043-en.xml",
@@ -531,12 +1092,29 @@
     "cri": {
       "valuePct": 35,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 21,
+        "denominatorPctGdp": 60,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 36.4,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Costa Rica: Report for the 2026 Article IV Consultation and Review under the Flexible Credit Line Arrangement-Press Release; Staff Report; Informational Annex; and Statement by the Executive Director for Costa Rica",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/116/002.2026.issue-116-en.xml",
@@ -547,12 +1125,29 @@
     "cyp": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 55,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Cyprus: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Cyprus",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/145/002.2026.issue-145-en.xml",
@@ -563,12 +1158,29 @@
     "cze": {
       "valuePct": 5.9,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 6,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Czech Republic: 2026 Article IV Consultation-Press Release; Staff Report; Staff Supplement; and Statement by the Executive Director for the Czech Republic",
       "reportDate": "2026-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/070/002.2026.issue-070-en.xml",
@@ -579,12 +1191,29 @@
     "deu": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 62.2,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Germany: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Germany",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/036/002.2026.issue-036-en.xml",
@@ -595,12 +1224,29 @@
     "dji": {
       "valuePct": 100,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 68.9,
+        "denominatorPctGdp": 68.9,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Djibouti: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-09-22",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/276/002.2025.issue-276-en.xml",
@@ -611,12 +1257,29 @@
     "dma": {
       "valuePct": 66.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 72.3,
+        "denominatorPctGdp": 108.2,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Dominica: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Dominica",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/117/002.2026.issue-117-en.xml",
@@ -627,12 +1290,29 @@
     "dom": {
       "valuePct": 56.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 33,
+        "denominatorPctGdp": 58.1,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 56.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Dominican Republic: 2025 Article IV Consultation-Press Release; Staff Report and Statement by the Executive Director for Dominican Republic",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/305/002.2025.issue-305-en.xml",
@@ -643,12 +1323,29 @@
     "dza": {
       "valuePct": 1,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 1,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Algeria: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/270/002.2025.issue-270-en.xml",
@@ -659,12 +1356,29 @@
     "ecu": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 54.3,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Ecuador: Fifth Review Under the Extended Arrangement Under the Extended Fund Facility, Requests for Waivers of Nonobservance of Performance Criteria, Modification of Performance Criteria, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for Ecuador",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/084/002.2026.issue-084-en.xml",
@@ -675,28 +1389,62 @@
     "egy": {
       "valuePct": 35.9,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Arab Republic of Egypt: Fifth and Sixth Reviews Under the Extended Arrangement Under the Extended Fund Facility and First Review Under the Resilience and Sustainability Arrangement, Requests for Rephasing of Access, Extension of the Arrangements, Waiver of Nonobservance of Performance Criterion, and Modification of Performance Criteria-Press Release; and Staff Report",
       "reportDate": "2026-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/069/002.2026.issue-069-en.xml",
-      "pdfPage": "56",
+      "pdfPage": "57",
       "printedPage": "51",
       "tableRef": "Figure 3. Egypt: Public Debt Structure Indicators — Debt by Currency"
     },
     "esp": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Spain: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Spain",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/102/002.2026.issue-102-en.xml",
@@ -707,12 +1455,29 @@
     "est": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Estonia: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/181/002.2025.issue-181-en.xml",
@@ -723,12 +1488,29 @@
     "fin": {
       "valuePct": 2.3,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 1.583862,
+        "denominatorPctGdp": 69.351181,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 2,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Finland: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/006/002.2026.issue-006-en.xml",
@@ -739,12 +1521,29 @@
     "fji": {
       "valuePct": 35,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 28,
+        "denominatorPctGdp": 80,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 34.8,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Fiji: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Republic of Fiji",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/118/002.2026.issue-118-en.xml",
@@ -755,12 +1554,29 @@
     "fsm": {
       "valuePct": 94.3,
       "year": "Jun-23",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 94.3,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Federated States of Micronesia: 2023 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Federated States of Micronesia",
       "reportDate": "2024-03-04",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/066/002.2024.issue-066-en.xml",
@@ -769,14 +1585,31 @@
       "tableRef": "Text Table 2. Stock of Debt Owed by the National and State Governments"
     },
     "gab": {
-      "valuePct": 52.3,
+      "valuePct": 48.2,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 33.2,
+        "denominatorPctGdp": 68.5,
+        "printedSharePct": null,
+        "note": "Re-measured from the cited chart at the 2023 point during the 2026-07 audit."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 52.3 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Gabon: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Gabon",
       "reportDate": "2024-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/144/002.2024.issue-144-en.xml",
@@ -787,12 +1620,29 @@
     "gbr": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "United Kingdom: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for United Kingdom",
       "reportDate": "2026-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/172/002.2026.issue-172-en.xml",
@@ -803,12 +1653,29 @@
     "geo": {
       "valuePct": 67.6,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 23,
+        "denominatorPctGdp": 34,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 67.3,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Georgia: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Georgia",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/133/002.2026.issue-133-en.xml",
@@ -819,12 +1686,29 @@
     "gha": {
       "valuePct": 53,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 53,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Cited PDF revision is not in the local extraction archive; verified against a same-title archived copy whose pagination matches the citation."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Ghana: Fifth Review Under the Arrangement Under the Extended Credit Facility, Requests for Modification of the Monetary Policy Consultation Clause and Program Extension, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for Ghana",
       "reportDate": "2025-12-22",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/343/002.2025.issue-343-en.xml",
@@ -835,12 +1719,29 @@
     "gin": {
       "valuePct": 48.9,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 19.7,
+        "denominatorPctGdp": 40.3,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Guinea: 2024 Article IV Consultation and Request for Disbursement Under the Rapid Credit Facility-Press Release; Staff Report; and Statement by the Executive Director for Guinea",
       "reportDate": "2024-05-17",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/130/002.2024.issue-130-en.xml",
@@ -851,12 +1752,29 @@
     "gmb": {
       "valuePct": 63.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 50.1,
+        "denominatorPctGdp": 78.5,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "The Gambia: Fourth Review Under the Extended Credit Facility Arrangement, Requests for a Waiver of Nonobservance of a Performance Criterion, Modifications of Performance Criteria and Indicative Targets, and Financing Assurances Review; First Review Under the Resilience and Sustainability Facility Arrangement, and Request for Rephasing of Access-Press Release; Staff Report; and Statement by the Executive Director for The Gambia",
       "reportDate": "2025-12-23",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/344/002.2025.issue-344-en.xml",
@@ -867,12 +1785,29 @@
     "gnb": {
       "valuePct": 37.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 28.3,
+        "denominatorPctGdp": 75.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Guinea-Bissau: Eleventh Review Under the Extended Credit Facility Arrangement, Requests for Modification of Performance Criteria and Financing Assurances Review",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/140/002.2026.issue-140-en.xml",
@@ -883,12 +1818,29 @@
     "gnq": {
       "valuePct": 21.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 21.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Equatorial Guinea: Staff Report for the 2025 Article IV Consultation and First and Second Reviews Under the Staff-Monitored Program-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Equatorial Guinea",
       "reportDate": "2025-08-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/224/002.2025.issue-224-en.xml",
@@ -899,12 +1851,29 @@
     "grc": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Greece: 2026 Article IV Consultation - Press Release; Staff Report; and Statement by the Executive Director for Greece",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/108/002.2026.issue-108-en.xml",
@@ -915,12 +1884,29 @@
     "grd": {
       "valuePct": 73.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 73.8,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Grenada: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/009/002.2026.issue-009-en.xml",
@@ -931,12 +1917,29 @@
     "gtm": {
       "valuePct": 46.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 47.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Guatemala: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Guatemala",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/260/002.2025.issue-260-en.xml",
@@ -947,12 +1950,29 @@
     "hnd": {
       "valuePct": 57.8,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 27.5,
+        "denominatorPctGdp": 47.6,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Honduras: First and Second Reviews Under the Extended Fund Facility and the Extended Credit Facility Arrangements, and Requests for Waivers of Nonobservance of Performance Criteria and Rephasing of Purchases-Press Release; Staff Report; and Statement by the Executive Director for Honduras",
       "reportDate": "2024-12-10",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/332/002.2024.issue-332-en.xml",
@@ -963,12 +1983,29 @@
     "hrv": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Croatia: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/329/002.2025.issue-329-en.xml",
@@ -979,12 +2016,29 @@
     "hti": {
       "valuePct": 14.6,
       "year": "FY2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 2.2,
+        "denominatorPctGdp": 15.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Haiti: Second Review Under the Staff-Monitored Program and Request for Extension-Press Release; and Staff Report",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/337/002.2025.issue-337-en.xml",
@@ -995,12 +2049,29 @@
     "hun": {
       "valuePct": 31.3,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 23,
+        "denominatorPctGdp": 73.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 31.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Hungary: 2025 Article IV Consultation-Press Release; Staff Report; and Statement  by the Executive Director for Hungary",
       "reportDate": "2025-08-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/250/002.2025.issue-250-en.xml",
@@ -1011,12 +2082,29 @@
     "idn": {
       "valuePct": 28.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 28.5,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Indonesia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Indonesia",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/010/002.2026.issue-010-en.xml",
@@ -1027,12 +2115,29 @@
     "irl": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Ireland: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/156/002.2026.issue-156-en.xml",
@@ -1043,12 +2148,29 @@
     "irq": {
       "valuePct": 42.4,
       "year": "2024",
+      "yearStatus": "estimate",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 20,
+        "denominatorPctGdp": 47.2,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 42.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Iraq: 2025 Article IV Consultation-Press Release; Staff Report; and Informational Annex",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/183/002.2025.issue-183-en.xml",
@@ -1059,12 +2181,29 @@
     "isl": {
       "valuePct": 9.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 9.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Iceland: 2025 Article IV Consultation-Press Release; Staff Report and Statement by the Executive Director for Iceland",
       "reportDate": "2025-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/141/002.2025.issue-141-en.xml",
@@ -1075,12 +2214,29 @@
     "isr": {
       "valuePct": 14.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 15,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Israel: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Alternate Executive Director for Israel",
       "reportDate": "2026-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/161/002.2026.issue-161-en.xml",
@@ -1091,12 +2247,29 @@
     "ita": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Italy: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Italy",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/201/002.2025.issue-201-en.xml",
@@ -1107,12 +2280,29 @@
     "jam": {
       "valuePct": 64.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 63.6,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Jamaica: Request for Purchase Under the Rapid Financing Instrument-Press Release; Staff Report; and Statement by the Executive Director for Jamaica",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/008/002.2026.issue-008-en.xml",
@@ -1123,12 +2313,29 @@
     "jor": {
       "valuePct": 39.8,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 41,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Jordan: Fifth Review Under the Extended Arrangement Under the Extended Fund Facility, Request for Modification of Performance Criteria, and Second Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Jordan",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/146/002.2026.issue-146-en.xml",
@@ -1139,12 +2346,29 @@
     "jpn": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 214.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Japan: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Japan",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/075/002.2026.issue-075-en.xml",
@@ -1155,12 +2379,29 @@
     "kaz": {
       "valuePct": 26.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 6.3,
+        "denominatorPctGdp": 24,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 27,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Kazakhstan: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Kazakhstan",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/017/002.2026.issue-017-en.xml",
@@ -1171,12 +2412,29 @@
     "ken": {
       "valuePct": 55.3,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 40.4,
+        "denominatorPctGdp": 73.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kenya: Seventh and Eighth Reviews Under the Extended Fund Facility and Extended Credit Facility Arrangements, Requests for Reduction of Access, Augmentation and Rephasing of Access Under the Arrangements, Modifications of Performance Criteria, Waiver of Nonobservance of Performance Criteria, and Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Kenya",
       "reportDate": "2024-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/316/002.2024.issue-316-en.xml",
@@ -1187,12 +2445,29 @@
     "kgz": {
       "valuePct": 72.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 26.6,
+        "denominatorPctGdp": 36.6,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kyrgyz Republic: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-06-04",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/118/002.2025.issue-118-en.xml",
@@ -1203,12 +2478,29 @@
     "khm": {
       "valuePct": 99.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 25.9,
+        "denominatorPctGdp": 26.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Cambodia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Cambodia",
       "reportDate": "2025-12-02",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/317/002.2025.issue-317-en.xml",
@@ -1217,30 +2509,64 @@
       "tableRef": "Table 2. Cambodia: Public Sector Debt Sustainability Framework, Baseline Scenario, 2022–2045"
     },
     "kir": {
-      "valuePct": 98.8,
-      "year": "2025",
+      "valuePct": 97.7,
+      "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
-      "confidence": "medium",
+      "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 8.6,
+        "denominatorPctGdp": 8.8,
+        "printedSharePct": null,
+        "note": "Printed table values at the latest actual column (2024)."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 98.8 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kiribati: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Kiribati",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/099/002.2026.issue-099-en.xml",
-      "pdfPage": "12",
-      "printedPage": "7",
-      "tableRef": "Paragraph 7, public debt composition"
+      "pdfPage": "79",
+      "printedPage": "20",
+      "tableRef": "Table 2. Kiribati: Public Sector Debt Sustainability Framework, Baseline Scenario, 2022-2045"
     },
     "kna": {
       "valuePct": 19,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 11,
+        "denominatorPctGdp": 58,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 18,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "St. Kitts and Nevis: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/093/002.2026.issue-093-en.xml",
@@ -1251,12 +2577,29 @@
     "kor": {
       "valuePct": 1.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0.882339,
+        "denominatorPctGdp": 63.087234,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 1,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Korea: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Republic of Korea",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/308/002.2025.issue-308-en.xml",
@@ -1265,14 +2608,31 @@
       "tableRef": "Figure 3. Republic of Korea: Public Debt Structure Indicators, Debt by Currency (Percent of GDP)"
     },
     "kwt": {
-      "valuePct": 82.8,
+      "valuePct": 97.9,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 2.85,
+        "denominatorPctGdp": 2.9,
+        "printedSharePct": null,
+        "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 82.8 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kuwait: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/052/002.2026.issue-052-en.xml",
@@ -1283,12 +2643,29 @@
     "lao": {
       "valuePct": 90.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 85,
+        "denominatorPctGdp": 94,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Lao People's Democratic Republic: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Lao People’s Democratic Republic",
       "reportDate": "2026-02-20",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/050/002.2026.issue-050-en.xml",
@@ -1297,14 +2674,31 @@
       "tableRef": "Table 2. Lao PDR: Public Sector Debt Sustainability Framework, Baseline Scenario, 2022–2044"
     },
     "lbn": {
-      "valuePct": 97.7,
-      "year": "2023",
+      "valuePct": 81.9,
+      "year": "2021",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 290,
+        "denominatorPctGdp": 354,
+        "printedSharePct": null,
+        "note": "Re-measured from the cited chart at the 2021 point during the 2026-07 audit."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 97.7 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Lebanon: 2023 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Lebanon",
       "reportDate": "2023-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2023/237/002.2023.issue-237-en.xml",
@@ -1315,12 +2709,29 @@
     "lbr": {
       "valuePct": 65.2,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 1853,
+        "denominatorPctGdp": 2841.4,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Liberia: Third Review Under the Extended Credit Facility Arrangement and Request for an Arrangement Under the Resilience and Sustainability Facility-Press Release; Staff Report; and Statement by the Executive Director for Liberia",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/098/002.2026.issue-098-en.xml",
@@ -1331,12 +2742,29 @@
     "lca": {
       "valuePct": 39.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 39.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "St. Lucia: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/003/002.2026.issue-003-en.xml",
@@ -1347,12 +2775,29 @@
     "lka": {
       "valuePct": 40,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 39.2,
+        "provenanceFixed": false,
+        "note": "Cited PDF revision is not in the local extraction archive; verified against a same-title archived copy whose pagination matches the citation."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Sri Lanka: Fifth and Sixth Reviews under the Extended Arrangement under the Extended Fund Facility, Requests for a Waiver of nonobservance of a Performance Criterion, Modification of Performance Criteria, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for Sri Lanka",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/111/002.2026.issue-111-en.xml",
@@ -1363,12 +2808,29 @@
     "lso": {
       "valuePct": 80.3,
       "year": "FY2024/25",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 45.6,
+        "denominatorPctGdp": 56.8,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kingdom of Lesotho: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-09-18",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/267/002.2025.issue-267-en.xml",
@@ -1379,12 +2841,29 @@
     "ltu": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Lithuania: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Lithuania",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/258/002.2025.issue-258-en.xml",
@@ -1395,12 +2874,29 @@
     "lux": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Luxembourg: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Luxembourg",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/159/002.2026.issue-159-en.xml",
@@ -1411,12 +2907,29 @@
     "lva": {
       "valuePct": 9.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 4.5,
+        "denominatorPctGdp": 47.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 9.6,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Latvia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Latvia",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/272/002.2025.issue-272-en.xml",
@@ -1427,12 +2940,29 @@
     "mar": {
       "valuePct": 28.5,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 28.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Morocco: 2026 Article IV Consultation and Review Under the Flexible Credit Line Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Morocco",
       "reportDate": "2026-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/072/002.2026.issue-072-en.xml",
@@ -1443,12 +2973,29 @@
     "mda": {
       "valuePct": 63.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 4309.9,
+        "denominatorPctGdp": 6795.2,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Moldova: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Alternate Executive Director for Republic of Moldova",
       "reportDate": "2026-03-05",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/059/002.2026.issue-059-en.xml",
@@ -1459,12 +3006,29 @@
     "mdg": {
       "valuePct": 71.7,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 37.8,
+        "denominatorPctGdp": 52.7,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Madagascar: Staff Report for the 2024 Article IV Consultation; First Review Under the Extended Credit Facility Arrangement; Request for A Waiver of Nonobservance of Performance Criteria; and Financing Assurances Review; and First Review Under the Arrangement Under the Resilience and Sustainability Facility-Press Release; Staff Report; and Statement by the Executive Director for Republic of Madagascar",
       "reportDate": "2025-03-21",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/060/002.2025.issue-060-en.xml",
@@ -1475,12 +3039,29 @@
     "mdv": {
       "valuePct": 44.6,
       "year": "2022",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 49.2,
+        "denominatorPctGdp": 110.4,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Maldives: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Maldives",
       "reportDate": "2024-05-13",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/106/002.2024.issue-106-en.xml",
@@ -1491,12 +3072,29 @@
     "mex": {
       "valuePct": 22.3,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 22.4,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Mexico: Request for an Arrangement Under the Flexible Credit Line and Cancellation of the Current Arrangement-Press Release; and Staff Report",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/301/002.2025.issue-301-en.xml",
@@ -1507,12 +3105,29 @@
     "mhl": {
       "valuePct": 100,
       "year": "FY2024",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 100,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 100,
       "reportTitle": "Republic of Marshall Islands: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Authorities of the Republic of Marshall Islands",
       "reportDate": "2025-12-04",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/321/002.2025.issue-321-en.xml",
@@ -1523,12 +3138,29 @@
     "mkd": {
       "valuePct": 65.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 34.5,
+        "denominatorPctGdp": 52.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 66.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of North Macedonia: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Republic of North Macedonia",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/123/002.2026.issue-123-en.xml",
@@ -1539,12 +3171,29 @@
     "mli": {
       "valuePct": 46.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 24.2,
+        "denominatorPctGdp": 51.8,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Mali: Request for Disbursement Under the Rapid Credit Facility and Request for a Staff-Monitored Program-Press Release; Staff Report; and Statement by the Executive Director for Mali",
       "reportDate": "2025-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/106/002.2025.issue-106-en.xml",
@@ -1555,12 +3204,29 @@
     "mlt": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Malta: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/029/002.2026.issue-029-en.xml",
@@ -1571,12 +3237,29 @@
     "mmr": {
       "valuePct": 39.5,
       "year": "Jun-20",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 39.5,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 38.1,
       "reportTitle": "Myanmar: Requests for Disbursement Under the Rapid Credit Facility and Purchase Under the Rapid Financing Instrument-Press Release; Staff Report; and Statement by the Executive Director for Myanmar",
       "reportDate": "2021-01-28",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2021/023/002.2021.issue-023-en.xml",
@@ -1587,12 +3270,29 @@
     "mne": {
       "valuePct": 13.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 8,
+        "denominatorPctGdp": 60.8,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 13.1,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Montenegro: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/304/002.2025.issue-304-en.xml",
@@ -1603,12 +3303,29 @@
     "mng": {
       "valuePct": 94,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 94,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Mongolia: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Alternate Executive Director for Mongolia",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/265/002.2025.issue-265-en.xml",
@@ -1619,12 +3336,29 @@
     "moz": {
       "valuePct": 67.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 60.9,
+        "denominatorPctGdp": 89.9,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Mozambique: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Mozambique",
       "reportDate": "2026-02-19",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/045/002.2026.issue-045-en.xml",
@@ -1635,12 +3369,29 @@
     "mrt": {
       "valuePct": 84.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 84.8,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Islamic Republic of Mauritania: Fifth Reviews Under the Arrangements Under the Extended Credit Facility and the Extended Fund Facility, Request for a Waiver of Applicability of Performance Criteria, and Fourth Review Under the Arrangement Under the Resilience and Sustainability Facility-Press Release; Staff Report; and Statement by the Executive Director for the Islamic Republic of Mauritania",
       "reportDate": "2026-02-05",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/027/002.2026.issue-027-en.xml",
@@ -1651,12 +3402,29 @@
     "mus": {
       "valuePct": 20,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 17,
+        "denominatorPctGdp": 85,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 18.8,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Mauritius: 2026 Article IV Consultation-Press Release; Staff Report; Staff Supplement; and Statement by the Executive Director for Mauritius",
       "reportDate": "2026-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/178/002.2026.issue-178-en.xml",
@@ -1667,12 +3435,29 @@
     "mwi": {
       "valuePct": 42.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 37.4,
+        "denominatorPctGdp": 87.6,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Malawi: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Malawi",
       "reportDate": "2025-08-06",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/226/002.2025.issue-226-en.xml",
@@ -1683,12 +3468,29 @@
     "mys": {
       "valuePct": 2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 2,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Malaysia: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Malaysia",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/055/002.2026.issue-055-en.xml",
@@ -1699,12 +3501,29 @@
     "nam": {
       "valuePct": 12,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 12,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Namibia: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/135/002.2026.issue-135-en.xml",
@@ -1715,12 +3534,29 @@
     "ner": {
       "valuePct": 56.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 56.5,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Niger: Eighth Review Under the Extended Credit Facility Arrangement, Fourth Review Under the Resilience and Sustainability Facility, Requests for Augmentation of the Extended Credit Facility Arrangement, Waiver of Nonobservance of a Performance Criterion, and Modification of Performance Criteria-Press Release; Staff Report; and Statement by the Executive Director for Niger",
       "reportDate": "2026-03-31",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/074/002.2026.issue-074-en.xml",
@@ -1731,12 +3567,29 @@
     "nga": {
       "valuePct": 46.8,
       "year": "2025",
+      "yearStatus": "estimate",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 16.9,
+        "denominatorPctGdp": 36.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 48.3,
       "reportTitle": "Nigeria: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Nigeria",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/125/002.2026.issue-125-en.xml",
@@ -1747,12 +3600,29 @@
     "nic": {
       "valuePct": 79.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 36,
+        "denominatorPctGdp": 45.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Nicaragua: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-26",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/014/002.2026.issue-014-en.xml",
@@ -1763,12 +3633,29 @@
     "nld": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kingdom of the Netherlands—The Netherlands: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Kingdom of the Netherlands—The Netherland",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/197/002.2025.issue-197-en.xml",
@@ -1779,12 +3666,29 @@
     "nor": {
       "valuePct": 38.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 16.5,
+        "denominatorPctGdp": 42.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 38,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Norway: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-08-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/248/002.2025.issue-248-en.xml",
@@ -1795,12 +3699,29 @@
     "npl": {
       "valuePct": 49.2,
       "year": "2025",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 10545,
+        "denominatorPctGdp": 21417,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Nepal: 2026 Article IV Consultation and Seventh Review under the Extended Credit Facility Arrangement-Press Release; Staff Report; Staff Supplement; and Statement by the Executive Director for Nepal",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/127/002.2026.issue-127-en.xml",
@@ -1811,12 +3732,29 @@
     "nru": {
       "valuePct": 55.8,
       "year": "FY2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the FY2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 55.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Nauru: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Alternate Executive Director for the Republic of Nauru",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/275/002.2025.issue-275-en.xml",
@@ -1827,12 +3765,29 @@
     "omn": {
       "valuePct": 69.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 69.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Oman: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Oman",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/004/002.2026.issue-004-en.xml",
@@ -1843,12 +3798,29 @@
     "pak": {
       "valuePct": 34.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 25,
+        "denominatorPctGdp": 72,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 34.5,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Pakistan: Third Review Under the Extended Arrangement Under the Extended Fund Facility and Second Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Pakistan",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/101/002.2026.issue-101-en.xml",
@@ -1859,12 +3831,29 @@
     "pan": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Panama: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Panama",
       "reportDate": "2025-08-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/245/002.2025.issue-245-en.xml",
@@ -1875,12 +3864,29 @@
     "per": {
       "valuePct": 42.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 12.9,
+        "denominatorPctGdp": 30.2,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Peru: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Peru",
       "reportDate": "2026-05-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/113/002.2026.issue-113-en.xml",
@@ -1891,12 +3897,29 @@
     "phl": {
       "valuePct": 31.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 19.3,
+        "denominatorPctGdp": 60.7,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 32,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Philippines: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Philippines",
       "reportDate": "2025-12-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/333/002.2025.issue-333-en.xml",
@@ -1907,12 +3930,29 @@
     "plw": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Palau: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Palau",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/022/002.2026.issue-022-en.xml",
@@ -1923,12 +3963,29 @@
     "png": {
       "valuePct": 54.9,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 28.9,
+        "denominatorPctGdp": 52.6,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Papua New Guinea: Sixth Reviews Under the Extended Arrangement Under the Extended Fund Facility and the Arrangement Under the Extended Credit Facility, Request for a Waiver of Nonobservance of Performance Criterion, and Second Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for Papua New Guinea",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/129/002.2026.issue-129-en.xml",
@@ -1939,12 +3996,29 @@
     "pol": {
       "valuePct": 25.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 25.5,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Poland: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/025/002.2026.issue-025-en.xml",
@@ -1955,12 +4029,29 @@
     "prt": {
       "valuePct": 0,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Portugal: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Portugal",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/147/002.2026.issue-147-en.xml",
@@ -1971,12 +4062,29 @@
     "pry": {
       "valuePct": 85,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 38.1,
+        "denominatorPctGdp": 44.8,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Paraguay: Fifth Review Under the Policy Coordination Instrument, Request for Modification of a Quantitative Target and Resetting of Reform Targets, Third Review Under the Arrangement Under the Resilience and Sustainability Facility, Rephasing of Reform Measures, and Requests for Extension of the Policy Coordination Instrument and the Resilience and Sustainability Facility Arrangement-Press Release; and Staff Report",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/161/002.2025.issue-161-en.xml",
@@ -1987,12 +4095,29 @@
     "qat": {
       "valuePct": 53.5,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 23,
+        "denominatorPctGdp": 43,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 54,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Qatar: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Qatar",
       "reportDate": "2025-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/047/002.2025.issue-047-en.xml",
@@ -2003,12 +4128,29 @@
     "rou": {
       "valuePct": 48.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 28,
+        "denominatorPctGdp": 57.5,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 49,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Romania: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Romania",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/294/002.2025.issue-294-en.xml",
@@ -2019,12 +4161,29 @@
     "rwa": {
       "valuePct": 80.6,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 59.3,
+        "denominatorPctGdp": 73.6,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Rwanda: Request for a 38-Month Arrangement Under the Extended Credit Facility; Press Release;  Staff Report; and Statement by the Executive Director for Rwanda",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/139/002.2026.issue-139-en.xml",
@@ -2035,12 +4194,29 @@
     "sau": {
       "valuePct": 42,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 40,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Saudi Arabia: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-08-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/223/002.2025.issue-223-en.xml",
@@ -2051,12 +4227,29 @@
     "sdn": {
       "valuePct": 87.7,
       "year": "2020",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 239.4,
+        "denominatorPctGdp": 273,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Sudan: Enhanced Heavily Indebted Poor Countries (HIPC) Initiative-Decision Point Document",
       "reportDate": "2021-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2021/144/002.2021.issue-144-en.xml",
@@ -2067,12 +4260,29 @@
     "sen": {
       "valuePct": 73.7,
       "year": "2022",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 73.7,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Senegal: Requests for an Extended Arrangement Under the Extended Fund Facility, an Arrangement Under the Extended Credit Facility, and an Arrangement Under the Resilience and Sustainability Facility-Press Release; Staff Report; and Statement by the Executive Director for Senegal",
       "reportDate": "2023-07-07",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2023/250/002.2023.issue-250-en.xml",
@@ -2083,12 +4293,29 @@
     "sgp": {
       "valuePct": 0,
       "year": "FY2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 173,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the FY2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Singapore: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Singapore",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/192/002.2025.issue-192-en.xml",
@@ -2099,12 +4326,29 @@
     "slb": {
       "valuePct": 57.6,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 11.7,
+        "denominatorPctGdp": 20.3,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Solomon Islands: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Solomon Islands",
       "reportDate": "2025-02-25",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/049/002.2025.issue-049-en.xml",
@@ -2115,12 +4359,29 @@
     "sle": {
       "valuePct": 61.1,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 1977,
+        "denominatorPctGdp": 3238,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Sierra Leone: First and Second Reviews Under the Extended Credit Facility Arrangement, Request for Waivers of Nonobservance of Performance Criteria-Press Release; and Statement by the Executive Director for Sierra Leone",
       "reportDate": "2026-02-13",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/040/002.2026.issue-040-en.xml",
@@ -2131,12 +4392,29 @@
     "slv": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "El Salvador: 2025 Article IV Consultation, First Review Under the Extended Fund Facility, and Request for Waivers of Nonobservance of Performance Criteria, and Modification of Performance Criteria-Press Release; Staff Report; and Statement by the Executive Director for El Salvador",
       "reportDate": "2025-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/190/002.2025.issue-190-en.xml",
@@ -2147,12 +4425,29 @@
     "smr": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0,
+        "denominatorPctGdp": 62.4,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of San Marino: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of San Marino",
       "reportDate": "2025-11-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/312/002.2025.issue-312-en.xml",
@@ -2163,12 +4458,29 @@
     "som": {
       "valuePct": 93.9,
       "year": "2024",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 1049.3,
+        "denominatorPctGdp": 1117.2,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Somalia: Fourth Review Under the Extended Credit Facility Arrangement and Request for Augmentation of Access-Press Release; Staff Report; and Statement by the Executive Director for Somalia",
       "reportDate": "2025-12-16",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/335/002.2025.issue-335-en.xml",
@@ -2179,12 +4491,29 @@
     "srb": {
       "valuePct": 76.7,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 77.8,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Serbia: Third Review Under the Policy Coordination Instrument; Press Release and Staff Report",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/138/002.2026.issue-138-en.xml",
@@ -2195,12 +4524,29 @@
     "ssd": {
       "valuePct": 67.9,
       "year": "FY2022/23 (end-June 2023)",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 67.9,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of South Sudan: 2023 Article IV Consultation, and First and Second Reviews under the Staff-Monitored Program with Board Involvement-Press Release; Staff Report; and Statement by the Executive Director for Republic of South Sudan",
       "reportDate": "2024-06-10",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/160/002.2024.issue-160-en.xml",
@@ -2211,12 +4557,29 @@
     "stp": {
       "valuePct": 53.1,
       "year": "2024",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 286.8,
+        "denominatorPctGdp": 540.3,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 48,
       "reportTitle": "Republic of São Tomé and Príncipe: Second Review Under the Extended Credit Facility Arrangement, Requests for Waivers of Nonobservance of Performance Criteria, Modification of Performance Criteria, Extension and Augmentation of the Arrangement, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for the Republic of São Tomé and Príncipe",
       "reportDate": "2025-12-23",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/347/002.2025.issue-347-en.xml",
@@ -2227,12 +4590,29 @@
     "sur": {
       "valuePct": 87.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 87.5,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Suriname: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Suriname",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/037/002.2026.issue-037-en.xml",
@@ -2241,14 +4621,31 @@
       "tableRef": "Annex III. Figure 3a. Suriname: Public Debt Structure Indicators — Debt by Currency (Percent of GDP)"
     },
     "svk": {
-      "valuePct": 5.1,
+      "valuePct": 0.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 0.3,
+        "denominatorPctGdp": 59.7,
+        "printedSharePct": null,
+        "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+      },
+      "audit": {
+        "outcome": "CORRECTED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": "Corrected from 5.1 during the independent audit; see dataset notes."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Slovak Republic: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/065/002.2026.issue-065-en.xml",
@@ -2259,12 +4656,29 @@
     "svn": {
       "valuePct": 3.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 2.5,
+        "denominatorPctGdp": 66,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 4.2,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Slovenia: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-01-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/015/002.2026.issue-015-en.xml",
@@ -2275,12 +4689,29 @@
     "swe": {
       "valuePct": 12.9,
       "year": "2022",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2022 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 14.1,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Sweden: 2023 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Sweden",
       "reportDate": "2023-03-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2023/111/002.2023.issue-111-en.xml",
@@ -2291,12 +4722,29 @@
     "swz": {
       "valuePct": 44,
       "year": "FY2024/25",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 44,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Kingdom of Eswatini: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Kingdom of Eswatini",
       "reportDate": "2025-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/279/002.2025.issue-279-en.xml",
@@ -2307,12 +4755,29 @@
     "syc": {
       "valuePct": 54,
       "year": "2025",
+      "yearStatus": "estimate",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 54,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Seychelles: 2026 Article IV Consultation, Fifth and Sixth Reviews Under the Arrangement Under the Extended Fund Facility and the Arrangement Under the Resilience and Sustainability Facility, and Request for a Waiver for Nonobservance of a Performance Criterion-Press Release; Staff Report; and Statement by the Executive Director for Seychelles",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/122/002.2026.issue-122-en.xml",
@@ -2323,12 +4788,29 @@
     "tcd": {
       "valuePct": 52.4,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 17.2,
+        "denominatorPctGdp": 32.8,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Chad: Request for a Four-Year Arrangement Under the Extended Credit Facility-Press Release; Staff Report; and Statement by the Executive Director for Chad",
       "reportDate": "2025-08-13",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/236/002.2025.issue-236-en.xml",
@@ -2339,12 +4821,29 @@
     "tgo": {
       "valuePct": 42.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 30.4,
+        "denominatorPctGdp": 72.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Togo: Second Review Under the Arrangement Under the Extended Credit Facility, Requests for Waiver of Nonobservance of a Performance Criterion, Modification of Performance Criteria, Extension of the Arrangement, and Rephasing of Access-Press Release; Staff Report; and Statement by the Executive Director for Togo",
       "reportDate": "2025-07-11",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/178/002.2025.issue-178-en.xml",
@@ -2355,12 +4854,29 @@
     "tha": {
       "valuePct": 0.8,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0.6,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Thailand: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Thailand",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/041/002.2026.issue-041-en.xml",
@@ -2371,12 +4887,29 @@
     "tjk": {
       "valuePct": 89.6,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 22.3,
+        "denominatorPctGdp": 24.9,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Tajikistan: 2025 Article IV Consultation and Second Review under the Policy Coordination Instrument and Request for Modification of a Reform Target-Press Release; Staff Report; and Statement by the Executive Director for Republic of Tajikistan",
       "reportDate": "2025-07-08",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/169/002.2025.issue-169-en.xml",
@@ -2387,12 +4920,29 @@
     "tls": {
       "valuePct": 100,
       "year": "2020",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 13.9,
+        "denominatorPctGdp": 13.9,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Timor-Leste: 2021 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Timor-Leste",
       "reportDate": "2021-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2021/152/002.2021.issue-152-en.xml",
@@ -2403,12 +4953,29 @@
     "ton": {
       "valuePct": 85.7,
       "year": "FY2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 31.7,
+        "denominatorPctGdp": 37,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Tonga: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-11-10",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/293/002.2025.issue-293-en.xml",
@@ -2419,12 +4986,29 @@
     "tto": {
       "valuePct": 31,
       "year": "FY2025",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 31,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Trinidad and Tobago: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Trinidad and Tobago",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/120/002.2026.issue-120-en.xml",
@@ -2435,12 +5019,29 @@
     "tur": {
       "valuePct": 50.8,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 12,
+        "denominatorPctGdp": 23.6,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 52.2,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Türkiye: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Türkiye",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/043/002.2026.issue-043-en.xml",
@@ -2451,12 +5052,29 @@
     "tuv": {
       "valuePct": 68.3,
       "year": "2022",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 6.9,
+        "denominatorPctGdp": 10.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Tuvalu: 2023 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Tuvalu",
       "reportDate": "2023-07-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2023/267/002.2023.issue-267-en.xml",
@@ -2467,12 +5085,29 @@
     "tza": {
       "valuePct": 65.9,
       "year": "2024",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 24600,
+        "denominatorPctGdp": 37321,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 64.7,
       "reportTitle": "United Republic of Tanzania: Staff Report for the 2025 Article IV Consultation, Fifth Review Under the Extended Credit Facility Arrangement, Modification of Performance Criteria, and Second Review Under the Resilience and Sustainability Facility Arrangement-Press Release; Staff Report; and Statement by the Executive Director for the United Republic of Tanzania",
       "reportDate": "2025-07-03",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/163/002.2025.issue-163-en.xml",
@@ -2483,12 +5118,29 @@
     "uga": {
       "valuePct": 58.9,
       "year": "FY2022/23",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "general_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 14895.3,
+        "denominatorPctGdp": 25292.9,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Uganda: 2024 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Uganda",
       "reportDate": "2024-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/290/002.2024.issue-290-en.xml",
@@ -2499,12 +5151,29 @@
     "ukr": {
       "valuePct": 74.1,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 66.5,
+        "denominatorPctGdp": 89.7,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 74,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Ukraine: Request for an Extended Arrangement Under the Extended Fund Facility and Cancellation of the Current Arrangement-Press Release; Staff Report; Supplementary Information; and Statement by the Alternate Executive Director for Ukraine",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/058/002.2026.issue-058-en.xml",
@@ -2515,12 +5184,29 @@
     "ury": {
       "valuePct": 45.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "nfps",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 31.4,
+        "denominatorPctGdp": 68.7,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 45.9,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Uruguay: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Uruguay",
       "reportDate": "2025-10-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/287/002.2025.issue-287-en.xml",
@@ -2531,12 +5217,29 @@
     "usa": {
       "valuePct": 0,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 0,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "United States: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the United States",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/076/002.2026.issue-076-en.xml",
@@ -2547,12 +5250,29 @@
     "uzb": {
       "valuePct": 90.6,
       "year": "2025",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 25.9,
+        "denominatorPctGdp": 28.6,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Uzbekistan: 2026 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2026-06-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/152/002.2026.issue-152-en.xml",
@@ -2563,12 +5283,29 @@
     "vct": {
       "valuePct": 71.3,
       "year": "2023",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 71.3,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "St. Vincent and the Grenadines: 2024 Article IV Consultation-Press Release and Staff Report",
       "reportDate": "2024-07-22",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2024/239/002.2024.issue-239-en.xml",
@@ -2579,12 +5316,29 @@
     "vnm": {
       "valuePct": 34.3,
       "year": "2022",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": 12,
+        "denominatorPctGdp": 35,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2022 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 34.3,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Vietnam: 2023 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Vietnam",
       "reportDate": "2023-09-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2023/338/002.2023.issue-338-en.xml",
@@ -2595,12 +5349,29 @@
     "vut": {
       "valuePct": 70,
       "year": "2024",
+      "yearStatus": "estimate",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "central_government",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "text",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 70,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": 78.2,
       "reportTitle": "Vanuatu: 2025 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-09-25",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/277/002.2025.issue-277-en.xml",
@@ -2611,12 +5382,29 @@
     "wsm": {
       "valuePct": 83.3,
       "year": "FY2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 25.9,
+        "denominatorPctGdp": 31.1,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Samoa: 2024 Article IV Consultation-Press Release; and Staff Report",
       "reportDate": "2025-01-31",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2025/032/002.2025.issue-032-en.xml",
@@ -2627,12 +5415,29 @@
     "kos": {
       "valuePct": 6.7,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "general_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": 6.7,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Republic of Kosovo: 2026 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for the Republic of Kosovo",
       "reportDate": "2026-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/079/002.2026.issue-079-en.xml",
@@ -2643,44 +5448,95 @@
     "zaf": {
       "valuePct": 10.5,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "MAC_SRDSF",
       "definitionBasis": "currency",
       "debtPerimeter": "central_government",
       "isProxy": false,
       "proxySource": null,
       "confidence": "medium",
+      "extractionMethod": "figure",
+      "derivation": {
+        "kind": "figure",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": null,
+        "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+      },
+      "audit": {
+        "outcome": "CONFIRMED_APPROX",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "South Africa: 2025 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for South Africa",
       "reportDate": "2026-02-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/034/002.2026.issue-034-en.xml",
-      "pdfPage": "58",
+      "pdfPage": "59",
       "printedPage": "54",
       "tableRef": "Figure 3. South Africa: Public Debt Structure Indicators — Debt by Currency (Percent of GDP)"
     },
     "zmb": {
       "valuePct": 62.2,
       "year": "2024",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "currency",
       "debtPerimeter": "public_sector",
       "isProxy": false,
       "proxySource": null,
       "confidence": "high",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "direct",
+        "numeratorPctGdp": null,
+        "denominatorPctGdp": null,
+        "printedSharePct": 62.2,
+        "note": "The share is stated directly on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": true,
+        "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Zambia: Sixth Review Under The Extended Credit Facility Arrangement, Request for a waiver of Nonobservance of a Quantitative Performance Criterion, and Financing Assurances Review-Press Release; Staff Report; and Statement by the Executive Director for Zambia",
       "reportDate": "2026-02-02",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2026/021/002.2026.issue-021-en.xml",
-      "pdfPage": "114",
+      "pdfPage": "115",
       "printedPage": "6",
       "tableRef": "Table 1. Zambia: Public and Publicly Guaranteed Debt Stock—Creditor Composition and Contracted Debt Service"
     },
     "zwe": {
       "valuePct": 97.2,
       "year": "2020",
+      "yearStatus": "actual",
       "framework": "LIC_DSF",
       "definitionBasis": "residency",
       "debtPerimeter": "public_sector",
       "isProxy": true,
       "proxySource": "external_share_residency",
       "confidence": "medium",
+      "extractionMethod": "table",
+      "derivation": {
+        "kind": "ratio",
+        "numeratorPctGdp": 106.6,
+        "denominatorPctGdp": 109.7,
+        "printedSharePct": null,
+        "note": "Both components printed on the cited page."
+      },
+      "audit": {
+        "outcome": "CONFIRMED",
+        "date": "2026-07-23",
+        "independentValuePct": null,
+        "provenanceFixed": false,
+        "note": null
+      },
+      "latestActualAlternativePct": null,
       "reportTitle": "Zimbabwe: 2022 Article IV Consultation-Press Release; Staff Report; and Statement by the Executive Director for Zimbabwe",
       "reportDate": "2022-04-01",
       "publicationUrl": "https://elibrary.imf.org/view/journals/002/2022/112/002.2022.issue-112-en.xml",

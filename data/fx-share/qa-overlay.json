@@ -1,0 +1,2267 @@
+{
+ "_meta": {
+  "name": "FX-share QA overlay",
+  "description": "Per-country year status, derivation transparency, and independent-audit outcome for the DSA FX-share dataset. Generated from the 2026-07-23 full-coverage audit (all 167 cited pages independently re-read); merged into src/data/fx-share.json at build time.",
+  "audit_date": "2026-07-23",
+  "policy": {
+   "year": "latest available eligible observation (actual or staff estimate), status labeled per country",
+   "figure_precision": "chart-derived values are estimates; UI displays them as approximate integers"
+  },
+  "dataset_csv_sha256": "e74f12d457a9af717508c447edf661dd01e3dc03ce6bdcb798e800fd63489f18"
+ },
+ "countries": {
+  "afg": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 100.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "ago": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 70.0,
+    "denominatorPctGdp": 100.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "alb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 23.0,
+    "denominatorPctGdp": 54.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 42.0
+   }
+  },
+  "are": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 55.9
+   }
+  },
+  "arg": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 56.3
+   }
+  },
+  "arm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 23.9,
+    "denominatorPctGdp": 49.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "atg": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 24.0,
+    "denominatorPctGdp": 68.3,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 35.9
+   },
+   "latestActualAlternativePct": 39.0
+  },
+  "aus": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "aze": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 40.7
+   }
+  },
+  "bdi": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 727.6,
+    "denominatorPctGdp": 2818.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "bel": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "ben": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 47.4,
+    "denominatorPctGdp": 60.5,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "bfa": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 25.5,
+    "denominatorPctGdp": 57.2,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "bgd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 19.5,
+    "denominatorPctGdp": 42.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "bgr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 17.0,
+    "denominatorPctGdp": 24.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 73.3
+   }
+  },
+  "bhs": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 40.0,
+    "denominatorPctGdp": 84.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 47.6
+   }
+  },
+  "bih": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 65.2
+   }
+  },
+  "blz": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 63.4
+   }
+  },
+  "bol": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 30.0,
+    "denominatorPctGdp": 95.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 29.1
+   }
+  },
+  "bra": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 4.5,
+    "denominatorPctGdp": 87.3,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "brb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 38.4,
+    "denominatorPctGdp": 96.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 40.7
+   }
+  },
+  "btn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 91.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "bwa": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 11.0,
+    "denominatorPctGdp": 33.0,
+    "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 38.7 during the independent audit; see dataset notes."
+   }
+  },
+  "caf": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 32.0,
+    "denominatorPctGdp": 60.7,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "can": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 6.0,
+    "denominatorPctGdp": 109.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 6.9
+   }
+  },
+  "chl": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 34.1
+   }
+  },
+  "civ": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 38.3,
+    "denominatorPctGdp": 60.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "cmr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 28.4,
+    "denominatorPctGdp": 43.4,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "cod": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 14.5,
+    "denominatorPctGdp": 22.5,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "cog": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 39.4,
+    "denominatorPctGdp": 99.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "col": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 46.7
+   }
+  },
+  "cpv": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 80.2,
+    "denominatorPctGdp": 124.7,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "cri": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 21.0,
+    "denominatorPctGdp": 60.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 36.4
+   }
+  },
+  "cyp": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 55.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "cze": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 6.0
+   }
+  },
+  "deu": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 62.2,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "dji": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 68.9,
+    "denominatorPctGdp": 68.9,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "dma": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 72.3,
+    "denominatorPctGdp": 108.2,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "dom": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 33.0,
+    "denominatorPctGdp": 58.1,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 56.9
+   }
+  },
+  "dza": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 1.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "ecu": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 54.3,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "egy": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "esp": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "est": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "fin": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 1.583862,
+    "denominatorPctGdp": 69.351181,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 2.0
+   }
+  },
+  "fji": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 28.0,
+    "denominatorPctGdp": 80.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 34.8
+   }
+  },
+  "fsm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 94.3,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "gab": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 33.2,
+    "denominatorPctGdp": 68.5,
+    "note": "Re-measured from the cited chart at the 2023 point during the 2026-07 audit."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 52.3 during the independent audit; see dataset notes."
+   }
+  },
+  "gbr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "geo": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 23.0,
+    "denominatorPctGdp": 34.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 67.3
+   }
+  },
+  "gha": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 53.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23",
+    "note": "Cited PDF revision is not in the local extraction archive; verified against a same-title archived copy whose pagination matches the citation."
+   }
+  },
+  "gin": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 19.7,
+    "denominatorPctGdp": 40.3,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "gmb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 50.1,
+    "denominatorPctGdp": 78.5,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "gnb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 28.3,
+    "denominatorPctGdp": 75.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "gnq": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 21.5
+   }
+  },
+  "grc": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "grd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 73.8,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "gtm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 47.9
+   }
+  },
+  "hnd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 27.5,
+    "denominatorPctGdp": 47.6,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "hrv": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "hti": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 2.2,
+    "denominatorPctGdp": 15.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "hun": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 23.0,
+    "denominatorPctGdp": 73.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 31.5
+   }
+  },
+  "idn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 28.5,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "irl": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "irq": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 20.0,
+    "denominatorPctGdp": 47.2,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 42.5
+   }
+  },
+  "isl": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 9.7
+   }
+  },
+  "isr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 15.0
+   }
+  },
+  "ita": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "jam": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 63.6
+   }
+  },
+  "jor": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 41.0
+   }
+  },
+  "jpn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 214.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "kaz": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 6.3,
+    "denominatorPctGdp": 24.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 27.0
+   }
+  },
+  "ken": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 40.4,
+    "denominatorPctGdp": 73.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "kgz": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 26.6,
+    "denominatorPctGdp": 36.6,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "khm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 25.9,
+    "denominatorPctGdp": 26.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "kir": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 8.6,
+    "denominatorPctGdp": 8.8,
+    "note": "Printed table values at the latest actual column (2024)."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 98.8 during the independent audit; see dataset notes."
+   }
+  },
+  "kna": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 11.0,
+    "denominatorPctGdp": 58.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 18.0
+   }
+  },
+  "kor": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.882339,
+    "denominatorPctGdp": 63.087234,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 1.0
+   }
+  },
+  "kwt": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 2.85,
+    "denominatorPctGdp": 2.9,
+    "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 82.8 during the independent audit; see dataset notes."
+   }
+  },
+  "lao": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 85.0,
+    "denominatorPctGdp": 94.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "lbn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 290.0,
+    "denominatorPctGdp": 354.0,
+    "note": "Re-measured from the cited chart at the 2021 point during the 2026-07 audit."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 97.7 during the independent audit; see dataset notes."
+   }
+  },
+  "lbr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 1853.0,
+    "denominatorPctGdp": 2841.4,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "lca": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 39.5
+   }
+  },
+  "lka": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 39.2,
+    "note": "Cited PDF revision is not in the local extraction archive; verified against a same-title archived copy whose pagination matches the citation."
+   }
+  },
+  "lso": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 45.6,
+    "denominatorPctGdp": 56.8,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "ltu": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "lux": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "lva": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 4.5,
+    "denominatorPctGdp": 47.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 9.6
+   }
+  },
+  "mar": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 28.5
+   }
+  },
+  "mda": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 4309.9,
+    "denominatorPctGdp": 6795.2,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mdg": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 37.8,
+    "denominatorPctGdp": 52.7,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mdv": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 49.2,
+    "denominatorPctGdp": 110.4,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mex": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 22.4
+   }
+  },
+  "mhl": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 100.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 100.0
+  },
+  "mkd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 34.5,
+    "denominatorPctGdp": 52.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 66.7
+   }
+  },
+  "mli": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 24.2,
+    "denominatorPctGdp": 51.8,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mlt": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mmr": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 39.5,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 38.1
+  },
+  "mne": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 8.0,
+    "denominatorPctGdp": 60.8,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 13.1
+   }
+  },
+  "mng": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 94.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "moz": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 60.9,
+    "denominatorPctGdp": 89.9,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mrt": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 84.8,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mus": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 17.0,
+    "denominatorPctGdp": 85.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 18.8
+   }
+  },
+  "mwi": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 37.4,
+    "denominatorPctGdp": 87.6,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "mys": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 2.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "nam": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 12.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "ner": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 56.5,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "nga": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 16.9,
+    "denominatorPctGdp": 36.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 48.3
+  },
+  "nic": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 36.0,
+    "denominatorPctGdp": 45.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "nld": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "nor": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 16.5,
+    "denominatorPctGdp": 42.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 38.0
+   }
+  },
+  "npl": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 10545.0,
+    "denominatorPctGdp": 21417.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "nru": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the FY2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 55.5
+   }
+  },
+  "omn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 69.5
+   }
+  },
+  "pak": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 25.0,
+    "denominatorPctGdp": 72.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 34.5,
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "pan": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "per": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 12.9,
+    "denominatorPctGdp": 30.2,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "phl": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 19.3,
+    "denominatorPctGdp": 60.7,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 32.0
+   }
+  },
+  "plw": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "png": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 28.9,
+    "denominatorPctGdp": 52.6,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "pol": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 25.5
+   }
+  },
+  "prt": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "pry": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 38.1,
+    "denominatorPctGdp": 44.8,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "qat": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 23.0,
+    "denominatorPctGdp": 43.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 54.0
+   }
+  },
+  "rou": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 28.0,
+    "denominatorPctGdp": 57.5,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 49.0
+   }
+  },
+  "rwa": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 59.3,
+    "denominatorPctGdp": 73.6,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "sau": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 40.0
+   }
+  },
+  "sdn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 239.4,
+    "denominatorPctGdp": 273.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "sen": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 73.7,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "sgp": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 173.0,
+    "note": "Read from the report's Debt-by-Currency chart at the FY2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "slb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 11.7,
+    "denominatorPctGdp": 20.3,
+    "note": "Read from the report's Debt-by-Currency chart at the 2023 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "sle": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 1977.0,
+    "denominatorPctGdp": 3238.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "slv": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "smr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.0,
+    "denominatorPctGdp": 62.4,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "som": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 1049.3,
+    "denominatorPctGdp": 1117.2,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "srb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 77.8
+   }
+  },
+  "ssd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 67.9,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "stp": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 286.8,
+    "denominatorPctGdp": 540.3,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 48.0
+  },
+  "sur": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 87.5,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "svk": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 0.3,
+    "denominatorPctGdp": 59.7,
+    "note": "Re-measured from the cited chart at the 2024 point during the 2026-07 audit."
+   },
+   "audit": {
+    "outcome": "CORRECTED",
+    "date": "2026-07-23",
+    "note": "Corrected from 5.1 during the independent audit; see dataset notes."
+   }
+  },
+  "svn": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 2.5,
+    "denominatorPctGdp": 66.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 4.2
+   }
+  },
+  "swe": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2022 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 14.1
+   }
+  },
+  "swz": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 44.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "syc": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 54.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tcd": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 17.2,
+    "denominatorPctGdp": 32.8,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tgo": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 30.4,
+    "denominatorPctGdp": 72.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tha": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2025 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.6
+   }
+  },
+  "tjk": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 22.3,
+    "denominatorPctGdp": 24.9,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tls": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 13.9,
+    "denominatorPctGdp": 13.9,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "ton": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 31.7,
+    "denominatorPctGdp": 37.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tto": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 31.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tur": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 12.0,
+    "denominatorPctGdp": 23.6,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 52.2
+   }
+  },
+  "tuv": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 6.9,
+    "denominatorPctGdp": 10.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "tza": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 24600.0,
+    "denominatorPctGdp": 37321.0,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 64.7
+  },
+  "uga": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 14895.3,
+    "denominatorPctGdp": 25292.9,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "ukr": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 66.5,
+    "denominatorPctGdp": 89.7,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 74.0
+   }
+  },
+  "ury": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 31.4,
+    "denominatorPctGdp": 68.7,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 45.9
+   }
+  },
+  "usa": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 0.0
+   }
+  },
+  "uzb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 25.9,
+    "denominatorPctGdp": 28.6,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "vct": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 71.3,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "vnm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": 12.0,
+    "denominatorPctGdp": 35.0,
+    "note": "Read from the report's Debt-by-Currency chart at the 2022 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 34.3
+   }
+  },
+  "vut": {
+   "yearStatus": "estimate",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 70.0,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   },
+   "latestActualAlternativePct": 78.2
+  },
+  "wsm": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 25.9,
+    "denominatorPctGdp": 31.1,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  },
+  "xkx": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "independentValuePct": 6.7
+   }
+  },
+  "zaf": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "figure",
+    "numeratorPctGdp": null,
+    "denominatorPctGdp": null,
+    "note": "Read from the report's Debt-by-Currency chart at the 2024 point."
+   },
+   "audit": {
+    "outcome": "CONFIRMED_APPROX",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "zmb": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "direct",
+    "printedSharePct": 62.2,
+    "note": "The share is stated directly on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23",
+    "provenanceFixed": true,
+    "note": "Citation (page and file hash) corrected to the adjudicated final package; value re-verified against the corrected page."
+   }
+  },
+  "zwe": {
+   "yearStatus": "actual",
+   "derivation": {
+    "kind": "ratio",
+    "numeratorPctGdp": 106.6,
+    "denominatorPctGdp": 109.7,
+    "note": "Both components printed on the cited page."
+   },
+   "audit": {
+    "outcome": "CONFIRMED",
+    "date": "2026-07-23"
+   }
+  }
+ }
+}

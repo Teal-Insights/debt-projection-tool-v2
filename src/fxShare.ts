@@ -18,11 +18,36 @@
 import fxShareData from './data/fx-share.json';
 import type { CountryState } from './types';
 
+export interface FxShareDerivation {
+  /** How the share was obtained from the cited page. */
+  kind: 'ratio' | 'figure' | 'direct';
+  /** FX-denominated (or external) debt, percent of GDP, as used in the ratio. */
+  numeratorPctGdp: number | null;
+  /** Total public debt, percent of GDP, as used in the ratio. */
+  denominatorPctGdp: number | null;
+  /** The share as printed verbatim on the page (direct statements). */
+  printedSharePct: number | null;
+  note: string | null;
+}
+
+export interface FxShareAudit {
+  /** Outcome of the 2026-07-23 independent source-page audit. */
+  outcome: 'CONFIRMED' | 'CONFIRMED_APPROX' | 'CORRECTED';
+  date: string;
+  /** The auditor's own chart measurement, where it differs meaningfully. */
+  independentValuePct: number | null;
+  /** True where the citation (page/file hash) was repaired to the adjudicated final. */
+  provenanceFixed: boolean;
+  note: string | null;
+}
+
 export interface FxShareEntry {
   /** FX share of public debt, percent of total debt (0-100). */
   valuePct: number;
   /** Reference year as printed in the source report (may be a fiscal-year label). */
   year: string;
+  /** Whether the source column/point is a hard actual or a staff estimate. */
+  yearStatus: 'actual' | 'estimate';
   framework: 'LIC_DSF' | 'MAC_SRDSF';
   /** 'currency' = denomination-based; 'residency' = external-debt proxy. */
   definitionBasis: 'currency' | 'residency';
@@ -30,6 +55,12 @@ export interface FxShareEntry {
   isProxy: boolean;
   proxySource: string | null;
   confidence: string;
+  /** Carrier of the observation on the cited page. */
+  extractionMethod: 'table' | 'text' | 'figure';
+  derivation: FxShareDerivation;
+  audit: FxShareAudit;
+  /** Latest hard-actual alternative where the shipped value is an estimate. */
+  latestActualAlternativePct: number | null;
   reportTitle: string;
   reportDate: string;
   publicationUrl: string;
@@ -229,4 +260,75 @@ export function perimeterLabel(code: string): string {
 /** Short framework label for UI text. */
 export function frameworkLabel(fw: FxShareEntry['framework']): string {
   return fw === 'LIC_DSF' ? 'LIC-DSF' : 'SRDSF';
+}
+
+/**
+ * Display form of a sourced share, honest about instrument precision:
+ * chart-derived values are estimates, so they render as approximate
+ * integers; table and text values keep one decimal.
+ */
+export function formatFxShareValue(entry: FxShareEntry): string {
+  if (entry.extractionMethod === 'figure') {
+    if (entry.valuePct > 0 && entry.valuePct < 0.75) return '<1%';
+    return `≈${Math.round(entry.valuePct)}%`;
+  }
+  return `${entry.valuePct.toFixed(1)}%`;
+}
+
+/** One-decimal percent for derivation text (numerators/denominators). */
+function pct(n: number): string {
+  return Number.isInteger(n) ? String(n) : n.toFixed(1).replace(/\.0$/, '');
+}
+
+/**
+ * Human-readable derivation sentence: the exact arithmetic connecting the
+ * displayed share to the numbers a reader will find on the cited page.
+ */
+export function derivationSentence(entry: FxShareEntry): string {
+  const d = entry.derivation;
+  const share = formatFxShareValue(entry);
+  if (d.kind === 'direct' && d.printedSharePct != null) {
+    return `The report states the share directly on the cited page: ${pct(d.printedSharePct)}% of total debt.`;
+  }
+  if (d.kind === 'ratio' && d.numeratorPctGdp != null && d.denominatorPctGdp != null) {
+    const numLabel =
+      entry.definitionBasis === 'currency' ? 'FX-denominated debt' : 'external debt';
+    return (
+      `Derivation: ${numLabel} ${pct(d.numeratorPctGdp)} ÷ total public debt ` +
+      `${pct(d.denominatorPctGdp)}, both percent of GDP as printed on the cited page, ` +
+      `= ${share} of total debt.`
+    );
+  }
+  if (d.kind === 'figure') {
+    if (d.numeratorPctGdp != null && d.denominatorPctGdp != null) {
+      return (
+        `Derivation: read from the report's Debt-by-Currency chart at the ${entry.year} point, ` +
+        `foreign currency ≈${pct(d.numeratorPctGdp)} ÷ total ≈${pct(d.denominatorPctGdp)} ` +
+        `(percent of GDP) = ${share} of total debt; chart-derived estimate.`
+      );
+    }
+    return (
+      `Read from the report's Debt-by-Currency chart at the ${entry.year} point; ` +
+      'chart-derived estimate.'
+    );
+  }
+  return '';
+}
+
+/** Year-status clause, including the hard-actual alternative when known. */
+export function yearStatusSentence(entry: FxShareEntry): string | null {
+  if (entry.yearStatus !== 'estimate') return null;
+  const alt =
+    entry.latestActualAlternativePct != null
+      ? ` The latest hard actual printed in the report implies ${entry.latestActualAlternativePct.toFixed(1)}%.`
+      : '';
+  return `The ${entry.year} observation is a staff estimate, the newest the DSA publishes.${alt}`;
+}
+
+/** One-line audit disclosure for the footnote. */
+export function auditSentence(entry: FxShareEntry): string {
+  if (entry.audit.outcome === 'CORRECTED') {
+    return 'Corrected in the July 2026 independent audit after re-measuring the cited source; every cited page was re-read in that audit.';
+  }
+  return 'Independently re-verified against the cited page in the July 2026 audit.';
 }

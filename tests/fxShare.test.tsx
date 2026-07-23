@@ -233,3 +233,94 @@ describe('FX-share UI states', () => {
     expect(observedZeroHtml).not.toContain('model fallback');
   });
 });
+
+describe('FX-share derivation transparency (v0.1.2)', () => {
+  it('shows the exact ratio arithmetic and estimate-year status for Nigeria', () => {
+    const defaultState = getFxShareDefault('NGA');
+    const html = renderToStaticMarkup(
+      <FxShareFootnote
+        defaultState={defaultState}
+        countryName="Nigeria"
+        values={[46.8, 46.8]}
+      />,
+    );
+
+    expect(html).toContain('Sourced DSA default: 46.8%');
+    expect(html).toContain('Derivation: FX-denominated debt 16.9');
+    expect(html).toContain('total public debt 36.1');
+    expect(html).toContain('staff estimate');
+    expect(html).toContain('48.3%'); // latest hard-actual alternative
+    expect(html).toContain('Source: 2025 (staff estimate)');
+    expect(html).toContain('July 2026 audit');
+  });
+
+  it('displays chart-derived values as approximate integers with components', () => {
+    const defaultState = getFxShareDefault('ALB');
+    const html = renderToStaticMarkup(
+      <FxShareFootnote
+        defaultState={defaultState}
+        countryName="Albania"
+        values={[42.2, 42.2]}
+      />,
+    );
+
+    expect(html).toContain('Sourced DSA default: ≈42% (chart-derived)');
+    expect(html).toContain('Debt-by-Currency chart');
+    expect(html).toContain('chart-derived estimate');
+    expect(html).toContain('Source: 2024 (actual)');
+  });
+
+  it('discloses audit corrections on corrected rows', () => {
+    const defaultState = getFxShareDefault('KWT');
+    const html = renderToStaticMarkup(
+      <FxShareFootnote
+        defaultState={defaultState}
+        countryName="Kuwait"
+        values={[97.9, 97.9]}
+      />,
+    );
+
+    expect(html).toContain('Sourced DSA default: ≈98% (chart-derived)');
+    expect(html).toContain('Corrected in the July 2026 independent audit');
+  });
+
+  it('every sourced entry carries year status, derivation, and audit fields', () => {
+    // The build script enforces this at generation time; this guards the
+    // bundled artifact against manual edits.
+    /* eslint-disable @typescript-eslint/no-var-requires */
+    const data = require('../src/data/fx-share.json') as {
+      countries: Record<
+        string,
+        {
+          valuePct: number;
+          yearStatus: string;
+          extractionMethod: string;
+          derivation: {
+            kind: string;
+            numeratorPctGdp: number | null;
+            denominatorPctGdp: number | null;
+            printedSharePct: number | null;
+          };
+          audit: { outcome: string; date: string };
+        }
+      >;
+    };
+    const entries = Object.entries(data.countries);
+    expect(entries.length).toBe(167);
+    for (const [iso, c] of entries) {
+      expect(['actual', 'estimate'], iso).toContain(c.yearStatus);
+      expect(['table', 'text', 'figure'], iso).toContain(c.extractionMethod);
+      expect(['ratio', 'figure', 'direct'], iso).toContain(c.derivation.kind);
+      expect(['CONFIRMED', 'CONFIRMED_APPROX', 'CORRECTED'], iso).toContain(
+        c.audit.outcome,
+      );
+      if (c.derivation.kind === 'ratio') {
+        const { numeratorPctGdp: n, denominatorPctGdp: d } = c.derivation;
+        expect(n, iso).not.toBeNull();
+        expect(d, iso).not.toBeNull();
+        const recomputed = ((n as number) / (d as number)) * 100;
+        expect(Math.abs(recomputed - c.valuePct), iso).toBeLessThan(0.35);
+      }
+    }
+  });
+});
